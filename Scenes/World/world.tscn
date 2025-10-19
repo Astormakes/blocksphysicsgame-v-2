@@ -1,0 +1,42 @@
+[gd_scene load_steps=4 format=3 uid="uid://dc5yusrj6d7ge"]
+
+[ext_resource type="PackedScene" uid="uid://dfluexj0asn8h" path="res://Scenes/Grid/Grid.tscn" id="1_t1gg8"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_e2bkl"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_t1gg8"]
+
+[node name="world" type="Node3D"]
+
+[node name="StaticBody3D3" type="StaticBody3D" parent="."]
+transform = Transform3D(0.9999837, -0.0055909073, 0.0010149332, 0.0055383593, 0.99892783, 0.045962024, -0.0012708146, -0.045955654, 0.9989428, -35.803032, -51.86398, -97.74866)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D3"]
+transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, 0, 0, 0)
+shape = SubResource("BoxShape3D_e2bkl")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D3/CollisionShape3D"]
+mesh = SubResource("BoxMesh_t1gg8")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="."]
+transform = Transform3D(0.99990445, -0.013822568, 0, 0.013822568, 0.99990445, 0, 0, 0, 1, -99.40064, -50.785534, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2"]
+transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, 0, 0, 0)
+shape = SubResource("BoxShape3D_e2bkl")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D2/CollisionShape3D"]
+mesh = SubResource("BoxMesh_t1gg8")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -50.087063, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, 0, 0, 0)
+shape = SubResource("BoxShape3D_e2bkl")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D/CollisionShape3D"]
+mesh = SubResource("BoxMesh_t1gg8")
+
+[node name="Grid" parent="." instance=ExtResource("1_t1gg8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0064881146, 0.68699837, -0.0814926)

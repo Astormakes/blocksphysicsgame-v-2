@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://dfluexj0asn8h"]
+
+[ext_resource type="Script" uid="uid://w8ssewue50uo" path="res://Scenes/Grid/grid.gd" id="1_uadnl"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_uadnl"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_srhpa"]
+
+[node name="Grid" type="Node3D"]
+script = ExtResource("1_uadnl")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_uadnl")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D/CollisionShape3D"]
+mesh = SubResource("BoxMesh_srhpa")

@@ -39,4 +39,4 @@ often games complelty neglect the tendency for fluids to stick to surfaces if i 
 I'm thinking of either a particle based system. 
 When a vehicle moves more then 30kmps it would spawn particles in front of the things that cause forces to happen... those could provably made to stick... 
 
-Or just a more common divergence aproach that happens in the 20x20x20 raster of the game and a simplified drag mechanic where they tend to move are stronger to a certian direction with less drag then a block have
+Or just a more common divergence aproach that happens in the 20x20x20 raster. An issue is going to be to implement slopes and stuff but ya ill see

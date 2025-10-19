@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://dfluexj0asn8h"]
+
+[ext_resource type="Script" uid="uid://w8ssewue50uo" path="res://Scenes/Grid/grid.gd" id="1_uadnl"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_uadnl"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_srhpa"]
+
+[node name="Grid" type="Node3D"]
+script = ExtResource("1_uadnl")
+
+[node name="RigidBody3D" type="RigidBody3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_uadnl")
+surface_material_override/0 = SubResource("StandardMaterial3D_srhpa")

@@ -32,10 +32,10 @@ const back = Vector3.BACK
 func _ready() -> void:
 	defaultblocklist()
 
-func set_block(id: int, data: Blockdata) -> void:
+func setb(id: int, data: Blockdata) -> void:
 	blocks[id] = data
 
-func get_block(id: int) -> Blockdata:
+func getb(id: int) -> Blockdata:
 	return blocks[id]
 
 func defaultblocklist(): 
@@ -108,7 +108,7 @@ func defaultblocklist():
 		3.5,
 		30,
 		Vector3(0.2,0.2,0.2),
-		[right,up,back,forward], # directions in which flow is allowed
+		0,#[right,up,back,forward], # directions in which flow is allowed
 		4 # Volume Per block
 	))
 	blocks.insert(5,Blockdata.new(
@@ -124,7 +124,7 @@ func defaultblocklist():
 		1.5,
 		100,
 		Vector3(0.2,0.2,0.2),
-		[right,up,back,forward], # directions in which flow is allowed
+		0,#[right,up,back,forward], # directions in which flow is allowed
 		4 # Volume Per block
 	))
 	blocks.insert(6,Blockdata.new(
@@ -140,7 +140,7 @@ func defaultblocklist():
 		0.25,
 		30,
 		Vector3(0.2,0.2,0.2),
-		[right,up,back,forward], # directions in which flow is allowed
+		0,#[right,up,back,forward], # directions in which flow is allowed
 		4 # Volume Per block
 	))
 	blocks.insert(7,Blockdata.new(
@@ -156,9 +156,9 @@ func defaultblocklist():
 		7,
 		500,
 		Vector3(0.4,0.2,0.2),
-		[right,up,back,forward],
+		0,#[right,up,back,forward],
 		8,
-		[right,left,up,back,forward]
+		0,#[right,left,up,back,forward]
 	))
 	blocks.insert(8,Blockdata.new(
 		8,
@@ -173,26 +173,26 @@ func defaultblocklist():
 		3,
 		200,
 		Vector3(0.4,0.2,0.2),
-		[right,up,back,forward],
+		0,#[right,up,back,forward],
 		8,
-		[right,left,up,back,forward]
+		0,#[right,left,up,back,forward]
 	))
 	blocks.insert(9,Blockdata.new(
 		9,
-			"Wood 1x1x2 Slope",
-			"",
-			"res://Meshes/1x1x2 Slope.obj",
-			"res://prebuilds/1x1x2_Slope_ColisionShape.tscn",
-			"res://Materials/defaultStructualMaterial.tres",
-			Color(150,90,60,255)/255,
-			"shape",
-			7,
-			1,
-			30,
-			Vector3(0.4,0.2,0.2),
-			[right,up,back,forward],
-			8,
-			[right,left,up,back,forward]
+		"Wood 1x1x2 Slope",
+		"",
+		"res://Meshes/1x1x2 Slope.obj",
+		"res://prebuilds/1x1x2_Slope_ColisionShape.tscn",
+		"res://Materials/defaultStructualMaterial.tres",
+		Color(150,90,60,255)/255,
+		"shape",
+		7,
+		1,
+		30,
+		Vector3(0.4,0.2,0.2),
+		0,#[right,up,back,forward],
+		8,
+		0,#[right,left,up,back,forward]
 	))
 	blocks.insert(10,Blockdata.new(
 		10,
@@ -207,9 +207,9 @@ func defaultblocklist():
 		10.5,
 		30,
 		Vector3(0.6,0.2,0.2),
-		[right,up,back,forward],
+		0,#[right,up,back,forward],
 		12,
-		[right,left,up,back,forward]
+		0,#[right,left,up,back,forward]
 	))
 	blocks.insert(11,Blockdata.new(
 		11,
@@ -224,24 +224,24 @@ func defaultblocklist():
 		7.5,
 		100,
 		Vector3(0.6,0.2,0.2),
-		[right,up,back,forward],
+		0,#[right,up,back,forward],
 		12,
-		[right,left,up,back,forward]
+		0,#[right,left,up,back,forward]
 	))
 	blocks.insert(12,Blockdata.new(
 		12,
-			"Wood 1x1x3 Slope",
-			"",
-			"res://Meshes/1x1x3 Slope.obj",
-			"res://prebuilds/1x1x3_Slope_ColisionShape.tscn",
-			"res://Materials/defaultStructualMaterial.tres",
-			Color(150,90,60,255)/255,
-			"shape",
-			4,
-			1.5,
-			30,
-			Vector3(0.6,0.2,0.2),
-			[right,up,back,forward],
-			12,
-			[right,left,up,back,forward],
+		"Wood 1x1x3 Slope",
+		"",
+		"res://Meshes/1x1x3 Slope.obj",
+		"res://prebuilds/1x1x3_Slope_ColisionShape.tscn",
+		"res://Materials/defaultStructualMaterial.tres",
+		Color(150,90,60,255)/255,
+		"shape",
+		4,
+		1.5,
+		30,
+		Vector3(0.6,0.2,0.2),
+		0,#[right,up,back,forward],
+		12,
+		0,#[right,left,up,back,forward],
 	))

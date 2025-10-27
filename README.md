@@ -16,27 +16,44 @@ But first the Basics:
 	
 Building system:
 The Blocks are should be 20x20x20cm big.
+
 Blocks should have attributes like the material, HP, tempreature in a grid
+
 enclosed volumes should be recogoniced as such
+
 enclosed volumes should have attributes like tempreature and pressure as well as different compunds inside like oxygen, water, diesel, gas, co2, nitrogen and more... with their gasious forms as well.
+
 Various reactions between compounds should be possible in a realstic-ish but simplyfied and belivable way that is affected by a volumes pressure and tempreature.
+
 there should be "special" geometire pieces. These can but dont have to, span multiple blocks far and allow volumes to connect across their "air space"
+
 Blocks directly next to a volume should have and affect the volumes tempreature. Blocks should transmitt tempreature to each other.
+
 there should a selection of pipes and ports that transmitt rotational energy as well as volumes together and allow compounds to flow based on pressure.
+
 The Ports position in a volume should decide what compound is sucked or pushed out of a volume. depending compounds density (forming layers)
+
 there should be "parts" that can span multiple blocks wide, high and far that are things like engines and motors, valves, pumps, batteries and alike that do specific things
+
 Special Parts should be player controlled or controlled by controll logic that the player has made but thats way later....
+
 The Main way stuff is build should be in a designer, that allows the player to move the camera freely, have different views, symetrie and building aids...
+
 Im on the edge if handplacing blocks should even be possible because it will be hard to implement "right"
-Hand building is highly interesting because thatway things like deposits from chemical reactions could be a thing too which would be sad to miss out on - that goes even as far as... players having to create their own metalblocks in hardcore by melting metal in a stone thing and then gathering them... sounds completly awesome actually hurr~~~ 
+
+Hand building is highly interesting because thatway things like deposits from chemical reactions could be a thing too which would be sad to miss out on - that goes even as far as... players having to create their own metalblocks in hardcore by melting metal in a stone thing and then gathering them... sounds completly awesome actually hurr~~~ it would make players want to automate a smeltery and supply it and stuff... 
 
 
 Hydrodynamic and arodynamic system:
 
 I want to have a hydrodynamic and arodynamic system. one thing that will be pretty hard i think, is making it so, that water behaves more like irl.
+
 Often games highly simplify the arodynamics logic and so taught me some things about water that dont align with reality i would like to get closer to reality.
+
 often games complelty neglect the tendency for fluids to stick to surfaces if i can simulate that i would allrady be happy...
-I'm thinking of either a particle based system. 
-When a vehicle moves more then 30kmps it would spawn particles in front of the things that cause forces to happen... those could provably made to stick... 
+
+I'm thinking of either a particle based system.
+
+When a vehicle moves more then 30kmps it would spawn particles in front of the things that cause forces to happen... those could provably made to stick... I think a simelar thing could be done with blocks actually instead of particulates ... only afraid that it would become unregular as in the forces arent distributed equaally ... but thats an issue with probably every particulate system that that dosent use thousands of particulats .... and in that case i can probably go with the block based system anyway lol..
 
 Or just a more common divergence aproach that happens in the 20x20x20 raster. An issue is going to be to implement slopes and stuff but ya ill see

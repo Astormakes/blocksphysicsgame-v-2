@@ -1,0 +1,108 @@
+[gd_scene load_steps=11 format=3 uid="uid://7rxbp7hki16p"]
+
+[ext_resource type="Script" uid="uid://c6ld35e55uc6n" path="res://Scenes/Designer/designer.gd" id="1_0gx8n"]
+[ext_resource type="Script" uid="uid://dfbr6ce7hidqh" path="res://Scenes/Designer/camera_pivot.gd" id="1_82vlm"]
+[ext_resource type="PackedScene" uid="uid://dfluexj0asn8h" path="res://Scenes/Grid/Grid.tscn" id="3_k0kss"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_15b5x"]
+sky_top_color = Color(0.49563682, 0.61094034, 0.72907096, 1)
+sky_horizon_color = Color(0.5935106, 0.66917884, 0.70394796, 1)
+sky_curve = 0.05683946
+ground_bottom_color = Color(0.48205066, 0.4820506, 0.4820506, 1)
+ground_horizon_color = Color(0.7182, 0.72508216, 0.7388414, 1)
+ground_curve = 0.018660564
+sun_curve = 0.14489044
+
+[sub_resource type="Sky" id="Sky_82vlm"]
+sky_material = SubResource("ProceduralSkyMaterial_15b5x")
+
+[sub_resource type="Environment" id="Environment_15b5x"]
+background_mode = 2
+sky = SubResource("Sky_82vlm")
+ambient_light_source = 3
+ambient_light_color = Color(0, 0, 0.36078432, 1)
+ambient_light_energy = 0.35
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0gx8n"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_k0kss"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_yg48b"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ajegr"]
+albedo_color = Color(0.9076119, 0.1627253, 0.5545485, 1)
+
+[node name="Designer" type="Node3D"]
+script = ExtResource("1_0gx8n")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_15b5x")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.2555133, 0.9668056, 0, -0.9668056, 0.2555133, 0, 3.3186626, 0)
+light_volumetric_fog_energy = 0.0
+shadow_enabled = true
+sky_mode = 1
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -50.087063, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, 0, 0, 0)
+shape = SubResource("BoxShape3D_0gx8n")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D/CollisionShape3D"]
+mesh = SubResource("BoxMesh_k0kss")
+
+[node name="CameraPivot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 1.727)
+script = ExtResource("1_82vlm")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CameraPivot"]
+transform = Transform3D(0.18, 0, 0, 0, 0.18, 0, 0, 0, 0.18, 0, -1.478001, -1.727)
+mesh = SubResource("BoxMesh_yg48b")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_ajegr")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="CameraPivot"]
+transform = Transform3D(0.18, 0, 0, 0, 0.18, 0, 0, 0, 0.18, 0, -1.478001, -1.727)
+mesh = SubResource("BoxMesh_yg48b")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_ajegr")
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot"]
+current = true
+near = 0.001
+
+[node name="Control" type="Control" parent="CameraPivot/Camera3D"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GrayBackground" type="ColorRect" parent="CameraPivot/Camera3D/Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.08
+offset_right = 0.16003418
+offset_bottom = 0.19999695
+grow_horizontal = 2
+color = Color(0.24705882, 0.24705882, 0.24705882, 0.5137255)
+
+[node name="Label" type="Label" parent="CameraPivot/Camera3D/Control/GrayBackground"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 15.0
+offset_top = 31.0
+offset_right = -1833.16
+offset_bottom = -32.6
+text = "New Grid"
+
+[node name="Grid" parent="." instance=ExtResource("3_k0kss")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.014771, 0)
+frozen = true

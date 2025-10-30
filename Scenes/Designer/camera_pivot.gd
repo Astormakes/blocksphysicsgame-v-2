@@ -10,17 +10,22 @@ extends Node3D
 var velocity := Vector3.ZERO
 var yaw := 0.0
 var pitch := 0.0
-var target_position := Vector3.ZERO
+
+var ray:RayCast3D
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	target_position = global_position
-
-
+	ray = RayCast3D.new()
+	ray.debug_shape_thickness = 1
+	add_child(ray)
+	
 func _process(_delta: float) -> void:
 	var input_dir = Vector3.ZERO
 	
-	#if Input.is_action_pressed("mouse2"): # this is so, that the mouse can obly be 
+	var mouse_pos = get_viewport().get_mouse_position()
+	ray.target_position = to_local(camera.project_ray_normal(mouse_pos)*100 + camera.project_ray_origin(mouse_pos))
+
+
 	var speed_mod = 1
 		
 	if Input.is_action_pressed("Forward"):

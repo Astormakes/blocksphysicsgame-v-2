@@ -2,7 +2,7 @@ extends Node3D
 
 const BLOCK_SIZE: float = 0.2 # 20 cm
 
-@export var blockDic:Dictionary
+var blockDic:Dictionary[Vector3i,Block]
 
 @export var frozen: bool = false
 

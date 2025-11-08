@@ -2,8 +2,7 @@ extends Node3D
 
 const BLOCK_SIZE: float = 0.2 # 20 cm
 
-var blocks:Dictionary
-var blockspos:Array
+@export var blockDic:Dictionary
 
 @export var frozen: bool = false
 
@@ -25,29 +24,12 @@ func _ready():
 	]
 	for x in test_layout:
 		placeBlock(x.id,x.pos,x.rot)
-	pass
+	
+	removeBlock(Vector3i(0, 1, 0))
+
 
 func placeBlock(id: int,pos: Vector3i,rot:int):
-	blockspos.append(pos)
-	blocks[pos] = Block.new(id,pos,rot)
-	blockupdate(pos)
+	blockDic[pos] = Block.new(id,pos,rot,self)
 
-func removeBlock():
-	pass
-
-func blockupdate(pos: Vector3i) -> void:
-	var block = blocks[pos]
-	
-	var mesh = MeshInstance3D.new()
-	mesh.transform.origin = Vector3(pos/5.0)
-	mesh.mesh = load(Blockcatalog.getb(block.id).mesh)
-	body.add_child(mesh)
-	
-	var colisionshape = CollisionShape3D.new()
-	colisionshape.transform.origin = Vector3(pos/5.0)
-	var shape = BoxShape3D.new()
-	shape.size = Vector3(0.2,0.2,0.2)
-	colisionshape.shape = shape
-	block.colisionshape = colisionshape
-	body.add_child(colisionshape)
-	
+func removeBlock(pos:Vector3i):
+	blockDic[pos].destroy()

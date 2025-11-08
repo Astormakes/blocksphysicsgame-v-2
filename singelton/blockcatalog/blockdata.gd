@@ -9,7 +9,7 @@ extends Resource
 @export var material: String
 @export var colormat: Color
 @export var type: String
-@export var hpmax: float
+@export var hpmax: int
 @export var cost: float
 @export var mass: float
 @export var size: Vector3
@@ -28,7 +28,7 @@ func _init(
 	_type: String = "Block",
 	_cost: float = 0.0,
 	_mass: float = 1.0,
-	_hpmax: float = 100.0,
+	_hpmax: int = 100,
 	_size: Vector3 = Vector3(0.2, 0.2, 0.2),
 	_flows: int = 0b000100, # only 8 bits!
 	_volume: float = 0.0,

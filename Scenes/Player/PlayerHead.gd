@@ -13,6 +13,6 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	
 	var mouse_pos = get_viewport().get_mouse_position()
-	ray.target_position = to_local(camera.project_ray_normal(mouse_pos)*100 + camera.project_ray_origin(mouse_pos))
+	ray.target_position = to_local(camera.project_ray_normal(mouse_pos)*2 + camera.project_ray_origin(mouse_pos))
 
 	print(ray.get_collider())

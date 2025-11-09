@@ -49,7 +49,7 @@ material_override = ExtResource("3_1bkc7")
 mesh = SubResource("BoxMesh_a202f")
 
 [node name="screen2" type="MeshInstance3D" parent="screen"]
-transform = Transform3D(0.95, -4.656613e-09, -2.3108441e-07, 4.656613e-09, 0.95, 6.931368e-07, 2.3841858e-07, -9.536743e-07, 0.9499999, -9.826571e-05, -0.00049448013, 0.120903015)
+transform = Transform3D(0.95, -4.656613e-09, -2.3108441e-07, 4.656613e-09, 0.95, 6.931368e-07, 2.3841858e-07, -1.1920929e-06, 0.94999987, -6.1260536e-05, -0.00030899048, 0.075366974)
 mesh = SubResource("BoxMesh_a202f")
 skeleton = NodePath("../..")
 

@@ -4,7 +4,9 @@
 
 [resource]
 albedo_texture = ExtResource("1_m5vi3")
-uv1_scale = Vector3(50, 25, 50)
+metallic = 0.51
+metallic_specular = 0.74
+roughness = 0.78
+uv1_scale = Vector3(50, 50, 50)
 uv1_triplanar = true
-texture_filter = 2
 point_size = 50.6

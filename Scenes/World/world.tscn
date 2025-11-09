@@ -37,7 +37,7 @@ ambient_light_energy = 0.35
 environment = SubResource("Environment_3rhlx")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.2555133, 0.9668056, 0, -0.9668056, 0.2555133, 0, 3.3186626, 0)
+transform = Transform3D(0.7274256, -0.66340905, 0.17532979, 0.18356001, 0.43433368, 0.8818503, -0.6611791, -0.609297, 0.43772084, 0, 3.3186626, 0)
 light_volumetric_fog_energy = 0.0
 shadow_enabled = true
 sky_mode = 1
@@ -93,12 +93,13 @@ shape = SubResource("BoxShape3D_e2bkl")
 material_override = ExtResource("1_3rhlx")
 mesh = SubResource("BoxMesh_t1gg8")
 
-[node name="RigidBody3D" type="RigidBody3D" parent="."]
+[node name="thecube" type="RigidBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.4235382, 3.4298944, -8.281235)
 mass = 20.0
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="thecube"]
 shape = SubResource("BoxShape3D_3rhlx")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D/CollisionShape3D"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="thecube/CollisionShape3D"]
+material_override = ExtResource("1_3rhlx")
 mesh = SubResource("BoxMesh_vadfg")

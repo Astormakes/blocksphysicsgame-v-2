@@ -1,5 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://c6pcwly7ikk0m"]
+[gd_scene load_steps=6 format=3 uid="uid://c6pcwly7ikk0m"]
 
+[ext_resource type="Script" uid="uid://bw4olqwtehllw" path="res://Scenes/Player/PlayerHead.gd" id="2_a3d8c"]
 [ext_resource type="Script" uid="uid://begt1lw5g58m4" path="res://Scenes/Player/playerMovement.gd" id="2_yxeup"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_fcuv6"]
@@ -45,6 +46,7 @@ mesh = SubResource("CapsuleMesh_6xmdg")
 
 [node name="Head" type="Node3D" parent="Body"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.747154, 0)
+script = ExtResource("2_a3d8c")
 
 [node name="Control" type="Control" parent="Body/Head"]
 layout_mode = 3

@@ -11,11 +11,10 @@ var velocity := Vector3.ZERO
 var yaw := 0.0
 var pitch := 0.0
 
-var ray:RayCast3D
+var ray:RayCast3D = RayCast3D.new()
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	ray = RayCast3D.new()
 	ray.debug_shape_thickness = 1
 	add_child(ray)
 	

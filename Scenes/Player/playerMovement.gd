@@ -6,13 +6,14 @@ var runMul = 10
 var movementDamping = Vector3(50000,300,50000)
 var Enginedelta = 0
 
-var noclip = true
+var noclip = false
 
 @onready var Head = $Head
 
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	freeze = noclip
 
 func _process(delta: float) -> void:
 	if is_multiplayer_authority():	
@@ -34,9 +35,9 @@ func _process(delta: float) -> void:
 		if Input.is_action_pressed("Run"):
 				velocity = velocity * runMul
 		if Input.is_action_pressed("jump"):
-				velocity.y = 5
+				velocity.y = 3
 		if Input.is_action_pressed("Sneak"):
-				velocity.y = -5
+				velocity.y = -3
 		
 	
 		if noclip:

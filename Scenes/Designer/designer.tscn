@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://7rxbp7hki16p"]
+[gd_scene load_steps=10 format=3 uid="uid://7rxbp7hki16p"]
 
 [ext_resource type="Script" uid="uid://c6ld35e55uc6n" path="res://Scenes/Designer/designer.gd" id="1_0gx8n"]
 [ext_resource type="Script" uid="uid://dfbr6ce7hidqh" path="res://Scenes/Designer/camera_pivot.gd" id="1_82vlm"]
@@ -26,6 +26,8 @@ ambient_light_energy = 0.35
 [sub_resource type="BoxShape3D" id="BoxShape3D_0gx8n"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_k0kss"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_yg48b"]
 
 [node name="Designer" type="Node3D"]
 script = ExtResource("1_0gx8n")
@@ -85,6 +87,10 @@ offset_top = 31.0
 offset_right = -1833.16
 offset_bottom = -32.6
 text = "New Grid"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CameraPivot"]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)
+mesh = SubResource("BoxMesh_yg48b")
 
 [node name="Grid" parent="." instance=ExtResource("3_k0kss")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.014771, 0)

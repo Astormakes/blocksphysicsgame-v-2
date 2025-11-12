@@ -1,9 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://dc5yusrj6d7ge"]
+[gd_scene load_steps=10 format=3 uid="uid://dc5yusrj6d7ge"]
 
 [ext_resource type="Material" uid="uid://biintp0xavghy" path="res://Materials/Prototype/PrototypeMat.tres" id="1_3rhlx"]
 [ext_resource type="PackedScene" uid="uid://ckv2wprx3ef7l" path="res://Scenes/Designer/Computer/computer.tscn" id="1_t1gg8"]
+[ext_resource type="Script" uid="uid://2f0uw5u6t0xi" path="res://Scenes/World/PlayerSpawner.gd" id="1_vadfg"]
 [ext_resource type="PackedScene" uid="uid://c6pcwly7ikk0m" path="res://Scenes/Player/player.tscn" id="2_yp2ti"]
-[ext_resource type="Material" uid="uid://cteprph04iptn" path="res://Materials/water.tres" id="4_vadfg"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_yp2ti"]
 sky_top_color = Color(0.49563682, 0.61094034, 0.72907096, 1)
@@ -28,9 +28,13 @@ ambient_light_energy = 0.35
 
 [sub_resource type="BoxMesh" id="BoxMesh_vadfg"]
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_3rhlx"]
-
 [node name="world" type="Node3D"]
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("uid://c6pcwly7ikk0m")
+spawn_path = NodePath("..")
+script = ExtResource("1_vadfg")
+network_player = ExtResource("2_yp2ti")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_3rhlx")
@@ -44,9 +48,6 @@ sky_mode = 1
 [node name="Computer" parent="." instance=ExtResource("1_t1gg8")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -2)
 
-[node name="Player" parent="." instance=ExtResource("2_yp2ti")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5596904, 0)
-
 [node name="ground" type="StaticBody3D" parent="."]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ground"]
@@ -56,11 +57,6 @@ shape = SubResource("BoxShape3D_3rhlx")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="ground/CollisionShape3D"]
 material_override = ExtResource("1_3rhlx")
 mesh = SubResource("BoxMesh_vadfg")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, -150, 0, 0)
-mesh = SubResource("PlaneMesh_3rhlx")
-surface_material_override/0 = ExtResource("4_vadfg")
 
 [node name="ground2" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -95.149, 1.5, 0)
@@ -72,11 +68,6 @@ shape = SubResource("BoxShape3D_3rhlx")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="ground2/CollisionShape3D"]
 material_override = ExtResource("1_3rhlx")
 mesh = SubResource("BoxMesh_vadfg")
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
-transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, 50, 0, 0)
-mesh = SubResource("PlaneMesh_3rhlx")
-surface_material_override/0 = ExtResource("4_vadfg")
 
 [node name="Computer2" parent="." instance=ExtResource("1_t1gg8")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 48.71679, 1, -2)

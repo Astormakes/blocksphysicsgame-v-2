@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="blocksphysicsgame v2"
-run/main_scene="uid://dc5yusrj6d7ge"
+run/main_scene="uid://d37p0km37kp02"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -22,8 +22,8 @@ Server="*res://singelton/Server/Server.gd"
 
 [display]
 
-window/size/viewport_width=1920
-window/size/viewport_height=1080
+window/size/viewport_width=1366
+window/size/viewport_height=768
 window/stretch/aspect="expand"
 
 [input]

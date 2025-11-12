@@ -2,10 +2,6 @@ extends Control
 
 @onready var Adressfied = $TextEdit
 
-var peer = ENetMultiplayerPeer.new()
-var address
-var port = 65165
-
 
 func _ready() -> void:
 	pass
@@ -16,9 +12,10 @@ func _unhandled_input(_event: InputEvent) -> void:
 
 
 func _on_host_pressed() -> void:
-	#GlobalServerHandler._on_host(int(port))
+	var world = load("res://Scenes/World/world.tscn").instantiate()
+	Server.create_game(world)
 	queue_free()
 
 func _on_join_pressed() -> void:
-	#GlobalServerHandler._on_join(Adressfied.text,port)
+	#GlobalServerHandler._on_join(Adressfied.text)
 	queue_free()

@@ -11,6 +11,8 @@ const PORT = 65165
 const DEFAULT_SERVER_IP = "127.0.0.1" # IPv4 localhost
 const MAX_CONNECTIONS = 20
 
+@export var world = "res://Scenes/World/world.tscn"
+
 # This will contain player info for every player,
 # with the keys being each player's unique IDs.
 var players = {}
@@ -19,7 +21,7 @@ var players = {}
 # before the connection is made. It will be passed to every other peer.
 # For example, the value of "name" can be set to something the player
 # entered in a UI scene.
-var player_info = {"name": "Test123"}
+@export var player_info = {"name": "Test123"}
 
 var players_loaded = 0
 
@@ -41,22 +43,21 @@ func join_game(address = ""):
 	if error:
 		return error
 	multiplayer.multiplayer_peer = peer
+	load_game(world)
 
 
-func create_game(scene):
+func create_game():
 	var peer = ENetMultiplayerPeer.new()
 	var error = peer.create_server(PORT, MAX_CONNECTIONS)
 	if error:
 		return error
 	multiplayer.multiplayer_peer = peer
-	
-	add_child(scene)
-	
 
 	players[1] = player_info
 	player_connected.emit(1, player_info)
 	
-	
+	load_game(world)
+
 
 func remove_multiplayer_peer():
 	multiplayer.multiplayer_peer = OfflineMultiplayerPeer.new()

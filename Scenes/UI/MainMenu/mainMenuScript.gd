@@ -12,10 +12,10 @@ func _unhandled_input(_event: InputEvent) -> void:
 
 
 func _on_host_pressed() -> void:
-	var world = load("res://Scenes/World/world.tscn").instantiate()
-	Server.create_game(world)
+	
+	Server.create_game()
 	queue_free()
 
 func _on_join_pressed() -> void:
-	#GlobalServerHandler._on_join(Adressfied.text)
+	Server.join_game(Adressfied.text)
 	queue_free()

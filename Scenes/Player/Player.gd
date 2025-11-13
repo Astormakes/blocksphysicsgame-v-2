@@ -14,7 +14,10 @@ func _enter_tree() -> void:
 	set_multiplayer_authority(name.to_int())
 
 func _ready() -> void:
+	body.contact_monitor = true
+	body.max_contacts_reported = 2
 	body.freeze = noclip
+	body.linear_damp = 0
 
 func _process(_delta: float) -> void:
 	if is_multiplayer_authority():
@@ -45,16 +48,22 @@ func movement(_delta) -> void:
 	if Input.is_action_pressed("Run"):
 		velocity = velocity * runMul
 		
+	var coliders:Array = body.get_colliding_bodies()
 	
+	var dampening:Vector3 =  Vector3.ZERO
+	
+	if coliders.size():
+		for c in coliders:
+			if "linear_velocity" in c:
+				dampening += c.linear_velocity / coliders.size()	
+		dampening -= body.linear_velocity*movementDamping
 	
 	if noclip:
 		body.transform.origin += Head.basis * velocity
 	else:
 		var head_rotation = Head.global_transform.basis.get_euler()
 		var yaw_only_basis = Basis(Vector3.UP, head_rotation.y)  # Only yaw
-		body.apply_central_force((yaw_only_basis * 2 * velocity / _delta) - body.linear_velocity*movementDamping)
-
-		print(((yaw_only_basis * 2 * velocity / _delta) - body.linear_velocity*movementDamping))
+		body.apply_central_force((yaw_only_basis * 2 * velocity / _delta) + dampening)
 
 ### head rotation
 func _input(event):

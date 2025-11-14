@@ -1,9 +1,9 @@
 extends Node
 
-var speed := 1
+var speed = 3
 var mouseSpeed = 0.15
-var runMul = 5
-var movementDamping = Vector3(30,1,30)
+var runMul = 2
+var movementDamping = Vector3(100,1,100)
 
 var noclip = false
 
@@ -31,25 +31,26 @@ func movement(_delta) -> void:
 	var velocity:Vector3 = Vector3(0,0,0)
 	
 	if Input.is_action_pressed('Forward'):
-			velocity.z = -speed
+			velocity.z = -1
 	if Input.is_action_pressed('Left'):
-			velocity.x = -speed
+			velocity.x = -1
 	if Input.is_action_pressed('Backward'):
-			velocity.z = speed
+			velocity.z = 1
 	if Input.is_action_pressed('Right'):
-			velocity.x = speed
-	if Input.is_action_pressed("jump"):
-			velocity.y = 3
+			velocity.x = 1
+			
+	velocity = velocity.normalized()*speed
+	
 	if Input.is_action_pressed("Sneak"):
 		velocity.y = -3
-		
-	velocity = velocity.normalized()
+	if Input.is_action_just_pressed("jump"):
+			body.linear_velocity += Vector3(0,5,0)
 	
 	if Input.is_action_pressed("Run"):
-		velocity = velocity * runMul
-		
-	var coliders:Array = body.get_colliding_bodies()
+		velocity *= runMul
 	
+	
+	var coliders:Array = body.get_colliding_bodies()
 	var dampening:Vector3 =  Vector3.ZERO
 	
 	if coliders.size():
@@ -57,13 +58,15 @@ func movement(_delta) -> void:
 			if "linear_velocity" in c:
 				dampening += c.linear_velocity / coliders.size()	
 		dampening -= body.linear_velocity*movementDamping
+	else:
+		velocity *= Vector3(0.1,1,0.1) # if not touching anything no change in velocity
 	
 	if noclip:
 		body.transform.origin += Head.basis * velocity
 	else:
 		var head_rotation = Head.global_transform.basis.get_euler()
 		var yaw_only_basis = Basis(Vector3.UP, head_rotation.y)  # Only yaw
-		body.apply_central_force((yaw_only_basis * 2 * velocity / _delta) + dampening)
+		body.apply_central_force((yaw_only_basis * velocity / _delta) + dampening)
 
 ### head rotation
 func _input(event):

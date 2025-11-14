@@ -1,9 +1,21 @@
-[gd_scene load_steps=10 format=3 uid="uid://dc5yusrj6d7ge"]
+[gd_scene load_steps=13 format=3 uid="uid://dc5yusrj6d7ge"]
 
 [ext_resource type="Material" uid="uid://biintp0xavghy" path="res://Materials/Prototype/PrototypeMat.tres" id="1_3rhlx"]
 [ext_resource type="PackedScene" uid="uid://ckv2wprx3ef7l" path="res://Scenes/Designer/Computer/computer.tscn" id="1_t1gg8"]
 [ext_resource type="Script" uid="uid://2f0uw5u6t0xi" path="res://Scenes/World/PlayerSpawner.gd" id="1_vadfg"]
 [ext_resource type="PackedScene" uid="uid://c6pcwly7ikk0m" path="res://Scenes/Player/player.tscn" id="2_yp2ti"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_vadfg"]
+properties/0/path = NodePath("RigidBody3D:rotation")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath("RigidBody3D:position")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vadfg"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_l1hd3"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_yp2ti"]
 sky_top_color = Color(0.49563682, 0.61094034, 0.72907096, 1)
@@ -29,6 +41,26 @@ ambient_light_energy = 0.35
 [sub_resource type="BoxMesh" id="BoxMesh_vadfg"]
 
 [node name="world" type="Node3D"]
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_vadfg")
+
+[node name="RigidBody3D" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6931288, -6.800275)
+mass = 10000.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
+shape = SubResource("BoxShape3D_vadfg")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D/CollisionShape3D"]
+mesh = SubResource("BoxMesh_l1hd3")
+
+[node name="SliderJoint3D" type="SliderJoint3D" parent="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.904778, 0)
+node_a = NodePath("../../ground")
+node_b = NodePath("..")
+linear_limit/upper_distance = 50.0
+linear_limit/lower_distance = -50.0
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("uid://c6pcwly7ikk0m")

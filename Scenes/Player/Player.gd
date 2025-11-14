@@ -9,6 +9,7 @@ var noclip = false
 
 @onready var Head = $Body/Head
 @onready var body = $Body
+@onready var camera:Camera3D = $Body/Head/Camera3D
 
 func _enter_tree() -> void:
 	set_multiplayer_authority(name.to_int())
@@ -21,6 +22,7 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	if is_multiplayer_authority():
+		if not camera.current: return
 		movement(_delta)
 
 ### movement simple rn ... 
@@ -76,11 +78,12 @@ func movement(_delta) -> void:
 ### head rotation
 func _input(event):
 	if not is_multiplayer_authority(): return
+	if not camera.current: return
+	
 	if not Input.is_action_pressed("Alt"):
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 		if event is InputEventMouseMotion:
 			Head.rotation_degrees.x = clamp(Head.rotation_degrees.x - event.relative.y * mouseSpeed,-89,89) # this rotates the players head
 			Head.rotation_degrees.y = Head.rotation_degrees.y - event.relative.x * mouseSpeed # this rotates the players head
-			
 	else:
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE) # this is what uncatches the mouse to close the game using alt key for example

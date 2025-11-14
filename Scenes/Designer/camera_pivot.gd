@@ -13,12 +13,18 @@ var pitch := 0.0
 
 var ray:RayCast3D = RayCast3D.new()
 
+
+
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	ray.debug_shape_thickness = 1
 	add_child(ray)
 	
 func _process(_delta: float) -> void:
+	
+	if Input.is_action_just_pressed("escape"):
+		queue_free()
+		
 	var input_dir = Vector3.ZERO
 	
 	var mouse_pos = get_viewport().get_mouse_position()

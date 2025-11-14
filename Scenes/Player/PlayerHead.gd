@@ -2,6 +2,9 @@ extends Node3D
 
 @onready var ray:RayCast3D = RayCast3D.new()
 
+var action
+var action2
+
 @onready var camera = $Camera3D
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -21,12 +24,25 @@ func _process(_delta: float) -> void:
 	ray.target_position = to_local(camera.project_ray_normal(mouse_pos)*2 + camera.project_ray_origin(mouse_pos))
 
 func _input(_event: InputEvent) -> void:
-	var action = "mouse1"
+	if not is_multiplayer_authority(): return
+	if not camera.current: return
+	
+	action = "mouse1"
+	action2 = "_pressed"
 	if Input.is_action_just_pressed(action):
 		var obj = ray.get_collider()
 		if obj:
-			obj = obj.get_parent()
-			if action in obj:
+			if (action+action2) in obj:
 				var objpos = ray.global_position
 				var objnormal = ray.get_collision_normal()
-				obj.call_deferred(action,objpos,objnormal,$"../..".name)
+				obj.call_deferred(action+action2,objpos,objnormal,$"../..".name)
+
+	action = "mouse1"
+	action2 = "_released"
+	if Input.is_action_just_released(action):
+		var obj = ray.get_collider()
+		if obj:
+			if (action+action2) in obj:
+				var objpos = ray.global_position
+				var objnormal = ray.get_collision_normal()
+				obj.call_deferred(action+action2,objpos,objnormal,$"../..".name)

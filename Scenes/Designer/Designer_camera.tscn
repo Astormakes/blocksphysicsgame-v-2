@@ -1,0 +1,45 @@
+[gd_scene load_steps=3 format=3 uid="uid://d1ciw2b1wuq7e"]
+
+[ext_resource type="Script" uid="uid://dfbr6ce7hidqh" path="res://Scenes/Designer/camera_pivot.gd" id="1_385r6"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_yg48b"]
+
+[node name="CameraPivot" type="Node3D"]
+script = ExtResource("1_385r6")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+current = true
+near = 0.001
+
+[node name="Control" type="Control" parent="Camera3D"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GrayBackground" type="ColorRect" parent="Camera3D/Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.08
+offset_right = 0.16003418
+offset_bottom = 0.19999695
+grow_horizontal = 2
+color = Color(0.24705882, 0.24705882, 0.24705882, 0.5137255)
+
+[node name="Label" type="Label" parent="Camera3D/Control/GrayBackground"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 15.0
+offset_top = 31.0
+offset_right = -1833.16
+offset_bottom = -32.6
+text = "New Grid"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)
+mesh = SubResource("BoxMesh_yg48b")

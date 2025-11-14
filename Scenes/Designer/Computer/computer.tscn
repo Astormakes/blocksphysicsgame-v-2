@@ -1,8 +1,12 @@
-[gd_scene load_steps=10 format=3 uid="uid://ckv2wprx3ef7l"]
+[gd_scene load_steps=11 format=3 uid="uid://ckv2wprx3ef7l"]
 
 [ext_resource type="Material" uid="uid://or6q7l6tupwi" path="res://Scenes/Designer/Computer/computerCabinMaterial.tres" id="1_0rtfo"]
-[ext_resource type="Script" uid="uid://c37pw4ubidgqp" path="res://Scenes/Designer/Computer/computer.gd" id="1_k8uq4"]
+[ext_resource type="PackedScene" uid="uid://d1ciw2b1wuq7e" path="res://Scenes/Designer/Designer_camera.tscn" id="2_8b6pi"]
 [ext_resource type="Material" uid="uid://dwcowu6rodxya" path="res://Scenes/Designer/Computer/computerMaterial.tres" id="3_1bkc7"]
+[ext_resource type="Script" uid="uid://d3c51gb7u7omn" path="res://Scenes/Designer/Computer/Computer.gd" id="4_8b6pi"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_a0tk4"]
+size = Vector3(0.6524658, 1.4577332, 0.5264206)
 
 [sub_resource type="PrismMesh" id="PrismMesh_4xowi"]
 
@@ -10,87 +14,98 @@
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_noarx"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_a0tk4"]
-size = Vector3(0.6524658, 1.4577332, 0.5264206)
-
 [sub_resource type="CylinderMesh" id="CylinderMesh_k8uq4"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_k8uq4"]
 
 [node name="Computer" type="Node3D"]
-script = ExtResource("1_k8uq4")
 
-[node name="PanelL" type="MeshInstance3D" parent="."]
+[node name="DesignerCameraSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("uid://d1ciw2b1wuq7e")
+spawn_path = NodePath("..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+script = ExtResource("4_8b6pi")
+DesignerCameraPackage = ExtResource("2_8b6pi")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0012817383, 0.73107165, 0.00066646934)
+shape = SubResource("BoxShape3D_a0tk4")
+
+[node name="Node3D" type="Node3D" parent="."]
+
+[node name="PanelL" type="MeshInstance3D" parent="Node3D"]
 transform = Transform3D(1.545431e-08, -7.727155e-09, -0.008, -0.35355338, -0.17677669, 0, 0.35355338, -0.17677669, 3.496911e-10, -0.3207131, 1.1855495, -0.15771203)
 material_override = ExtResource("1_0rtfo")
 mesh = SubResource("PrismMesh_4xowi")
 skeleton = NodePath("../Box")
 surface_material_override/0 = ExtResource("1_0rtfo")
 
-[node name="Box" type="MeshInstance3D" parent="."]
+[node name="Box" type="MeshInstance3D" parent="Node3D"]
 transform = Transform3D(0.65, 0, 0, 0, 1.1, 0, 0, 0, 0.52, 0, 0.54871976, 0)
 material_override = ExtResource("1_0rtfo")
 mesh = SubResource("BoxMesh_a202f")
+skeleton = NodePath("../..")
 
-[node name="PanelB" type="MeshInstance3D" parent="."]
+[node name="PanelB" type="MeshInstance3D" parent="Node3D"]
 transform = Transform3D(0.65, 0, 0, 0, 0.365, 0, 0, 0, 0.01, 0, 1.2678822, -0.25302023)
 material_override = ExtResource("1_0rtfo")
 mesh = SubResource("BoxMesh_a202f")
+skeleton = NodePath("../..")
 
-[node name="PanelL2" type="MeshInstance3D" parent="."]
+[node name="PanelL2" type="MeshInstance3D" parent="Node3D"]
 transform = Transform3D(1.545431e-08, -7.727155e-09, -0.009, -0.35355338, -0.17677669, 0, 0.35355338, -0.17677669, 3.9340248e-10, 0.319954, 1.1837353, -0.15940058)
 material_override = ExtResource("1_0rtfo")
 mesh = SubResource("PrismMesh_4xowi")
 skeleton = NodePath("../Box")
 
-[node name="screen" type="MeshInstance3D" parent="."]
+[node name="screen" type="MeshInstance3D" parent="Node3D"]
 transform = Transform3D(0.5245286, -0.0012986216, 0.00042099904, 0, 0.27328616, 0.0011146895, -0.02224105, -0.030626437, 0.009928759, -0.01817628, 1.288, -0.19802636)
 material_override = ExtResource("3_1bkc7")
 mesh = SubResource("BoxMesh_a202f")
-
-[node name="screen2" type="MeshInstance3D" parent="screen"]
-transform = Transform3D(0.95, -4.656613e-09, -2.3108441e-07, 4.656613e-09, 0.95, 6.931368e-07, 2.3841858e-07, -1.1920929e-06, 0.94999987, -6.1260536e-05, -0.00030899048, 0.075366974)
-mesh = SubResource("BoxMesh_a202f")
 skeleton = NodePath("../..")
 
-[node name="MeshInstance3D9" type="MeshInstance3D" parent="screen"]
+[node name="screen2" type="MeshInstance3D" parent="Node3D/screen"]
+transform = Transform3D(0.95, -4.656613e-09, -2.3108441e-07, 4.656613e-09, 0.95, 6.931368e-07, 2.3841858e-07, -1.1920929e-06, 0.94999987, -6.1260536e-05, -0.00030899048, 0.075366974)
+mesh = SubResource("BoxMesh_a202f")
+skeleton = NodePath("../../..")
+
+[node name="MeshInstance3D9" type="MeshInstance3D" parent="Node3D/screen"]
 transform = Transform3D(0.49523798, 1.1240845e-11, 1.8626451e-09, 9.313226e-10, 0.03613701, -0.054721113, 0, 0.111468874, 13.415865, -0.0027449336, -0.68616724, 0.3850994)
 material_override = ExtResource("3_1bkc7")
 mesh = SubResource("BoxMesh_a202f")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../..")
 
-[node name="MeshInstance3D8" type="MeshInstance3D" parent="screen"]
+[node name="MeshInstance3D8" type="MeshInstance3D" parent="Node3D/screen"]
 transform = Transform3D(0.09523808, -9.0670735e-11, 2.910383e-10, 2.3283064e-10, 0.5239866, -0.004053414, 2.9802322e-08, 1.6162983, 0.9937673, -3.7252903e-09, -0.4070263, -2.1738071)
 material_override = ExtResource("3_1bkc7")
 mesh = SubResource("BoxMesh_a202f")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../..")
 
-[node name="mouse" type="MeshInstance3D" parent="."]
+[node name="mouse" type="MeshInstance3D" parent="Node3D"]
 transform = Transform3D(0.06739457, 0, -0.0031789506, 0, 0.018000003, 0, 0.0020249474, 0, 0.105802245, 0.19579679, 1.1074175, 0.11541775)
 material_override = ExtResource("3_1bkc7")
 mesh = SubResource("CapsuleMesh_noarx")
 skeleton = NodePath("../screen")
 
-[node name="keyboard" type="MeshInstance3D" parent="."]
+[node name="keyboard" type="MeshInstance3D" parent="Node3D"]
 transform = Transform3D(0.33738407, 0.016714256, -5.411876e-11, 0.003406744, -0.0108414395, -0.009967199, -0.041957084, 0.1335219, -0.00080929615, -0.071238205, 1.1112301, 0.07600474)
 material_override = ExtResource("3_1bkc7")
 mesh = SubResource("BoxMesh_a202f")
+skeleton = NodePath("../..")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0012817383, 0.73107165, 0.00066646934)
-shape = SubResource("BoxShape3D_a0tk4")
-
-[node name="door handle" type="MeshInstance3D" parent="."]
+[node name="door handle" type="MeshInstance3D" parent="Node3D"]
 transform = Transform3D(0.08, 0, 0, 0, -3.496911e-09, -0.08, 0, 0.08, -3.496911e-09, 0.18376997, 0.5713353, 0.19261803)
 material_override = ExtResource("1_0rtfo")
 mesh = SubResource("CylinderMesh_k8uq4")
+skeleton = NodePath("../..")
 
-[node name="bigdoor#" type="MeshInstance3D" parent="."]
+[node name="bigdoor#" type="MeshInstance3D" parent="Node3D"]
 transform = Transform3D(0.55, 0, 0, 0, 0.8, 0, 0, 0, 0.42, 0, 0.45123374, 0.053079143)
 mesh = SubResource("BoxMesh_k8uq4")
+skeleton = NodePath("../..")
 
-[node name="small door" type="MeshInstance3D" parent="."]
+[node name="small door" type="MeshInstance3D" parent="Node3D"]
 transform = Transform3D(0.55, 0, 0, 0, 0.125, 0, 0, 0, 0.42, 0, 0.9763582, 0.053079143)
 mesh = SubResource("BoxMesh_k8uq4")
+skeleton = NodePath("../..")

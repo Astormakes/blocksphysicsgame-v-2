@@ -47,7 +47,7 @@ replication_config = SubResource("SceneReplicationConfig_vadfg")
 
 [node name="RigidBody3D" type="RigidBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6931288, -6.800275)
-mass = 100.0
+mass = 500.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
 shape = SubResource("BoxShape3D_vadfg")

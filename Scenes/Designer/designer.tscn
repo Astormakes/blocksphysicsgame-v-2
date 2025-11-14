@@ -56,7 +56,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 1.727)
 script = ExtResource("1_82vlm")
 
 [node name="Camera3D" type="Camera3D" parent="CameraPivot"]
-current = true
 near = 0.001
 
 [node name="Control" type="Control" parent="CameraPivot/Camera3D"]

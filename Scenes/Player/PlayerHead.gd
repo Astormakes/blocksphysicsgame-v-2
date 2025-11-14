@@ -20,4 +20,13 @@ func _process(_delta: float) -> void:
 	var mouse_pos = get_viewport().get_mouse_position()
 	ray.target_position = to_local(camera.project_ray_normal(mouse_pos)*2 + camera.project_ray_origin(mouse_pos))
 
-	#print(ray.get_collider())
+func _input(_event: InputEvent) -> void:
+	var action = "mouse1"
+	if Input.is_action_just_pressed(action):
+		var obj = ray.get_collider()
+		if obj:
+			obj = obj.get_parent()
+			if action in obj:
+				var objpos = ray.global_position
+				var objnormal = ray.get_collision_normal()
+				obj.call_deferred(action,objpos,objnormal,$"../..".name)

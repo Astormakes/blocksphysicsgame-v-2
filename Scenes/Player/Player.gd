@@ -53,7 +53,14 @@ func movement(_delta) -> void:
 	var coliders:Array = body.get_colliding_bodies()
 	var dampening:Vector3 =  Vector3.ZERO
 	
+	var head_rotation = Head.global_transform.basis.get_euler()
+	var yaw_only_basis = Basis(Vector3.UP, head_rotation.y)
+	
 	if coliders.size():
+		var colider = coliders[0]
+		if "apply_central_force" in colider:
+			colider.apply_central_force(yaw_only_basis * -velocity / _delta)
+		
 		for c in coliders:
 			if "linear_velocity" in c:
 				dampening += c.linear_velocity / coliders.size()	
@@ -64,10 +71,8 @@ func movement(_delta) -> void:
 	if noclip:
 		body.transform.origin += Head.basis * velocity
 	else:
-		var head_rotation = Head.global_transform.basis.get_euler()
-		var yaw_only_basis = Basis(Vector3.UP, head_rotation.y)  # Only yaw
 		body.apply_central_force((yaw_only_basis * velocity / _delta) + dampening)
-
+		
 ### head rotation
 func _input(event):
 	if not is_multiplayer_authority(): return

@@ -44,7 +44,14 @@ func movement(_delta) -> void:
 	velocity = velocity.normalized()*speed
 	
 	if Input.is_action_pressed("Sneak"):
+		$"Body/BodyColider Standing".disabled = true
+		$"Body/BodyColider couching".disabled = false
+		
 		velocity.y = -3
+	else:
+		$"Body/BodyColider Standing".disabled = false
+		$"Body/BodyColider couching".disabled = true
+		
 	if Input.is_action_just_pressed("jump"):
 			body.linear_velocity += Vector3(0,5,0)
 	

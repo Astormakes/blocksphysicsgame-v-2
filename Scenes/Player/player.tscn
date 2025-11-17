@@ -11,6 +11,12 @@ properties/1/path = NodePath("Body/Head:rotation")
 properties/1/spawn = true
 properties/1/replication_mode = 1
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rqvxt"]
+radius = 0.28
+height = 1.78
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_a3d8c"]
+
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_fcuv6"]
 properties/0/path = NodePath("Body:position")
 properties/0/spawn = true
@@ -21,12 +27,6 @@ properties/1/replication_mode = 1
 properties/2/path = NodePath("Body:rotation")
 properties/2/spawn = true
 properties/2/replication_mode = 1
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rqvxt"]
-radius = 0.28
-height = 1.78
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_a3d8c"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_a3d8c"]
 
@@ -44,16 +44,21 @@ axis_lock_angular_z = true
 mass = 80.0
 freeze = true
 
+[node name="BodyColider couching" type="CollisionShape3D" parent="Body"]
+transform = Transform3D(0.59, 0, 0, 0, 0.59, 0, 0, 0, 0.59, 0, 0.33307654, 0.004404187)
+shape = SubResource("CapsuleShape3D_rqvxt")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Body"]
+transform = Transform3D(0.6, 0, 0, 0, 0.9, 0, 0, 0, 0.6, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_a3d8c")
+skeleton = NodePath("../BodyColider Standing")
+
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="Body"]
 root_path = NodePath("../..")
 replication_config = SubResource("SceneReplicationConfig_fcuv6")
 
-[node name="BodyColider" type="CollisionShape3D" parent="Body"]
+[node name="BodyColider Standing" type="CollisionShape3D" parent="Body"]
 shape = SubResource("CapsuleShape3D_rqvxt")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Body/BodyColider"]
-transform = Transform3D(0.6, 0, 0, 0, 0.9, 0, 0, 0, 0.6, 0, 0, 0)
-mesh = SubResource("CapsuleMesh_a3d8c")
 
 [node name="Head" type="Node3D" parent="Body"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.747154, 0)
@@ -65,9 +70,10 @@ mesh = SubResource("BoxMesh_a3d8c")
 
 [node name="Control" type="Control" parent="Body/Head"]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchor_right = 0.029000001
+anchor_bottom = 0.052
+offset_right = 0.38599777
+offset_bottom = 0.063999176
 
 [node name="Label" type="Label" parent="Body/Head/Control"]
 layout_mode = 0

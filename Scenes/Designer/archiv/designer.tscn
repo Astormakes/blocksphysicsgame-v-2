@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://7rxbp7hki16p"]
 
-[ext_resource type="Script" uid="uid://c6ld35e55uc6n" path="res://Scenes/Designer/designer.gd" id="1_0gx8n"]
-[ext_resource type="Script" uid="uid://dfbr6ce7hidqh" path="res://Scenes/Designer/camera_pivot.gd" id="1_82vlm"]
+[ext_resource type="Script" uid="uid://c6ld35e55uc6n" path="res://Scenes/Designer/archiv/designer.gd" id="1_0gx8n"]
+[ext_resource type="Script" uid="uid://dfbr6ce7hidqh" path="res://Scenes/Designer/camerapivot.gd" id="1_82vlm"]
 [ext_resource type="PackedScene" uid="uid://dfluexj0asn8h" path="res://Scenes/Grid/Grid.tscn" id="3_k0kss"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_15b5x"]

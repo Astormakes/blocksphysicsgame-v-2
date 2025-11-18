@@ -13,14 +13,23 @@ var pitch := 0.0
 
 var ray:RayCast3D = RayCast3D.new()
 
-
+func _enter_tree() -> void:
+	set_multiplayer_authority(name.to_int())
 
 func _ready():
+	
+	
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	ray.debug_shape_thickness = 1
 	add_child(ray)
+	if int(name) == multiplayer.get_unique_id():
+		transform.origin = get_parent().get_parent().transform.origin + Vector3(0,2,0)
+		$Camera3D.current = true
+	else:
+		$Camera3D.current = false
 	
 func _process(_delta: float) -> void:
+	if not is_multiplayer_authority(): return
 	
 	if Input.is_action_just_pressed("escape"):
 		queue_free()
@@ -54,6 +63,7 @@ func _process(_delta: float) -> void:
 	
 
 func _input(event: InputEvent) -> void:
+	if not is_multiplayer_authority(): return
 	if event is InputEventMouseMotion:
 		if Input.is_action_pressed("mouse3"):
 			yaw -= event.relative.x * look_sensitivity

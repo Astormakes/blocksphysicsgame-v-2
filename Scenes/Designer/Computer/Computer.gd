@@ -6,20 +6,18 @@ extends StaticBody3D
 func _ready() -> void:
 	pass # Replace with function body.
 
-@rpc("any_peer","call_local","reliable")
 func mouse1_pressed(pos,normal,id):
 	print("m1_pressed:",pos, " normal:",normal," id:",id)
 
 func mouse1_released(pos,normal,id):
-	Spawn_DesingerCam(1)
+	rpc_id(1,"Spawn_DesingerCam",id)
 	print("m1_released:",pos, " normal:",normal," id:",id)
 
-@rpc("authority","call_remote","reliable")
+@rpc("any_peer","call_local","reliable")
 func Spawn_DesingerCam(id) -> void:
-	print("new Player ", id)
 	if multiplayer.is_server():
+		print("new designer ", id)
 		var DesingerCam:Node = DesignerCameraPackage.instantiate()
 		DesingerCam.name = str(id)
-		DesingerCam.transform.origin = transform.origin
-		
+
 		$"../DesignerCameraSpawner".call_deferred("add_child",DesingerCam)

@@ -1,6 +1,6 @@
 extends Node
 
-var speed = 30
+var speed = 6
 var mouseSpeed = 0.15
 var runMul = 2
 var movementDamping = Vector3(200,1,200)
@@ -19,13 +19,20 @@ func _ready() -> void:
 	body.max_contacts_reported = 2
 	body.freeze = noclip
 	body.linear_damp = 0
+	if is_multiplayer_authority():
+		camera.current = true
+		Server.localplayer = self
+		
+func currentCam():
+		camera.current = true
 
 func _process(_delta: float) -> void:
 	if is_multiplayer_authority():
+		if Input.is_action_just_pressed("debug"):
+			currentCam()
 		if not camera.current: return
 		movement(_delta)
 
-### movement simple rn ... 
 func movement(_delta) -> void:
 	if Input.is_action_just_pressed("Noclip"):
 		noclip = not noclip
@@ -40,14 +47,12 @@ func movement(_delta) -> void:
 			velocity.z = 1
 	if Input.is_action_pressed('Right'):
 			velocity.x = 1
-			
+	
 	velocity = velocity.normalized()*speed
 	
 	if Input.is_action_pressed("Sneak"):
 		$"Body/BodyColider Standing".disabled = true
 		$"Body/BodyColider couching".disabled = false
-		
-		velocity.y = -3
 	else:
 		$"Body/BodyColider Standing".disabled = false
 		$"Body/BodyColider couching".disabled = true
@@ -81,7 +86,7 @@ func movement(_delta) -> void:
 		body.transform.origin += Head.basis * velocity
 	else:
 		body.apply_central_force((yaw_only_basis * velocity / _delta) + dampening)
-		
+
 ### head rotation
 func _input(event):
 	if not is_multiplayer_authority(): return

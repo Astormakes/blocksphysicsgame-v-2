@@ -19,7 +19,6 @@ script = ExtResource("1_ums38")
 replication_config = SubResource("SceneReplicationConfig_2rrug")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-current = true
 near = 0.001
 
 [node name="Control" type="Control" parent="Camera3D"]

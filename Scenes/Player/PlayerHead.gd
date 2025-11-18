@@ -5,13 +5,13 @@ extends Node3D
 var action
 var action2
 
+@onready var player:Node3D = $"../.."
+
 @onready var camera = $Camera3D
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	if is_multiplayer_authority():
 		$Camera3D.current = true
-	else:
-		$Camera3D.current = false
 	
 	ray.debug_shape_thickness = 1
 	add_child(ray)
@@ -35,7 +35,7 @@ func _input(_event: InputEvent) -> void:
 			if (action+action2) in obj:
 				var objpos = ray.global_position
 				var objnormal = ray.get_collision_normal()
-				obj.call_deferred(action+action2,objpos,objnormal,$"../..".name)
+				obj.call_deferred(action+action2,objpos,objnormal,player.name)
 
 	action = "mouse1"
 	action2 = "_released"
@@ -45,4 +45,4 @@ func _input(_event: InputEvent) -> void:
 			if (action+action2) in obj:
 				var objpos = ray.global_position
 				var objnormal = ray.get_collision_normal()
-				obj.call_deferred(action+action2,objpos,objnormal,$"../..".name)
+				obj.call_deferred(action+action2,objpos,objnormal,player.name)

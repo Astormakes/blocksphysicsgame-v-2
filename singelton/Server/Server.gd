@@ -6,7 +6,9 @@ const MAX_CONNECTIONS = 20
 
 @export var world = "res://Scenes/World/world.tscn"
 
-var players = {}
+var players:Dictionary
+
+var localplayer
 
 var players_loaded = 0
 
@@ -14,8 +16,6 @@ var peer:ENetMultiplayerPeer
 
 func _ready():
 	peer = ENetMultiplayerPeer.new()
-
-
 
 func create_game():
 	var error = peer.create_server(PORT, MAX_CONNECTIONS)
@@ -36,6 +36,4 @@ func join_game(address = ""):
 	if error:
 		print(error)
 	multiplayer.multiplayer_peer = peer
-
-	print(multiplayer.get_unique_id())
 	get_tree().change_scene_to_file(world)

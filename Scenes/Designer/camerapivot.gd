@@ -16,6 +16,7 @@ var ray:RayCast3D = RayCast3D.new()
 func _enter_tree() -> void:
 	set_multiplayer_authority(name.to_int())
 
+
 func _ready():
 	
 	
@@ -39,6 +40,25 @@ func _process(_delta: float) -> void:
 	var mouse_pos = get_viewport().get_mouse_position()
 	ray.target_position = to_local(camera.project_ray_normal(mouse_pos)*100 + camera.project_ray_origin(mouse_pos))
 
+	var action = "mouse1"
+	var action2 = "_pressed"
+	if Input.is_action_just_pressed(action):
+		var obj = ray.get_collider()
+		if obj:
+			if (action+action2) in obj:
+				var objpos = ray.global_position
+				var objnormal = ray.get_collision_normal()
+				obj.call_deferred(action+action2,objpos,objnormal,name)
+
+	action = "mouse1"
+	action2 = "_released"
+	if Input.is_action_just_released(action):
+		var obj = ray.get_collider()
+		if obj:
+			if (action+action2) in obj:
+				var objpos = ray.global_position
+				var objnormal = ray.get_collision_normal()
+				obj.call_deferred(action+action2,objpos,objnormal,name)
 
 	var speed_mod = 1
 		

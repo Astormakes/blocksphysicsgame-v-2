@@ -1,9 +1,9 @@
 extends Node
 
-var speed = 3
+var speed = 30
 var mouseSpeed = 0.15
 var runMul = 2
-var movementDamping = Vector3(100,1,100)
+var movementDamping = Vector3(200,1,200)
 
 var noclip = false
 

@@ -18,10 +18,14 @@ func mouse1_released(pos,normal,id):
 	print("m1_released:",pos, " normal:",normal," id:",id)
 
 func action5_released(pos,normal,id):
+	rpc_id(1,"spawn_grid")
+
+@rpc("any_peer","call_local","reliable")
+func spawn_grid():
 	var grid:Node = gridPackage.instantiate()
 	gridspawner.call_deferred("add_child",grid,true)
 	grid.transform.origin = get_parent().transform.origin + Vector3(0,2,-1)
-	
+
 @rpc("any_peer","call_local","reliable")
 func Spawn_DesingerCam(id) -> void: # spawn designer pivot
 	if multiplayer.is_server():

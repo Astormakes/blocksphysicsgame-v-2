@@ -24,7 +24,7 @@ func free() -> void:
 func _ready():
 	ray.debug_shape_thickness = 1
 	add_child(ray)
-	transform.origin = get_parent().get_parent().transform.origin + Vector3(0,2,0)
+	#transform.origin = get_parent().get_parent().transform.origin + Vector3(0,2,0)
 	if is_multiplayer_authority():
 		camera.current = true
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)

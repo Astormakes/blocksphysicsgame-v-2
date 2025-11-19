@@ -42,4 +42,4 @@ func destroy() -> void:
 	if mesh != null:
 		mesh.free()
 	
-	parent.blockDic.erase(pos)
+	parent.get_parent().blockDic.erase(pos)

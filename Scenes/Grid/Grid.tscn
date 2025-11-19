@@ -1,6 +1,17 @@
-[gd_scene load_steps=2 format=3 uid="uid://dfluexj0asn8h"]
+[gd_scene load_steps=3 format=3 uid="uid://dfluexj0asn8h"]
 
 [ext_resource type="Script" uid="uid://w8ssewue50uo" path="res://Scenes/Grid/grid.gd" id="1_uadnl"]
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_uadnl"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
 [node name="Grid" type="Node3D"]
 script = ExtResource("1_uadnl")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_uadnl")

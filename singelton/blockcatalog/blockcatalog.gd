@@ -48,8 +48,8 @@ func defaultblocklist():
 		"", # shape
 		Color(110,110,110,255)/255,
 		"block",
-		10,
-		7,
+		10.0,
+		30,#mass
 		500,
 		Vector3(0.2,0.2,0.2)
 	))
@@ -62,8 +62,8 @@ func defaultblocklist():
 		"", # shape
 		Color(200,200,200,255)/255,
 		"block",
-		25,
-		3,
+		10,
+		8,
 		200,
 		Vector3(0.2,.2,0.2)
 	))		
@@ -77,7 +77,7 @@ func defaultblocklist():
 		Color(150,90,60,255)/255,
 		"block",
 		5,
-		1,
+		4,#
 		30,
 		Vector3(0.2,.2,0.2)
 	))
@@ -91,7 +91,7 @@ func defaultblocklist():
 		Color(20,30,35,255)/255,
 		"block",
 		10,
-		25,
+		50,
 		200,
 		Vector3(0.2,.2,0.2)
 	))

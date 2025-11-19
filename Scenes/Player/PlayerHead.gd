@@ -27,16 +27,17 @@ func _input(_event: InputEvent) -> void:
 	if not is_multiplayer_authority(): return
 	if not camera.current: return
 	
-	action = "mouse1"
-	action2 = "_pressed"
+	
+	var action = "mouse1"
+	var action2 = "_pressed"
 	if Input.is_action_just_pressed(action):
 		var obj = ray.get_collider()
 		if obj:
 			if (action+action2) in obj:
 				var objpos = ray.global_position
 				var objnormal = ray.get_collision_normal()
-				obj.call_deferred(action+action2,objpos,objnormal,player.name)
-
+				obj.call_deferred(action+action2,objpos,objnormal,name)
+	
 	action = "mouse1"
 	action2 = "_released"
 	if Input.is_action_just_released(action):
@@ -45,4 +46,118 @@ func _input(_event: InputEvent) -> void:
 			if (action+action2) in obj:
 				var objpos = ray.global_position
 				var objnormal = ray.get_collision_normal()
-				obj.call_deferred(action+action2,objpos,objnormal,player.name)
+				obj.call_deferred(action+action2,objpos,objnormal,name)
+		
+	action = "mouse2"
+	action2 = "_released"
+	if Input.is_action_just_released(action):
+		var obj = ray.get_collider()
+		if obj:
+			if (action+action2) in obj:
+				var objpos = ray.global_position
+				var objnormal = ray.get_collision_normal()
+				obj.call_deferred(action+action2,objpos,objnormal,name)
+	
+	action2 = "_pressed"
+	if Input.is_action_just_released(action):
+		var obj = ray.get_collider()
+		if obj:
+			if (action+action2) in obj:
+				var objpos = ray.global_position
+				var objnormal = ray.get_collision_normal()
+				obj.call_deferred(action+action2,objpos,objnormal,name)
+
+	action = "action1"
+	action2 = "_released"
+	if Input.is_action_just_released(action):
+		var obj = ray.get_collider()
+		if obj:
+			if (action+action2) in obj:
+				var objpos = ray.global_position
+				var objnormal = ray.get_collision_normal()
+				obj.call_deferred(action+action2,objpos,objnormal,name)
+	
+	action2 = "_pressed"
+	if Input.is_action_just_released(action):
+		var obj = ray.get_collider()
+		if obj:
+			if (action+action2) in obj:
+				var objpos = ray.global_position
+				var objnormal = ray.get_collision_normal()
+				obj.call_deferred(action+action2,objpos,objnormal,name)
+	
+	action = "action2"
+	action2 = "_released"
+	if Input.is_action_just_released(action):
+		var obj = ray.get_collider()
+		if obj:
+			if (action+action2) in obj:
+				var objpos = ray.global_position
+				var objnormal = ray.get_collision_normal()
+				obj.call_deferred(action+action2,objpos,objnormal,name)
+	
+	action2 = "_pressed"
+	if Input.is_action_just_released(action):
+		var obj = ray.get_collider()
+		if obj:
+			if (action+action2) in obj:
+				var objpos = ray.global_position
+				var objnormal = ray.get_collision_normal()
+				obj.call_deferred(action+action2,objpos,objnormal,name)
+	
+	action = "action3"
+	action2 = "_released"
+	if Input.is_action_just_released(action):
+		var obj = ray.get_collider()
+		if obj:
+			if (action+action2) in obj:
+				var objpos = ray.global_position
+				var objnormal = ray.get_collision_normal()
+				obj.call_deferred(action+action2,objpos,objnormal,name)
+	
+	action2 = "_pressed"
+	if Input.is_action_just_released(action):
+		var obj = ray.get_collider()
+		if obj:
+			if (action+action2) in obj:
+				var objpos = ray.global_position
+				var objnormal = ray.get_collision_normal()
+				obj.call_deferred(action+action2,objpos,objnormal,name)
+	
+	action = "action4"
+	action2 = "_released"
+	if Input.is_action_just_released(action):
+		var obj = ray.get_collider()
+		if obj:
+			if (action+action2) in obj:
+				var objpos = ray.global_position
+				var objnormal = ray.get_collision_normal()
+				obj.call_deferred(action+action2,objpos,objnormal,name)
+	
+	action2 = "_pressed"
+	if Input.is_action_just_released(action):
+		var obj = ray.get_collider()
+		if obj:
+			if (action+action2) in obj:
+				var objpos = ray.global_position
+				var objnormal = ray.get_collision_normal()
+				obj.call_deferred(action+action2,objpos,objnormal,name)
+	
+	action = "action5"
+	action2 = "_released"
+	if Input.is_action_just_released(action):
+		var obj = ray.get_collider()
+		if obj:
+			if (action+action2) in obj:
+				var objpos = ray.global_position
+				var objnormal = ray.get_collision_normal()
+				obj.call_deferred(action+action2,objpos,objnormal,name)
+	
+	action2 = "_pressed"
+	if Input.is_action_just_released(action):
+		var obj = ray.get_collider()
+		if obj:
+			if (action+action2) in obj:
+				var objpos = ray.global_position
+				var objnormal = ray.get_collision_normal()
+				obj.call_deferred(action+action2,objpos,objnormal,name)

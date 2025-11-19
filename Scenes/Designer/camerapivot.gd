@@ -34,7 +34,7 @@ func _ready():
 func _process(_delta: float) -> void:
 	if not is_multiplayer_authority(): return
 	
-	if Input.is_action_just_pressed("escape"):
+	if Input.is_action_just_pressed("exit"):
 		rpc("free")
 	
 	var input_dir = Vector3.ZERO

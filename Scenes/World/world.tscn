@@ -46,7 +46,7 @@ ambient_light_energy = 0.35
 replication_config = SubResource("SceneReplicationConfig_vadfg")
 
 [node name="RigidBody3D" type="RigidBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6931288, -6.800275)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6931288, 17.651268)
 mass = 500.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]

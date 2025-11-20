@@ -18,10 +18,10 @@ func _init(_id:int,_pos: Vector3i,_rot:int,_parent:Node) -> void:
 	pos = _pos
 	rot = _rot
 	parent = _parent
-	_update()
+	update()
 
 
-func _update():
+func update():
 	mesh = MeshInstance3D.new()
 	mesh.transform.origin = Vector3(pos/5.0)
 	mesh.mesh = load(Blockcatalog.getb(id).mesh)

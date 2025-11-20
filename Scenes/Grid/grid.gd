@@ -12,22 +12,29 @@ func _ready():
 	body = RigidBody3D.new()
 	add_child(body)
 	body.freeze = frozen
+	
 
-	var test_layout := [
-	{"id": 0, "pos": Vector3i(0, 0, 0), "rot": 0},
-	{"id": 0, "pos": Vector3i(1, 0, 0), "rot": 0},
-	{"id": 0, "pos": Vector3i(0, 1, 0), "rot": 0},
-	{"id": 0, "pos": Vector3i(0, 0, 1), "rot": 0},
-	{"id": 0, "pos": Vector3i(-1, 0, 0), "rot": 0},
-	{"id": 0, "pos": Vector3i(0, -1, 0), "rot": 0},
-	{"id": 0, "pos": Vector3i(0, 0, -1), "rot": 0}]
-	
-	
-	for x in test_layout: 
-		placeBlock(x.id,x.pos,x.rot)
-	
-	removeBlock(Vector3i(0, 1, 0))
+	if multiplayer.is_server(): ### initilize testdata
+		var test_layout := [
+		{"id": 0, "pos": Vector3i(0, 0, 0), "rot": 0},
+		{"id": 0, "pos": Vector3i(1, 0, 0), "rot": 0},
+		{"id": 0, "pos": Vector3i(0, 1, 0), "rot": 0},
+		{"id": 0, "pos": Vector3i(0, 0, 1), "rot": 0},
+		{"id": 0, "pos": Vector3i(-1, 0, 0), "rot": 0},
+		{"id": 0, "pos": Vector3i(0, -1, 0), "rot": 0},
+		{"id": 0, "pos": Vector3i(0, 0, -1), "rot": 0}]
+		for x in test_layout: 
+			placeBlock(x.id,x.pos,x.rot)
+		removeBlock(Vector3i(0, 1, 0))
 
+func sync_dic():
+	rpc_id(1,"send_dic",multiplayer.get_unique_id())
+	print("syncing to",)
+
+@rpc("any_peer","call_remote","reliable")
+func send_dic():
+	#return blockDic
+	pass
 
 func placeBlock(id: int,pos: Vector3i,rot:int):
 	blockDic[pos] = Block.new(id,pos,rot,body)

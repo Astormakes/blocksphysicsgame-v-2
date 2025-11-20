@@ -25,6 +25,7 @@ func spawn_grid(id):
 		grid.name = "grid"+id+"_"+str(randi_range(0,9999))
 		gridspawner.call_deferred("add_child",grid,true)
 		grid.transform.origin = get_parent().transform.origin + Vector3(0,2,-1)
+		grid.frozen = true
 
 @rpc("any_peer","call_local","reliable")
 func Spawn_DesingerCam(id) -> void: # spawn designer pivot

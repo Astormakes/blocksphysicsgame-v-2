@@ -70,7 +70,7 @@ func movement(_delta) -> void:
 	var head_rotation = Head.global_transform.basis.get_euler()
 	var yaw_only_basis = Basis(Vector3.UP, head_rotation.y)
 	
-	if coliders.size():
+	if coliders.size():#### test comment
 		var colider = coliders[0]
 		if "apply_central_force" in colider:
 			colider.apply_central_force(yaw_only_basis * -velocity / _delta)

@@ -3,13 +3,18 @@ extends Node
 var speed = 6
 var mouseSpeed = 0.15
 var runMul = 2
+var coruchMul = 0.5
 var movementDamping = Vector3(200,1,200)
+
+
 
 var noclip = false
 
-@onready var Head = $Body/Head
+@onready var shapecast:ShapeCast3D = $Body/ShapeCast3D
+@onready var head:Node3D = $Body/Head
 @onready var body = $Body
 @onready var camera:Camera3D = $Body/Head/Camera3D
+
 
 func _enter_tree() -> void:
 	set_multiplayer_authority(name.to_int())
@@ -50,12 +55,21 @@ func movement(_delta) -> void:
 	
 	velocity = velocity.normalized()*speed
 	
+	
 	if Input.is_action_pressed("Sneak"):
 		$"Body/BodyColider Standing".disabled = true
 		$"Body/BodyColider couching".disabled = false
+		head.transform.origin = Vector3(0, 0, 0)
+		$Body/MeshInstance3D.transform.origin = Vector3(0, -0.7, 0)
+		velocity *= coruchMul
 	else:
-		$"Body/BodyColider Standing".disabled = false
-		$"Body/BodyColider couching".disabled = true
+		shapecast.force_shapecast_update()
+		if not shapecast.is_colliding():
+			$"Body/BodyColider Standing".disabled = false
+			$"Body/BodyColider couching".disabled = true
+			head.transform.origin = Vector3(0, 0.7, 0)
+			$Body/MeshInstance3D.transform.origin = Vector3(0, 0, 0)
+
 		
 	if Input.is_action_just_pressed("jump"):
 			body.linear_velocity += Vector3(0,5,0)
@@ -67,7 +81,7 @@ func movement(_delta) -> void:
 	var coliders:Array = body.get_colliding_bodies()
 	var dampening:Vector3 =  Vector3.ZERO
 	
-	var head_rotation = Head.global_transform.basis.get_euler()
+	var head_rotation = head.global_transform.basis.get_euler()
 	var yaw_only_basis = Basis(Vector3.UP, head_rotation.y)
 	
 	if coliders.size():#### test comment
@@ -83,7 +97,7 @@ func movement(_delta) -> void:
 		velocity *= Vector3(0.1,1,0.1) # if not touching anything no change in velocity
 	
 	if noclip:
-		body.transform.origin += Head.basis * velocity
+		body.transform.origin += head.basis * velocity
 	else:
 		body.apply_central_force((yaw_only_basis * velocity / _delta) + dampening)
 
@@ -95,7 +109,7 @@ func _input(event):
 	if not Input.is_action_pressed("Alt"):
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 		if event is InputEventMouseMotion:
-			Head.rotation_degrees.x = clamp(Head.rotation_degrees.x - event.relative.y * mouseSpeed,-89,89) # this rotates the players head
-			Head.rotation_degrees.y = Head.rotation_degrees.y - event.relative.x * mouseSpeed # this rotates the players head
+			head.rotation_degrees.x = clamp(head.rotation_degrees.x - event.relative.y * mouseSpeed,-89,89) # this rotates the players head
+			head.rotation_degrees.y = head.rotation_degrees.y - event.relative.x * mouseSpeed # this rotates the players head
 	else:
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE) # this is what uncatches the mouse to close the game using alt key for example

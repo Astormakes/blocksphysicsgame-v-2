@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://c6pcwly7ikk0m"]
+[gd_scene load_steps=10 format=3 uid="uid://c6pcwly7ikk0m"]
 
 [ext_resource type="Script" uid="uid://bw4olqwtehllw" path="res://Scenes/Player/PlayerHead.gd" id="2_a3d8c"]
 [ext_resource type="Script" uid="uid://begt1lw5g58m4" path="res://Scenes/Player/Player.gd" id="2_yxeup"]
@@ -10,10 +10,19 @@ properties/0/replication_mode = 1
 properties/1/path = NodePath("Body/Head:rotation")
 properties/1/spawn = true
 properties/1/replication_mode = 1
+properties/2/path = NodePath("Body/MeshInstance3D:position")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath("Body/Head:position")
+properties/3/spawn = true
+properties/3/replication_mode = 1
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rqvxt"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_a3d8c"]
 radius = 0.28
-height = 1.78
+height = 1.1
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_xpcdj"]
+radius = 0.28
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_a3d8c"]
 
@@ -27,6 +36,10 @@ properties/1/replication_mode = 1
 properties/2/path = NodePath("Body:rotation")
 properties/2/spawn = true
 properties/2/replication_mode = 1
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rqvxt"]
+radius = 0.28
+height = 1.8
 
 [sub_resource type="BoxMesh" id="BoxMesh_a3d8c"]
 
@@ -45,8 +58,13 @@ mass = 80.0
 freeze = true
 
 [node name="BodyColider couching" type="CollisionShape3D" parent="Body"]
-transform = Transform3D(0.59, 0, 0, 0, 0.59, 0, 0, 0, 0.59, 0, 0.33307654, 0.004404187)
-shape = SubResource("CapsuleShape3D_rqvxt")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.34582597, 0.004404187)
+shape = SubResource("CapsuleShape3D_a3d8c")
+
+[node name="ShapeCast3D" type="ShapeCast3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, -0.99999994, 0.00026169617, 0, -0.00026169617, -0.99999994, 0, 0.62302655, 0)
+shape = SubResource("SphereShape3D_xpcdj")
+target_position = Vector3(0, -0.75, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Body"]
 transform = Transform3D(0.6, 0, 0, 0, 0.9, 0, 0, 0, 0.6, 0, 0, 0)
@@ -58,10 +76,11 @@ root_path = NodePath("../..")
 replication_config = SubResource("SceneReplicationConfig_fcuv6")
 
 [node name="BodyColider Standing" type="CollisionShape3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.002943039, 0)
 shape = SubResource("CapsuleShape3D_rqvxt")
 
 [node name="Head" type="Node3D" parent="Body"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.747154, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
 script = ExtResource("2_a3d8c")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Body/Head"]

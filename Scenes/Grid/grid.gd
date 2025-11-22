@@ -2,7 +2,7 @@ extends Node3D
 
 const BLOCK_SIZE: float = 0.2 # 20 cm
 
-var blockDic:Dictionary[Vector3i,Block]
+var grid:Dictionary
 
 @export var frozen: bool = false
 
@@ -38,23 +38,30 @@ func send_dic(id,type):
 	if multiplayer.is_server():
 		print(id," requested grid ",type)
 		if type == "all":
-			var data = blockDic # i think this needs to be Serialized.... right now its not crashing but also not working
+			var data = serialize_dic(grid) #i think this needs to be Serialized.... right now its not crashing but also not working
 			rpc_id(id,"recieve_dic",data,type)
 
 @rpc("authority","call_remote","reliable")
-func recieve_dic(data:Dictionary[Vector3i,Block],type):
+func recieve_dic(data:Dictionary,type):
 	if not multiplayer.is_server():
 		print(multiplayer.get_unique_id()," revieced grid ",type)
 		if type == "all":
-			blockDic = data
-			print(multiplayer.get_unique_id()," recieved:",data)
-			for x in blockDic.keys():
-				blockDic[x].update()
+			for x in data:
+				var out = data[x]
+				grid[x] = Block.new(body,out.pos,out.rot,out.id,out.hp,out.temp)
+			for x in grid.keys():
+				grid[x].update()
 
 
 func placeBlock(id: int,pos: Vector3i,rot:int):
-	blockDic[pos] = Block.new(id,pos,rot,body)
+	grid[pos] = Block.new(body,pos,rot,id)
 	body.mass += Blockcatalog.getb(id).mass 
 
 func removeBlock(pos:Vector3i):
-	blockDic[pos].destroy()
+	grid[pos].destroy()
+
+func serialize_dic(dic:Dictionary):
+	var output:Dictionary 
+	for x in dic.keys():
+		output[x] = dic[x].get_properties()
+	return output

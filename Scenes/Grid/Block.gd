@@ -6,15 +6,14 @@ var hp: int
 var temp: float
 var pos: Vector3i
 var rot: int = 0 # 0–5 for orientation
-var custom_data: Dictionary = {}
 var colisionshape: CollisionShape3D
 var mesh
 var parent:Node
 
-func _init(_id:int,_pos: Vector3i,_rot:int,_parent:Node) -> void:
+func _init(_parent:Node,_pos: Vector3i,_rot:int,_id:int = 1,_hp = Blockcatalog.getb(_id).hpmax,_temp = 20) -> void:
 	id = _id
-	hp = Blockcatalog.getb(_id).hpmax
-	temp = 20
+	hp = _hp
+	temp = _temp
 	pos = _pos
 	rot = _rot
 	parent = _parent
@@ -42,4 +41,16 @@ func destroy() -> void:
 	if mesh != null:
 		mesh.free()
 	
-	parent.get_parent().blockDic.erase(pos)
+	parent.get_parent().grid.erase(pos)
+
+func set_properties(dic):
+	id = dic["id"]
+	hp = dic["hp"]
+	temp = dic["temp"]
+	pos = dic["pos"]
+	parent = dic["parent"]
+
+func get_properties() -> Dictionary:
+	var out:Dictionary = {"id":id,"hp":hp,"temp":temp,"pos":pos,"rot":rot,"parent":mesh}
+	return out
+	

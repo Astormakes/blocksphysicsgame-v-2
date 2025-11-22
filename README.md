@@ -50,9 +50,15 @@ Often games highly simplify the arodynamics logic and so taught me some things a
 
 often games complelty neglect the tendency for fluids to stick to surfaces if i can simulate that i would allrady be happy...
 
-I'm thinking of either a particle based system.
+I'm thinking of either a particle based system. Or just a more common divergence aproach that happens inside the 20x20x20 raster. maybe there are some ways in which I can cut corners with this too.
 
-Or just a more common divergence aproach that happens in the 20x20x20 raster.
+## terrain System
+
+as mentioned at the start, terrain shouldn't be made from blocks since blocky hills can't really be driven on with vehicles. Additionally i think, things like resource gathering are going to be a somewhat important game concept as it will provide a lot of the depth and emergent tasks the player will find himself wanting to solve. Especially in harder game modes where the player might not be able to just buy Material where ever he happens to have his base.
+
+I think an other voxel based system, additional to the voxel like system in grids, might put the bar a little to high though. So my though is, to go with Highmaps which are split up in somewhat small chunks to remain edible during runtime. If dug into they should kind of collapse and always sort of slope like dirt hills do irl. Unfortunately that compromise means no tunnels, cliffs, underground structures or overhangs in the traditional sense and also that I probably won't be able to use one of the many great premade free to use terrain systems for Godot and I'm going to have to make my own. Dispite all those limitations, I can think of an otherway of realizing underground structures by punching holes though the mesh with foundation, that then is composed of blocks like any other grid in the game.
+
+Also the ability for chunks to be made simply edible allows for hydraulic erosion to be a thing again maybe ??? like it was in my first attempt since the look on the terrain it caused was really quiet distinguishable from other more traditional generation methods and it was lots of fun to implement. 
 
 ## Other Game Systems
 

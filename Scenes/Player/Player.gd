@@ -87,7 +87,7 @@ func movement(_delta) -> void:
 	else:
 		body.apply_central_force((yaw_only_basis * velocity / _delta) + dampening)
 
-### head rotation
+### head rotation  HALLOOOOOOOOOOOOO
 func _input(event):
 	if not is_multiplayer_authority(): return
 	if not camera.current: return

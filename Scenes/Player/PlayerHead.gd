@@ -24,7 +24,9 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	fps.text = str(Engine.get_frames_per_second())
+	var displaytext = str(Engine.get_frames_per_second()) + "\n"
+	
+	fps.text = displaytext
 	
 	var mouse_pos = get_viewport().get_mouse_position()
 	ray.target_position = to_local(camera.project_ray_normal(mouse_pos)*2 + camera.project_ray_origin(mouse_pos))

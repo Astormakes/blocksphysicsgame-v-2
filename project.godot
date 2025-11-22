@@ -25,7 +25,6 @@ Server="*res://singelton/Server/Server.gd"
 window/size/viewport_width=1366
 window/size/viewport_height=768
 window/stretch/aspect="expand"
-window/vsync/vsync_mode=0
 
 [input]
 

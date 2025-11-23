@@ -1,13 +1,13 @@
 extends Node
 
-var speed = 6
+var speed = 40
 var mouseSpeed = 0.15
 var runMul = 2
 var coruchMul = 0.5
 var movementDamping = Vector3(200,1,200)
 
 
-
+var focus = false
 var noclip = false
 
 @onready var shapecast:ShapeCast3D = $Body/ShapeCast3D
@@ -31,12 +31,14 @@ func _ready() -> void:
 func currentCam():
 		camera.current = true
 
-func _process(_delta: float) -> void:
+
+func _physics_process(_delta: float) -> void:
 	if is_multiplayer_authority():
 		if Input.is_action_just_pressed("debug"):
 			currentCam()
 		if not camera.current: return
 		movement(_delta)
+
 
 func movement(_delta) -> void:
 	if Input.is_action_just_pressed("Noclip"):
@@ -84,7 +86,7 @@ func movement(_delta) -> void:
 	var head_rotation = head.global_transform.basis.get_euler()
 	var yaw_only_basis = Basis(Vector3.UP, head_rotation.y)
 	
-	if coliders.size():#### test comment
+	if coliders.size():
 		var colider = coliders[0]
 		if "apply_central_force" in colider:
 			colider.apply_central_force(yaw_only_basis * -velocity / _delta)
@@ -101,15 +103,24 @@ func movement(_delta) -> void:
 	else:
 		body.apply_central_force((yaw_only_basis * velocity / _delta) + dampening)
 
-### head rotation  HALLOOOOOOOOOOOOO
+
+	if not get_window().has_focus():
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		focus = true
+	else:
+		focus = false
+
+
+### head rotation
 func _input(event):
 	if not is_multiplayer_authority(): return
 	if not camera.current: return
 	
-	if not Input.is_action_pressed("Alt"):
+	if Input.is_action_pressed("Alt") or focus:
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE) # this is what uncatches the mouse to close the game using alt key for example
+	else:
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+
 		if event is InputEventMouseMotion:
 			head.rotation_degrees.x = clamp(head.rotation_degrees.x - event.relative.y * mouseSpeed,-89,89) # this rotates the players head
 			head.rotation_degrees.y = head.rotation_degrees.y - event.relative.x * mouseSpeed # this rotates the players head
-	else:
-		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE) # this is what uncatches the mouse to close the game using alt key for example

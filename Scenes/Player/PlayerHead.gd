@@ -56,7 +56,7 @@ func _input(_event: InputEvent) -> void:
 		var obj = ray.get_collider()
 		if obj:
 			if (action+action2) in obj:
-				var objpos = ray.global_position
+				var objpos = ray.get_collision_point()
 				var objnormal = ray.get_collision_normal()
 				obj.call_deferred(action+action2,objpos,objnormal,player.name,item)
 	
@@ -66,7 +66,7 @@ func _input(_event: InputEvent) -> void:
 		var obj = ray.get_collider()
 		if obj:
 			if (action+action2) in obj:
-				var objpos = ray.global_position
+				var objpos = ray.get_collision_point()
 				var objnormal = ray.get_collision_normal()
 				obj.call_deferred(action+action2,objpos,objnormal,player.name,item)
 		
@@ -76,7 +76,7 @@ func _input(_event: InputEvent) -> void:
 		var obj = ray.get_collider()
 		if obj:
 			if (action+action2) in obj:
-				var objpos = ray.global_position
+				var objpos = ray.get_collision_point()
 				var objnormal = ray.get_collision_normal()
 				obj.call_deferred(action+action2,objpos,objnormal,player.name,item)
 	
@@ -85,7 +85,7 @@ func _input(_event: InputEvent) -> void:
 		var obj = ray.get_collider()
 		if obj:
 			if (action+action2) in obj:
-				var objpos = ray.global_position
+				var objpos = ray.get_collision_point()
 				var objnormal = ray.get_collision_normal()
 				obj.call_deferred(action+action2,objpos,objnormal,player.name,item)
 
@@ -95,7 +95,7 @@ func _input(_event: InputEvent) -> void:
 		var obj = ray.get_collider()
 		if obj:
 			if (action+action2) in obj:
-				var objpos = ray.global_position
+				var objpos = ray.get_collision_point()
 				var objnormal = ray.get_collision_normal()
 				obj.call_deferred(action+action2,objpos,objnormal,player.name,item)
 	
@@ -104,7 +104,7 @@ func _input(_event: InputEvent) -> void:
 		var obj = ray.get_collider()
 		if obj:
 			if (action+action2) in obj:
-				var objpos = ray.global_position
+				var objpos = ray.get_collision_point()
 				var objnormal = ray.get_collision_normal()
 				obj.call_deferred(action+action2,objpos,objnormal,player.name,item)
 	
@@ -114,7 +114,7 @@ func _input(_event: InputEvent) -> void:
 		var obj = ray.get_collider()
 		if obj:
 			if (action+action2) in obj:
-				var objpos = ray.global_position
+				var objpos = ray.get_collision_point()
 				var objnormal = ray.get_collision_normal()
 				obj.call_deferred(action+action2,objpos,objnormal,player.name,item)
 	
@@ -123,7 +123,7 @@ func _input(_event: InputEvent) -> void:
 		var obj = ray.get_collider()
 		if obj:
 			if (action+action2) in obj:
-				var objpos = ray.global_position
+				var objpos = ray.get_collision_point()
 				var objnormal = ray.get_collision_normal()
 				obj.call_deferred(action+action2,objpos,objnormal,player.name,item)
 	
@@ -133,7 +133,7 @@ func _input(_event: InputEvent) -> void:
 		var obj = ray.get_collider()
 		if obj:
 			if (action+action2) in obj:
-				var objpos = ray.global_position
+				var objpos = ray.get_collision_point()
 				var objnormal = ray.get_collision_normal()
 				obj.call_deferred(action+action2,objpos,objnormal,player.name,item)
 	
@@ -142,7 +142,7 @@ func _input(_event: InputEvent) -> void:
 		var obj = ray.get_collider()
 		if obj:
 			if (action+action2) in obj:
-				var objpos = ray.global_position
+				var objpos = ray.get_collision_point()
 				var objnormal = ray.get_collision_normal()
 				obj.call_deferred(action+action2,objpos,objnormal,player.name,item)
 	
@@ -152,7 +152,7 @@ func _input(_event: InputEvent) -> void:
 		var obj = ray.get_collider()
 		if obj:
 			if (action+action2) in obj:
-				var objpos = ray.global_position
+				var objpos = ray.get_collision_point()
 				var objnormal = ray.get_collision_normal()
 				obj.call_deferred(action+action2,objpos,objnormal,player.name,item)
 	
@@ -161,7 +161,7 @@ func _input(_event: InputEvent) -> void:
 		var obj = ray.get_collider()
 		if obj:
 			if (action+action2) in obj:
-				var objpos = ray.global_position
+				var objpos = ray.get_collision_point()
 				var objnormal = ray.get_collision_normal()
 				obj.call_deferred(action+action2,objpos,objnormal,player.name,item)
 	
@@ -171,7 +171,7 @@ func _input(_event: InputEvent) -> void:
 		var obj = ray.get_collider()
 		if obj:
 			if (action+action2) in obj:
-				var objpos = ray.global_position
+				var objpos = ray.get_collision_point()
 				var objnormal = ray.get_collision_normal()
 				obj.call_deferred(action+action2,objpos,objnormal,player.name,item)
 	
@@ -180,6 +180,6 @@ func _input(_event: InputEvent) -> void:
 		var obj = ray.get_collider()
 		if obj:
 			if (action+action2) in obj:
-				var objpos = ray.global_position
+				var objpos = ray.get_collision_point()
 				var objnormal = ray.get_collision_normal()
 				obj.call_deferred(action+action2,objpos,objnormal,player.name,item)

@@ -6,11 +6,9 @@ var grid:Dictionary
 
 @export var frozen: bool = false
 
-var body
+var body = self
 
 func _ready():
-	body = RigidBody3D.new()
-	add_child(body)
 	body.freeze = frozen
 	print(multiplayer.get_unique_id(),": grid:",name, "created")
 	
@@ -29,6 +27,24 @@ func _ready():
 		removeBlock(Vector3i(0, 1, 0))
 	else:
 		request_dic()
+
+func action5_released(_pos,_normal,_id,_item): ## on T Press... 
+	body.freeze = !body.freeze
+
+func mouse1_released(pos:Vector3,normal:Vector3,id,_item):
+	print("grid - m1_released:",pos, " normal:",normal," id:",id)
+	pos = (body.to_local(pos+normal/10)*5).snapped(Vector3.ONE)
+	id = int(id)
+	print("resulting in:",pos)
+	placeBlock(id,pos,0)
+	
+func mouse2_released(pos:Vector3,normal:Vector3,id,_item):
+	print("grid - m1_released:",pos, " normal:",normal," id:",id)
+	pos = (body.to_local(pos-normal/10)*5).snapped(Vector3.ONE)
+	id = int(id)
+	print("resulting in:",pos)
+	body.mass -= Blockcatalog.getb(id).mass
+	removeBlock(pos)
 
 func request_dic():
 	rpc_id(1,"send_dic",multiplayer.get_unique_id(),"all")
@@ -52,14 +68,19 @@ func recieve_dic(data:Dictionary,type):
 			for x in grid.keys():
 				grid[x].update()
 
-
 func placeBlock(id: int,pos: Vector3i,rot:int):
 	grid[pos] = Block.new(body,pos,rot,id)
 	body.mass += Blockcatalog.getb(id).mass 
-
+	print("mass:" , body.mass)
+	
 func removeBlock(pos:Vector3i):
+	body.mass -= Blockcatalog.getb(grid[pos].id).mass 
+	print("mass:" , body.mass)
 	grid[pos].destroy()
-
+	if grid.size() < 1:
+		print("grid "+ name + "que free")
+		self.queue_free()
+	
 func serialize_dic(dic:Dictionary):
 	var output:Dictionary 
 	for x in dic.keys():

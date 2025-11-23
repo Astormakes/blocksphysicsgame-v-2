@@ -41,7 +41,7 @@ func destroy() -> void:
 	if mesh != null:
 		mesh.free()
 	
-	parent.get_parent().grid.erase(pos)
+	parent.grid.erase(pos)
 
 func set_properties(dic):
 	id = dic["id"]

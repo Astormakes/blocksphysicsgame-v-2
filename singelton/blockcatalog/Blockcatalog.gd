@@ -56,7 +56,7 @@ func defaultblocklist():
 		Color(110,110,110,255)/255,
 		"block",
 		10.0,
-		30,#mass
+		20,#mass 30?
 		500,
 		Vector3(0.2,0.2,0.2)
 	))

@@ -17,10 +17,11 @@ var item:int
 func _ready() -> void:
 	if is_multiplayer_authority():
 		$Camera3D.current = true
-	
+		lable.text = str(item) + " " + ItemCatalog.geti(item).showName
+		
 	ray.debug_shape_thickness = 1
 	add_child(ray)
-
+	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:

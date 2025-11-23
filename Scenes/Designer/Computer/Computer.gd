@@ -11,11 +11,11 @@ func _ready() -> void:
 	pass # Replace with function body.
 
 
-func mouse1_released(pos,normal,id):
+func mouse1_released(pos,normal,id,_item):
 	rpc_id(1,"Spawn_DesingerCam",id)
 	print("m1_released:",pos, " normal:",normal," id:",id)
 
-func action5_released(_pos,_normal,id): ## on T Press... 
+func action5_released(_pos,_normal,id,_item): ## on T Press... 
 	rpc_id(1,"spawn_grid",id)
 
 @rpc("any_peer","call_local","reliable")

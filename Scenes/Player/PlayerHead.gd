@@ -34,7 +34,9 @@ func _process(_delta: float) -> void:
 
 func _input(_event: InputEvent) -> void:
 	if not is_multiplayer_authority(): return
-	if not camera.current: return
+	if not camera.current: 
+		lable.text = ""
+		return
 	
 	if Input.is_action_just_released("mousewheel_up"):
 		item = clamp(item+1,0,ItemCatalog.size()-1)

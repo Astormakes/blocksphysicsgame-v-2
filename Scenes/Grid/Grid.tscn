@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://dfluexj0asn8h"]
+[gd_scene load_steps=5 format=3 uid="uid://dfluexj0asn8h"]
 
 [ext_resource type="Script" uid="uid://w8ssewue50uo" path="res://Scenes/Grid/grid.gd" id="1_uadnl"]
 
@@ -13,8 +13,19 @@ properties/2/path = NodePath(".:frozen")
 properties/2/spawn = true
 properties/2/replication_mode = 2
 
+[sub_resource type="BoxMesh" id="BoxMesh_uadnl"]
+size = Vector3(0.22, 0.22, 0.22)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uadnl"]
+transparency = 1
+albedo_color = Color(1, 0.26, 0.26, 0.34117648)
+
 [node name="Grid" type="RigidBody3D"]
 script = ExtResource("1_uadnl")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_uadnl")
+
+[node name="debugg" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_uadnl")
+surface_material_override/0 = SubResource("StandardMaterial3D_uadnl")

@@ -7,7 +7,7 @@ var temp: float
 var pos: Vector3i
 var rot: int = 0 # 0–5 for orientation
 var colisionshape: CollisionShape3D
-var mesh
+var mesh:MeshInstance3D
 var parent:Node
 
 func _init(_parent:Node,_pos: Vector3i,_rot:int,_id:int = 1,_hp = Blockcatalog.getb(_id).hpmax,_temp = 20) -> void:
@@ -25,23 +25,26 @@ func update():
 	mesh.transform.origin = Vector3(pos/5.0)
 	mesh.mesh = load(Blockcatalog.getb(id).mesh)
 	parent.add_child(mesh)
+	mesh.name = str(pos)+"_mesh"
 	
 	colisionshape = CollisionShape3D.new()
+	parent.add_child(colisionshape)
 	colisionshape.transform.origin = Vector3(pos/5.0)
 	var shape = BoxShape3D.new()
 	shape.size = Vector3(0.2,0.2,0.2)
 	colisionshape.shape = shape
-	self.colisionshape = colisionshape
-	parent.add_child(colisionshape)
+	colisionshape = colisionshape
+	colisionshape.name = str(pos)+"_shape"
+	
 
 func destroy() -> void:
-	if colisionshape != null:
+	print("removed block with pos:", pos)
+	if colisionshape:
 		colisionshape.free()
-	
-	if mesh != null:
+	if mesh:
 		mesh.free()
-	
 	parent.grid.erase(pos)
+
 
 func set_properties(dic):
 	id = dic["id"]

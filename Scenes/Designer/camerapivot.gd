@@ -1,15 +1,20 @@
 extends Node3D
 
-@export var move_speed := 0.1
-@export var fast_speed := 100.0
+@export var move_speed := 0.05
+@export var fast_speed := 3.0
+@export var slow_speed := 0.2
 @export var look_sensitivity := 0.15
 @export var smoothing := 10.0
 
 @onready var camera: Camera3D = $Camera3D
 
+@onready var lable = $Camera3D/Control/GrayBackground/Label
+
 var velocity:Vector3 = Vector3.ZERO
 var yaw:float = 0.0
 var pitch:float = 0.0
+
+var item = 0
 
 var ray:RayCast3D = RayCast3D.new()
 
@@ -45,19 +50,19 @@ func _process(_delta: float) -> void:
 	var speed_mod = 1
 	
 	if Input.is_action_pressed("Forward"):
-		input_dir.z -= 1
+		input_dir.z -= move_speed
 	if Input.is_action_pressed("Backward"):
-		input_dir.z += 1
+		input_dir.z += move_speed
 	if Input.is_action_pressed("Left"):
-		input_dir.x -= 1
+		input_dir.x -= move_speed
 	if Input.is_action_pressed("Right"):
-		input_dir.x += 1
+		input_dir.x += move_speed
 	if Input.is_action_pressed("jump"):
-		input_dir.y += 1
+		input_dir.y += move_speed
 	if Input.is_action_pressed("Run"):
-		speed_mod = 2
+		speed_mod = fast_speed
 	if Input.is_action_pressed("Sneak"):
-		speed_mod = 0.1
+		speed_mod = slow_speed
 	
 	transform.origin += basis * input_dir * move_speed * speed_mod
 
@@ -73,6 +78,21 @@ func _input(event: InputEvent) -> void: # Key Presses and Looking.
 		else:
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	
+	if Input.is_action_just_released("mousewheel_up"):
+		item = clamp(item+1,0,ItemCatalog.size()-1)
+		print(item)
+		print(ItemCatalog.geti(item))
+		if ItemCatalog.geti(item):
+			lable.text = str(item) + " " + ItemCatalog.geti(item).showName
+		
+	if Input.is_action_just_released("mousewheel_down"):
+		item = clamp(item-1,0,ItemCatalog.size()-1)
+		print(item)
+		print(ItemCatalog.geti(item))
+		if ItemCatalog.geti(item):
+			lable.text = str(item) + " " + ItemCatalog.geti(item).showName
+	
+	
 	var action = "mouse1"
 	var action2 = "_pressed"
 	if Input.is_action_just_pressed(action):
@@ -81,7 +101,7 @@ func _input(event: InputEvent) -> void: # Key Presses and Looking.
 			if (action+action2) in obj:
 				var objpos = ray.get_collision_point()
 				var objnormal = ray.get_collision_normal()
-				obj.call_deferred(action+action2,objpos,objnormal,name)
+				obj.call_deferred(action+action2,objpos,objnormal,name,item)
 	
 	action = "mouse1"
 	action2 = "_released"
@@ -91,7 +111,7 @@ func _input(event: InputEvent) -> void: # Key Presses and Looking.
 			if (action+action2) in obj:
 				var objpos = ray.get_collision_point()
 				var objnormal = ray.get_collision_normal()
-				obj.call_deferred(action+action2,objpos,objnormal,name,1)
+				obj.call_deferred(action+action2,objpos,objnormal,name,item)
 		
 	action = "mouse2"
 	action2 = "_released"
@@ -101,7 +121,7 @@ func _input(event: InputEvent) -> void: # Key Presses and Looking.
 			if (action+action2) in obj:
 				var objpos = ray.get_collision_point()
 				var objnormal = ray.get_collision_normal()
-				obj.call_deferred(action+action2,objpos,objnormal,name)
+				obj.call_deferred(action+action2,objpos,objnormal,name,item)
 	
 	action2 = "_pressed"
 	if Input.is_action_just_released(action):
@@ -110,7 +130,7 @@ func _input(event: InputEvent) -> void: # Key Presses and Looking.
 			if (action+action2) in obj:
 				var objpos = ray.get_collision_point()
 				var objnormal = ray.get_collision_normal()
-				obj.call_deferred(action+action2,objpos,objnormal,name)
+				obj.call_deferred(action+action2,objpos,objnormal,name,item)
 
 	action = "action1"
 	action2 = "_released"
@@ -120,7 +140,7 @@ func _input(event: InputEvent) -> void: # Key Presses and Looking.
 			if (action+action2) in obj:
 				var objpos = ray.get_collision_point()
 				var objnormal = ray.get_collision_normal()
-				obj.call_deferred(action+action2,objpos,objnormal,name)
+				obj.call_deferred(action+action2,objpos,objnormal,name,item)
 	
 	action2 = "_pressed"
 	if Input.is_action_just_released(action):
@@ -129,7 +149,7 @@ func _input(event: InputEvent) -> void: # Key Presses and Looking.
 			if (action+action2) in obj:
 				var objpos = ray.get_collision_point()
 				var objnormal = ray.get_collision_normal()
-				obj.call_deferred(action+action2,objpos,objnormal,name)
+				obj.call_deferred(action+action2,objpos,objnormal,name,item)
 	
 	action = "action2"
 	action2 = "_released"
@@ -139,7 +159,7 @@ func _input(event: InputEvent) -> void: # Key Presses and Looking.
 			if (action+action2) in obj:
 				var objpos = ray.get_collision_point()
 				var objnormal = ray.get_collision_normal()
-				obj.call_deferred(action+action2,objpos,objnormal,name)
+				obj.call_deferred(action+action2,objpos,objnormal,name,item)
 	
 	action2 = "_pressed"
 	if Input.is_action_just_released(action):
@@ -148,7 +168,7 @@ func _input(event: InputEvent) -> void: # Key Presses and Looking.
 			if (action+action2) in obj:
 				var objpos = ray.get_collision_point()
 				var objnormal = ray.get_collision_normal()
-				obj.call_deferred(action+action2,objpos,objnormal,name)
+				obj.call_deferred(action+action2,objpos,objnormal,name,item)
 	
 	action = "action3"
 	action2 = "_released"
@@ -158,7 +178,7 @@ func _input(event: InputEvent) -> void: # Key Presses and Looking.
 			if (action+action2) in obj:
 				var objpos = ray.get_collision_point()
 				var objnormal = ray.get_collision_normal()
-				obj.call_deferred(action+action2,objpos,objnormal,name)
+				obj.call_deferred(action+action2,objpos,objnormal,name,item)
 	
 	action2 = "_pressed"
 	if Input.is_action_just_released(action):
@@ -167,7 +187,7 @@ func _input(event: InputEvent) -> void: # Key Presses and Looking.
 			if (action+action2) in obj:
 				var objpos = ray.get_collision_point()
 				var objnormal = ray.get_collision_normal()
-				obj.call_deferred(action+action2,objpos,objnormal,name)
+				obj.call_deferred(action+action2,objpos,objnormal,name,item)
 	
 	action = "action4"
 	action2 = "_released"
@@ -177,7 +197,7 @@ func _input(event: InputEvent) -> void: # Key Presses and Looking.
 			if (action+action2) in obj:
 				var objpos = ray.get_collision_point()
 				var objnormal = ray.get_collision_normal()
-				obj.call_deferred(action+action2,objpos,objnormal,name)
+				obj.call_deferred(action+action2,objpos,objnormal,name,item)
 	
 	action2 = "_pressed"
 	if Input.is_action_just_released(action):
@@ -186,7 +206,7 @@ func _input(event: InputEvent) -> void: # Key Presses and Looking.
 			if (action+action2) in obj:
 				var objpos = ray.get_collision_point()
 				var objnormal = ray.get_collision_normal()
-				obj.call_deferred(action+action2,objpos,objnormal,name)
+				obj.call_deferred(action+action2,objpos,objnormal,name,item)
 	
 	action = "action5"
 	action2 = "_released"
@@ -196,7 +216,7 @@ func _input(event: InputEvent) -> void: # Key Presses and Looking.
 			if (action+action2) in obj:
 				var objpos = ray.get_collision_point()
 				var objnormal = ray.get_collision_normal()
-				obj.call_deferred(action+action2,objpos,objnormal,name)
+				obj.call_deferred(action+action2,objpos,objnormal,name,item)
 	
 	action2 = "_pressed"
 	if Input.is_action_just_released(action):
@@ -205,4 +225,4 @@ func _input(event: InputEvent) -> void: # Key Presses and Looking.
 			if (action+action2) in obj:
 				var objpos = ray.get_collision_point()
 				var objnormal = ray.get_collision_normal()
-				obj.call_deferred(action+action2,objpos,objnormal,name)
+				obj.call_deferred(action+action2,objpos,objnormal,name,item)

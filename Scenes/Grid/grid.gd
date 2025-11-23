@@ -31,19 +31,19 @@ func _ready():
 func action5_released(_pos,_normal,_id,_item): ## on T Press... 
 	body.freeze = !body.freeze
 
-func mouse1_released(pos:Vector3,normal:Vector3,id,_item):
-	print("grid - m1_released:",pos, " normal:",normal," id:",id)
+func mouse1_released(pos,normal:Vector3,id,_item):
 	pos = (body.to_local(pos+normal/10)*5).snapped(Vector3.ONE)
+	$debugg.transform.origin = Vector3(pos)/5
 	id = int(id)
-	print("resulting in:",pos)
+	print("building:",pos)
 	placeBlock(id,pos,0)
 	
-func mouse2_released(pos:Vector3,normal:Vector3,id,_item):
-	print("grid - m1_released:",pos, " normal:",normal," id:",id)
+func mouse2_released(pos,normal:Vector3,id,_item):
 	pos = (body.to_local(pos-normal/10)*5).snapped(Vector3.ONE)
+	$debugg.transform.origin = Vector3(pos)/5
 	id = int(id)
-	print("resulting in:",pos)
 	body.mass -= Blockcatalog.getb(id).mass
+	print("removing:",pos)
 	removeBlock(pos)
 
 func request_dic():
@@ -69,18 +69,23 @@ func recieve_dic(data:Dictionary,type):
 				grid[x].update()
 
 func placeBlock(id: int,pos: Vector3i,rot:int):
-	grid[pos] = Block.new(body,pos,rot,id)
-	body.mass += Blockcatalog.getb(id).mass 
-	print("mass:" , body.mass)
+	if not grid.has(pos):
+		var block = Block.new(body,pos,rot,id)
+		grid.set(pos,block)
+		body.mass += Blockcatalog.getb(id).mass 
+		#print("mass:" , body.mass)
 	
 func removeBlock(pos:Vector3i):
-	body.mass -= Blockcatalog.getb(grid[pos].id).mass 
-	print("mass:" , body.mass)
-	grid[pos].destroy()
-	if grid.size() < 1:
-		print("grid "+ name + "que free")
-		self.queue_free()
-	
+	if grid.has(pos):
+		body.mass -= Blockcatalog.getb(grid[pos].id).mass 
+		#print("mass:" , body.mass)
+		grid[pos].destroy()
+		if grid.size() < 1:
+			print("grid "+ name + "que free")
+			self.queue_free()
+	else:
+		print("ERROR: Block not found in grid Directory")
+		print(grid)
 func serialize_dic(dic:Dictionary):
 	var output:Dictionary 
 	for x in dic.keys():

@@ -17,8 +17,9 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-Blockcatalog="*res://singelton/blockcatalog/blockcatalog.gd"
+Blockcatalog="*res://singelton/blockcatalog/Blockcatalog.gd"
 Server="*res://singelton/Server/Server.gd"
+ItemCatalog="*res://singelton/itemcatalog/Itemcatalog.gd"
 
 [display]
 

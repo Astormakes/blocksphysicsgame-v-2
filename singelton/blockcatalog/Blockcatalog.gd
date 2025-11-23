@@ -36,7 +36,14 @@ func setb(id: int, data: Blockdata) -> void:
 	blocks[id] = data
 
 func getb(id: int) -> Blockdata:
-	return blocks[id]
+	if blocks.size() > id:
+		return blocks[id]
+	else:
+		print("ERROR - block was requested of block that dosent exist!")
+		return null
+
+func size() -> int:
+	return blocks.size()
 
 func defaultblocklist(): 
 	blocks.insert(0,Blockdata.new(

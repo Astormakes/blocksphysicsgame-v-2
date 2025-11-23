@@ -36,12 +36,18 @@ func _input(_event: InputEvent) -> void:
 	if not camera.current: return
 	
 	if Input.is_action_just_released("mousewheel_up"):
-		item = clamp(item+1,0,99)
-		lable.text = str(item)
+		item = clamp(item+1,0,ItemCatalog.size()-1)
+		print(item)
+		print(ItemCatalog.geti(item))
+		if ItemCatalog.geti(item):
+			lable.text = str(item) + " " + ItemCatalog.geti(item).showName
 		
 	if Input.is_action_just_released("mousewheel_down"):
-		item = clamp(item-1,0,99)
-		lable.text = str(item)
+		item = clamp(item-1,0,ItemCatalog.size()-1)
+		print(item)
+		print(ItemCatalog.geti(item))
+		if ItemCatalog.geti(item):
+			lable.text = str(item) + " " + ItemCatalog.geti(item).showName
 	
 	action = "mouse1"
 	action2 = "_pressed"
@@ -51,7 +57,7 @@ func _input(_event: InputEvent) -> void:
 			if (action+action2) in obj:
 				var objpos = ray.global_position
 				var objnormal = ray.get_collision_normal()
-				obj.call_deferred(action+action2,objpos,objnormal,player.name)
+				obj.call_deferred(action+action2,objpos,objnormal,player.name,item)
 	
 	action = "mouse1"
 	action2 = "_released"
@@ -61,7 +67,7 @@ func _input(_event: InputEvent) -> void:
 			if (action+action2) in obj:
 				var objpos = ray.global_position
 				var objnormal = ray.get_collision_normal()
-				obj.call_deferred(action+action2,objpos,objnormal,player.name)
+				obj.call_deferred(action+action2,objpos,objnormal,player.name,item)
 		
 	action = "mouse2"
 	action2 = "_released"
@@ -71,7 +77,7 @@ func _input(_event: InputEvent) -> void:
 			if (action+action2) in obj:
 				var objpos = ray.global_position
 				var objnormal = ray.get_collision_normal()
-				obj.call_deferred(action+action2,objpos,objnormal,player.name)
+				obj.call_deferred(action+action2,objpos,objnormal,player.name,item)
 	
 	action2 = "_pressed"
 	if Input.is_action_just_released(action):
@@ -80,7 +86,7 @@ func _input(_event: InputEvent) -> void:
 			if (action+action2) in obj:
 				var objpos = ray.global_position
 				var objnormal = ray.get_collision_normal()
-				obj.call_deferred(action+action2,objpos,objnormal,player.name)
+				obj.call_deferred(action+action2,objpos,objnormal,player.name,item)
 
 	action = "action1"
 	action2 = "_released"
@@ -90,7 +96,7 @@ func _input(_event: InputEvent) -> void:
 			if (action+action2) in obj:
 				var objpos = ray.global_position
 				var objnormal = ray.get_collision_normal()
-				obj.call_deferred(action+action2,objpos,objnormal,player.name)
+				obj.call_deferred(action+action2,objpos,objnormal,player.name,item)
 	
 	action2 = "_pressed"
 	if Input.is_action_just_released(action):
@@ -99,7 +105,7 @@ func _input(_event: InputEvent) -> void:
 			if (action+action2) in obj:
 				var objpos = ray.global_position
 				var objnormal = ray.get_collision_normal()
-				obj.call_deferred(action+action2,objpos,objnormal,player.name)
+				obj.call_deferred(action+action2,objpos,objnormal,player.name,item)
 	
 	action = "action2"
 	action2 = "_released"
@@ -109,7 +115,7 @@ func _input(_event: InputEvent) -> void:
 			if (action+action2) in obj:
 				var objpos = ray.global_position
 				var objnormal = ray.get_collision_normal()
-				obj.call_deferred(action+action2,objpos,objnormal,player.name)
+				obj.call_deferred(action+action2,objpos,objnormal,player.name,item)
 	
 	action2 = "_pressed"
 	if Input.is_action_just_released(action):
@@ -118,7 +124,7 @@ func _input(_event: InputEvent) -> void:
 			if (action+action2) in obj:
 				var objpos = ray.global_position
 				var objnormal = ray.get_collision_normal()
-				obj.call_deferred(action+action2,objpos,objnormal,player.name)
+				obj.call_deferred(action+action2,objpos,objnormal,player.name,item)
 	
 	action = "action3"
 	action2 = "_released"
@@ -128,7 +134,7 @@ func _input(_event: InputEvent) -> void:
 			if (action+action2) in obj:
 				var objpos = ray.global_position
 				var objnormal = ray.get_collision_normal()
-				obj.call_deferred(action+action2,objpos,objnormal,player.name)
+				obj.call_deferred(action+action2,objpos,objnormal,player.name,item)
 	
 	action2 = "_pressed"
 	if Input.is_action_just_released(action):
@@ -137,7 +143,7 @@ func _input(_event: InputEvent) -> void:
 			if (action+action2) in obj:
 				var objpos = ray.global_position
 				var objnormal = ray.get_collision_normal()
-				obj.call_deferred(action+action2,objpos,objnormal,player.name)
+				obj.call_deferred(action+action2,objpos,objnormal,player.name,item)
 	
 	action = "action4"
 	action2 = "_released"
@@ -147,7 +153,7 @@ func _input(_event: InputEvent) -> void:
 			if (action+action2) in obj:
 				var objpos = ray.global_position
 				var objnormal = ray.get_collision_normal()
-				obj.call_deferred(action+action2,objpos,objnormal,player.name)
+				obj.call_deferred(action+action2,objpos,objnormal,player.name,item)
 	
 	action2 = "_pressed"
 	if Input.is_action_just_released(action):
@@ -156,7 +162,7 @@ func _input(_event: InputEvent) -> void:
 			if (action+action2) in obj:
 				var objpos = ray.global_position
 				var objnormal = ray.get_collision_normal()
-				obj.call_deferred(action+action2,objpos,objnormal,player.name)
+				obj.call_deferred(action+action2,objpos,objnormal,player.name,item)
 	
 	action = "action5"
 	action2 = "_released"
@@ -166,7 +172,7 @@ func _input(_event: InputEvent) -> void:
 			if (action+action2) in obj:
 				var objpos = ray.global_position
 				var objnormal = ray.get_collision_normal()
-				obj.call_deferred(action+action2,objpos,objnormal,player.name)
+				obj.call_deferred(action+action2,objpos,objnormal,player.name,item)
 	
 	action2 = "_pressed"
 	if Input.is_action_just_released(action):
@@ -175,4 +181,4 @@ func _input(_event: InputEvent) -> void:
 			if (action+action2) in obj:
 				var objpos = ray.global_position
 				var objnormal = ray.get_collision_normal()
-				obj.call_deferred(action+action2,objpos,objnormal,player.name)
+				obj.call_deferred(action+action2,objpos,objnormal,player.name,item)

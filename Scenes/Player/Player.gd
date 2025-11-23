@@ -1,6 +1,6 @@
 extends Node
 
-var speed = 6
+var speed = 40
 var mouseSpeed = 0.15
 var runMul = 2
 var coruchMul = 0.5
@@ -31,12 +31,14 @@ func _ready() -> void:
 func currentCam():
 		camera.current = true
 
-func _process(_delta: float) -> void:
+
+func _physics_process(_delta: float) -> void:
 	if is_multiplayer_authority():
 		if Input.is_action_just_pressed("debug"):
 			currentCam()
 		if not camera.current: return
 		movement(_delta)
+
 
 func movement(_delta) -> void:
 	if Input.is_action_just_pressed("Noclip"):
@@ -100,7 +102,6 @@ func movement(_delta) -> void:
 		body.transform.origin += head.basis * velocity
 	else:
 		body.apply_central_force((yaw_only_basis * velocity / _delta) + dampening)
-
 
 
 	if not get_window().has_focus():

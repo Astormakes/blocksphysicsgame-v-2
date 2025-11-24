@@ -10,7 +10,7 @@ extends Node
 #		"type": "shape",
 #		"cost": 4,
 #		"mass": 1.5,
-#		"maxHP": 30,
+#		"hpmax": 30,
 #		"size": Vector3(0.6,0.2,0.2),
 #		"flows": [right,up,back,forward],
 #		"volume": 12

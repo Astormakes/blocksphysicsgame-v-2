@@ -4,6 +4,8 @@ const BLOCK_SIZE: float = 0.2 # 20 cm
 
 var grid:Dictionary
 
+var creator = 0
+
 @export var frozen: bool = false
 
 var body = self
@@ -31,20 +33,20 @@ func _ready():
 func action5_released(_pos,_normal,_id,_item): ## on T Press... 
 	body.freeze = !body.freeze
 
-func mouse1_released(pos,normal:Vector3,id,_item):
+func mouse1_released(pos,normal:Vector3,id,item):
 	pos = (body.to_local(pos+normal/10)*5).snapped(Vector3.ONE)
 	$debugg.transform.origin = Vector3(pos)/5
 	id = int(id)
 	print("building:",pos)
-	placeBlock(id,pos,0)
+	rpc("placeBlock",item,pos,0)
 	
-func mouse2_released(pos,normal:Vector3,id,_item):
+func mouse2_released(pos,normal:Vector3,id,item):
 	pos = (body.to_local(pos-normal/10)*5).snapped(Vector3.ONE)
 	$debugg.transform.origin = Vector3(pos)/5
 	id = int(id)
-	body.mass -= Blockcatalog.getb(id).mass
+	body.mass -= Blockcatalog.getb(item).mass
 	print("removing:",pos)
-	removeBlock(pos)
+	rpc("removeBlock",pos)
 
 func request_dic():
 	rpc_id(1,"send_dic",multiplayer.get_unique_id(),"all")
@@ -68,13 +70,16 @@ func recieve_dic(data:Dictionary,type):
 			for x in grid.keys():
 				grid[x].update()
 
+
+@rpc("any_peer","call_local","reliable")
 func placeBlock(id: int,pos: Vector3i,rot:int):
 	if not grid.has(pos):
 		var block = Block.new(body,pos,rot,id)
 		grid.set(pos,block)
 		body.mass += Blockcatalog.getb(id).mass 
 		#print("mass:" , body.mass)
-	
+
+@rpc("any_peer","call_local","reliable")
 func removeBlock(pos:Vector3i):
 	if grid.has(pos):
 		body.mass -= Blockcatalog.getb(grid[pos].id).mass 

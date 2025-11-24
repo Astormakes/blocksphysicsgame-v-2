@@ -10,9 +10,12 @@ var colisionshape: CollisionShape3D
 var mesh:MeshInstance3D
 var parent:Node
 
-func _init(_parent:Node,_pos: Vector3i,_rot:int,_id:int = 1,_hp = Blockcatalog.getb(_id).hpmax,_temp = 20) -> void:
+func _init(_parent:Node,_pos: Vector3i,_rot:int,_id:int = 1,_hp = null,_temp = 20) -> void:
 	id = _id
-	hp = _hp
+	if _hp == null:
+		hp = Blockcatalog.getb(_id).hpmax
+	else:
+		hp = _hp
 	temp = _temp
 	pos = _pos
 	rot = _rot

@@ -6,11 +6,6 @@ extends StaticBody3D
 @onready var designerspawner:MultiplayerSpawner = $"../DesignerCameraSpawner"
 @onready var gridspawner:MultiplayerSpawner = $"../GridSpawner"
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
-
-
 func mouse1_released(pos,normal,id,_item):
 	rpc_id(1,"Spawn_DesingerCam",id)
 	print("m1_released:",pos, " normal:",normal," id:",id)
@@ -24,6 +19,7 @@ func spawn_grid(id):
 		var grid:Node3D = gridPackage.instantiate()
 		grid.name = "grid"+id+"_"+str(randi_range(0,9999))
 		gridspawner.call_deferred("add_child",grid,true)
+		grid.creator = id
 		grid.transform.origin = get_parent().transform.origin + Vector3(0,2,-1)
 		grid.frozen = true
 

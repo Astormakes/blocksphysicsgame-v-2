@@ -27,24 +27,28 @@ func _ready():
 		for x in test_layout: 
 			placeBlock(x.id,x.pos,x.rot)
 		removeBlock(Vector3i(0, 1, 0))
+		body.mass -= 1  
 	else:
 		request_dic()
-
+	
 func action5_released(_pos,_normal,_id,_item): ## on T Press... 
 	body.freeze = !body.freeze
 
-func mouse1_released(pos,normal:Vector3,id,item):
-	pos = (body.to_local(pos+normal/10)*5).snapped(Vector3.ONE)
-	$debugg.transform.origin = Vector3(pos)/5
-	id = int(id)
-	rpc("placeBlock",item,pos,0)
+func mouse1_released(pos,normal:Vector3,id,itemid):
+	var item = ItemCatalog.geti(itemid)
+	if item.type == "Block":
+		pos = (body.to_local(pos+normal/10)*5).snapped(Vector3.ONE)
+		$debugg.transform.origin = Vector3(pos)/5
+		id = int(id)
+		rpc("placeBlock",item.blockid,pos,0)
 	
-func mouse2_released(pos,normal:Vector3,id,item):
-	pos = (body.to_local(pos-normal/10)*5).snapped(Vector3.ONE)
-	$debugg.transform.origin = Vector3(pos)/5
-	id = int(id)
-	body.mass -= Blockcatalog.getb(item).mass
-	rpc("removeBlock",pos)
+func mouse2_released(pos,normal:Vector3,id,itemid):
+	var item = ItemCatalog.geti(itemid)
+	if item.type == "Block":
+		pos = (body.to_local(pos-normal/10)*5).snapped(Vector3.ONE)
+		$debugg.transform.origin = Vector3(pos)/5
+		id = int(id)
+		rpc("removeBlock",pos)
 
 func request_dic():
 	rpc_id(1,"send_dic",multiplayer.get_unique_id(),"all")
@@ -73,18 +77,19 @@ func placeBlock(id: int,pos: Vector3i,rot:int):
 		var block = Block.new(body,pos,rot,id)
 		grid.set(pos,block)
 		body.mass += Blockcatalog.getb(id).mass 
-
+		print(body.mass)
+		
 @rpc("any_peer","call_local","reliable")
 func removeBlock(pos:Vector3i):
 	if grid.has(pos):
 		body.mass -= Blockcatalog.getb(grid[pos].id).mass 
+		print(body.mass)
 		grid[pos].destroy()
 		if grid.size() < 1:
-			print("grid "+ name + "que free")
+			print("grid "+ name + " que free")
 			self.queue_free()
 	else:
 		print("ERROR: Block not found in grid Directory")
-		print(grid)
 func serialize_dic(dic:Dictionary):
 	var output:Dictionary 
 	for x in dic.keys():

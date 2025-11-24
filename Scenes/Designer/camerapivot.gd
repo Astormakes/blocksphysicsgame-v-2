@@ -1,8 +1,8 @@
 extends Node3D
 
-@export var move_speed := 0.05
-@export var fast_speed := 3.0
-@export var slow_speed := 0.2
+@export var move_speed := 2
+@export var fast_speed := 10.0
+@export var slow_speed := 0.5
 @export var look_sensitivity := 0.15
 @export var smoothing := 10.0
 
@@ -36,7 +36,8 @@ func _ready():
 
 
 
-func _process(_delta: float) -> void:
+
+func _physics_process(delta: float) -> void:
 	if not is_multiplayer_authority(): return
 	
 	if Input.is_action_just_pressed("exit"):
@@ -47,7 +48,12 @@ func _process(_delta: float) -> void:
 	var mouse_pos = get_viewport().get_mouse_position()
 	ray.target_position = to_local(camera.project_ray_normal(mouse_pos)*100 + camera.project_ray_origin(mouse_pos))
 	
-	var speed_mod = 1
+	var speed_mod = move_speed
+	
+	if Input.is_action_pressed("Run"):
+		speed_mod = fast_speed
+	if Input.is_action_pressed("Alt"):
+		speed_mod = slow_speed
 	
 	if Input.is_action_pressed("Forward"):
 		input_dir.z -= move_speed
@@ -59,12 +65,10 @@ func _process(_delta: float) -> void:
 		input_dir.x += move_speed
 	if Input.is_action_pressed("jump"):
 		input_dir.y += move_speed
-	if Input.is_action_pressed("Run"):
-		speed_mod = fast_speed
 	if Input.is_action_pressed("Sneak"):
-		speed_mod = slow_speed
+		input_dir.y -= move_speed
 	
-	transform.origin += basis * input_dir * move_speed * speed_mod
+	transform.origin += basis * input_dir * speed_mod * delta
 
 func _input(event: InputEvent) -> void: # Key Presses and Looking.
 	if not is_multiplayer_authority(): return

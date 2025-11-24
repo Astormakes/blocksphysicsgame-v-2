@@ -1,10 +1,9 @@
 extends Node
 
-# Example: 
-#		"showName": "Wood 1x1x3 Slope",
-#		"path": "",
-#		"mesh": "res://Meshes/1x1x3 Slope.obj",
-
+# id: int
+# showName: String
+# path: String
+# type: String
 
 @export var items:Array
 
@@ -36,9 +35,13 @@ func defaultitemlist():
 		0,
 		"Hands",
 		"",
+		""
 	))
+
 	items.insert(1,Itemdata.new(
 		1,
-		"Block",
+		"Metalblock",
 		"",
+		"Block"
 	))
+	items[1].blockid = 0

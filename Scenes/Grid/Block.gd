@@ -8,7 +8,7 @@ var pos: Vector3i
 var rot: int = 0 # 0–5 for orientation
 var colisionshape: CollisionShape3D
 var mesh:MeshInstance3D
-var parent:Node
+var parent:Node3D
 
 func _init(_parent:Node,_pos: Vector3i,_rot:int,_id:int = 1,_hp = null,_temp = 20) -> void:
 	id = _id
@@ -57,6 +57,5 @@ func set_properties(dic):
 	parent = dic["parent"]
 
 func get_properties() -> Dictionary:
-	var out:Dictionary = {"id":id,"hp":hp,"temp":temp,"pos":pos,"rot":rot,"parent":mesh}
-	return out
+	return {"id":id,"hp":hp,"temp":temp,"pos":pos,"rot":rot,"parent":mesh}
 	

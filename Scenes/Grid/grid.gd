@@ -33,7 +33,9 @@ func _ready():
 
 
 func action5_released(_pos,_normal,_id,_item): ## on T Press... 
-	body.freeze = !body.freeze
+	rpc("freeze")
+
+
 
 func mouse1_released(pos,normal:Vector3,id,itemid):
 	var item = ItemCatalog.geti(itemid)
@@ -54,6 +56,10 @@ func mouse2_released(pos,normal:Vector3,id,itemid):
 func request_dic():
 	rpc_id(1,"send_dic",multiplayer.get_unique_id(),"all")
 
+@rpc("any_peer","call_local","reliable")
+func freeze():
+	body.freeze = !body.freeze
+
 @rpc("any_peer","call_local")
 func send_dic(id,type):
 	if multiplayer.is_server():
@@ -69,8 +75,6 @@ func recieve_dic(data:Dictionary,type):
 				var out = data[x]
 				grid[x] = Block.new(body,out.pos,out.rot,out.id,out.hp,out.temp)
 				body.mass += Blockcatalog.getb(out.id).mass
-			for x in grid.keys():
-				grid[x].update()
 			body.mass -= 1 
 
 

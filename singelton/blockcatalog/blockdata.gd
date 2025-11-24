@@ -29,7 +29,7 @@ func _init(
 	_cost: float = 0.0,
 	_mass: float = 1.0,
 	_hpmax: int = 100,
-	_size: Vector3 = Vector3(0.2, 0.2, 0.2),
+	_size: Vector3i = Vector3i(1, 1, 1),
 	_flows: int = 0b000100, # only 8 bits!
 	_volume: float = 0.0,
 	_flowssec: int = 0 # only 8 bits!

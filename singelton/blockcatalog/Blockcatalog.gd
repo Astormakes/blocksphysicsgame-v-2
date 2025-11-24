@@ -58,7 +58,7 @@ func defaultblocklist():
 		10.0,
 		20,#mass 30?
 		500,
-		Vector3(0.2,0.2,0.2)
+		Vector3i.ONE
 	))
 	blocks.insert(1,Blockdata.new(
 		1,
@@ -72,7 +72,7 @@ func defaultblocklist():
 		10,
 		8,
 		200,
-		Vector3(0.2,.2,0.2)
+		Vector3i.ONE
 	))		
 	blocks.insert(2,Blockdata.new(
 		2,
@@ -86,7 +86,7 @@ func defaultblocklist():
 		5,
 		4,#
 		30,
-		Vector3(0.2,.2,0.2)
+		Vector3i.ONE
 	))
 	blocks.insert(3,Blockdata.new(
 		3,
@@ -100,7 +100,7 @@ func defaultblocklist():
 		10,
 		50,
 		200,
-		Vector3(0.2,.2,0.2)
+		Vector3i.ONE
 	))
 	blocks.insert(4,Blockdata.new(
 		4,
@@ -114,7 +114,7 @@ func defaultblocklist():
 		7,
 		3.5,
 		30,
-		Vector3(0.2,0.2,0.2),
+		Vector3i.ONE,
 		0,#[right,up,back,forward], # directions in which flow is allowed
 		4 # Volume Per block
 	))
@@ -130,7 +130,7 @@ func defaultblocklist():
 		20,
 		1.5,
 		100,
-		Vector3(0.2,0.2,0.2),
+		Vector3i.ONE,
 		0,#[right,up,back,forward], # directions in which flow is allowed
 		4 # Volume Per block
 	))
@@ -146,7 +146,7 @@ func defaultblocklist():
 		4,
 		0.25,
 		30,
-		Vector3(0.2,0.2,0.2),
+		Vector3i.ONE,
 		0,#[right,up,back,forward], # directions in which flow is allowed
 		4 # Volume Per block
 	))
@@ -162,7 +162,7 @@ func defaultblocklist():
 		13,
 		7,
 		500,
-		Vector3(0.4,0.2,0.2),
+		Vector3(2,1,1),
 		0,#[right,up,back,forward],
 		8,
 		0,#[right,left,up,back,forward]
@@ -179,7 +179,7 @@ func defaultblocklist():
 		35,
 		3,
 		200,
-		Vector3(0.4,0.2,0.2),
+		Vector3(2,1,1),
 		0,#[right,up,back,forward],
 		8,
 		0,#[right,left,up,back,forward]
@@ -196,7 +196,7 @@ func defaultblocklist():
 		7,
 		1,
 		30,
-		Vector3(0.4,0.2,0.2),
+		Vector3(2,1,1),
 		0,#[right,up,back,forward],
 		8,
 		0,#[right,left,up,back,forward]
@@ -213,7 +213,7 @@ func defaultblocklist():
 		7,
 		10.5,
 		30,
-		Vector3(0.6,0.2,0.2),
+		Vector3(3,1,1),
 		0,#[right,up,back,forward],
 		12,
 		0,#[right,left,up,back,forward]
@@ -230,7 +230,7 @@ func defaultblocklist():
 		20,
 		7.5,
 		100,
-		Vector3(0.6,0.2,0.2),
+		Vector3(3,1,1),
 		0,#[right,up,back,forward],
 		12,
 		0,#[right,left,up,back,forward]
@@ -247,7 +247,7 @@ func defaultblocklist():
 		4,
 		1.5,
 		30,
-		Vector3(0.6,0.2,0.2),
+		Vector3(3,1,1),
 		0,#[right,up,back,forward],
 		12,
 		0,#[right,left,up,back,forward],

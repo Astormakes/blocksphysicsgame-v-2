@@ -27,10 +27,11 @@ func _ready():
 		for x in test_layout: 
 			placeBlock(x.id,x.pos,x.rot)
 		removeBlock(Vector3i(0, 1, 0))
-		body.mass -= 1  
+		body.mass -= 1 
 	else:
 		request_dic()
-	
+
+
 func action5_released(_pos,_normal,_id,_item): ## on T Press... 
 	body.freeze = !body.freeze
 
@@ -67,8 +68,10 @@ func recieve_dic(data:Dictionary,type):
 			for x in data:
 				var out = data[x]
 				grid[x] = Block.new(body,out.pos,out.rot,out.id,out.hp,out.temp)
+				body.mass += Blockcatalog.getb(out.id).mass
 			for x in grid.keys():
 				grid[x].update()
+			body.mass -= 1 
 
 
 @rpc("any_peer","call_local","reliable")

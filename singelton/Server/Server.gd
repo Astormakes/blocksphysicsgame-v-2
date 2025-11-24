@@ -25,7 +25,6 @@ func create_game():
 	multiplayer.multiplayer_peer = peer
 	
 	get_tree().change_scene_to_file(world)
-	print(multiplayer.get_unique_id())
 
 
 func join_game(address = ""):

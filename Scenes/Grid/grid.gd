@@ -37,7 +37,6 @@ func mouse1_released(pos,normal:Vector3,id,item):
 	pos = (body.to_local(pos+normal/10)*5).snapped(Vector3.ONE)
 	$debugg.transform.origin = Vector3(pos)/5
 	id = int(id)
-	print("building:",pos)
 	rpc("placeBlock",item,pos,0)
 	
 func mouse2_released(pos,normal:Vector3,id,item):
@@ -45,7 +44,6 @@ func mouse2_released(pos,normal:Vector3,id,item):
 	$debugg.transform.origin = Vector3(pos)/5
 	id = int(id)
 	body.mass -= Blockcatalog.getb(item).mass
-	print("removing:",pos)
 	rpc("removeBlock",pos)
 
 func request_dic():
@@ -54,7 +52,6 @@ func request_dic():
 @rpc("any_peer","call_local")
 func send_dic(id,type):
 	if multiplayer.is_server():
-		print(id," requested grid ",type)
 		if type == "all":
 			var data = serialize_dic(grid) #i think this needs to be Serialized.... right now its not crashing but also not working
 			rpc_id(id,"recieve_dic",data,type)
@@ -62,7 +59,6 @@ func send_dic(id,type):
 @rpc("authority","call_remote","reliable")
 func recieve_dic(data:Dictionary,type):
 	if not multiplayer.is_server():
-		print(multiplayer.get_unique_id()," revieced grid ",type)
 		if type == "all":
 			for x in data:
 				var out = data[x]
@@ -77,13 +73,11 @@ func placeBlock(id: int,pos: Vector3i,rot:int):
 		var block = Block.new(body,pos,rot,id)
 		grid.set(pos,block)
 		body.mass += Blockcatalog.getb(id).mass 
-		#print("mass:" , body.mass)
 
 @rpc("any_peer","call_local","reliable")
 func removeBlock(pos:Vector3i):
 	if grid.has(pos):
 		body.mass -= Blockcatalog.getb(grid[pos].id).mass 
-		#print("mass:" , body.mass)
 		grid[pos].destroy()
 		if grid.size() < 1:
 			print("grid "+ name + "que free")

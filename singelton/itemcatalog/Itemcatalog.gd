@@ -45,3 +45,11 @@ func defaultitemlist():
 		"Block"
 	))
 	items[1].blockid = 0
+
+	items.insert(2,Itemdata.new(
+		2,
+		"Metalslope 1x1x1",
+		"",
+		"Shape_1x1x1"
+	))
+	items[2].blockid = 4

@@ -43,25 +43,48 @@ func _ready():
 
 	if multiplayer.is_server(): ### initilize testdata
 		var test_layout := [
-		{"itemid": 1, "pos": Vector3i(0, 0, 0), "rot": 0},
-		{"itemid": 1, "pos": Vector3i(1, 0, 0), "rot": 0},
-		{"itemid": 1, "pos": Vector3i(0, 1, 0), "rot": 0},
-		{"itemid": 1, "pos": Vector3i(0, 0, 1), "rot": 0},
-		{"itemid": 1, "pos": Vector3i(-1, 0, 0), "rot": 0},
-		{"itemid": 1, "pos": Vector3i(0, -1, 0), "rot": 0},
-		{"itemid": 1, "pos": Vector3i(0, 0, -1), "rot": 0}]
+		#{"itemid": 1, "pos": Vector3i(0, 0, 0), "rot": 0},
+		#{"itemid": 1, "pos": Vector3i(1, 0, 0), "rot": 0},
+		#{"itemid": 1, "pos": Vector3i(0, 1, 0), "rot": 0},
+		#{"itemid": 1, "pos": Vector3i(0, 0, 1), "rot": 0},
+		#{"itemid": 1, "pos": Vector3i(-1, 0, 0), "rot": 0},
+		#{"itemid": 1, "pos": Vector3i(0, -1, 0), "rot": 0},
+		#{"itemid": 1, "pos": Vector3i(0, 0, -1), "rot": 0}]
+		
+		{"itemid": 1,"pos": Vector3i(0, 0, 0), "rot": 0},
+		{"itemid": 1,"pos": Vector3i(1, 0, 0), "rot": 0},
+		{"itemid": 1,"pos": Vector3i(0, 0, 1), "rot": 0},
+		{"itemid": 1,"pos": Vector3i(-1, 0, 0), "rot": 0},
+		{"itemid": 1,"pos": Vector3i(0, -1, 0), "rot": 0},
+		{"itemid": 1,"pos": Vector3i(0, 0, -1), "rot": 0},
+		{"itemid": 2,"pos": Vector3i(1, 1, 0), "rot": 0},
+		{"itemid": 2,"pos": Vector3i(-1, 1, 0), "rot": 1},
+		{"itemid": 2,"pos": Vector3i(-1, -1, 0), "rot": 2},
+		{"itemid": 2,"pos": Vector3i(1, -1, 0), "rot": 3},
+		{"itemid": 2,"pos": Vector3i(0, 1, 1), "rot": 17},
+		{"itemid": 2,"pos": Vector3i(0, -1, -1), "rot": 19},
+		{"itemid": 2,"pos": Vector3i(0, -1, 1), "rot": 23},
+		{"itemid": 2,"pos": Vector3i(0, 1, -1), "rot": 16},
+		{"itemid": 1,"pos": Vector3i(0, 1, 0), "rot": 0}
+		]
+
+		
+		
+		
 		for x in test_layout: 
 			request_placement(body.to_global(x.pos/5.01),Vector3.ZERO,1,x.itemid,x.rot)
 		
 		request_removal(body.to_global(Vector3(0,1,0)/5.01),Vector3.ZERO,1)
-		#removeBlock(Vector3i(0, 1, 0))
+		request_removal(body.to_global(Vector3(0,0,0)/5.01),Vector3.ZERO,1)
+		request_removal(body.to_global(Vector3(0,-1,0)/5.01),Vector3.ZERO,1)
 		body.mass -= 1 
 	else:
 		request_dic()
 
 func action5_released(_pos,_normal,id,_item): ## on T Press... 
 	rpc("set_freeze",!body.freeze,int(id))
-
+	print_grid()
+	
 ## placing blocks
 func mouse1_released(pos,normal:Vector3,id,itemid,itemrotation):
 	rpc("request_placement",pos,normal,id,itemid,itemrotation)
@@ -121,7 +144,7 @@ func recieve_dic(data:Dictionary,type):
 			grid.clear()
 			for x in data:
 				var out = data[x]
-				grid[x] = Block.new(body,out.pos,out.rot,out.id,out.hp,out.temp)
+				grid[x] = Block.new(body,out.pos,out.rot,out.itemid,out.hp,out.temp)
 				body.mass += Blockcatalog.getb(out.id).mass
 			body.mass -= 1 
 
@@ -144,6 +167,9 @@ func removeBlock(pos:Vector3i):
 			body.mass -= mass
 	else:
 		print("ERROR: Block not found in grid Directory")
+
+func print_grid():
+	print(serialize_dic(grid))
 
 func serialize_dic(dic:Dictionary):
 	var output:Dictionary 

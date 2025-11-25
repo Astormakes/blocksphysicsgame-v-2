@@ -98,5 +98,5 @@ func set_properties(dic):
 	parent = dic["parent"]
 
 func get_properties() -> Dictionary:
-	return {"id":id,"hp":hp,"temp":temp,"pos":pos,"rot":rot,"parent":mesh}
+	return {"itemid":id,"hp":hp,"temp":temp,"pos":pos,"rot":rot,"parent":mesh}
 	

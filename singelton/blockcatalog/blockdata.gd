@@ -25,7 +25,7 @@ func _init(
 	_shape: String = "",
 	_material: String = "",
 	_colormat: Color = Color(1, 1, 1),
-	_type: String = "Block",
+	_type: String = "block",
 	_cost: float = 0.0,
 	_mass: float = 1.0,
 	_hpmax: int = 100,

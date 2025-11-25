@@ -42,7 +42,7 @@ func defaultitemlist():
 		1,
 		"Metalblock",
 		"",
-		"Block"
+		"block"
 	))
 	items[1].blockid = 0
 
@@ -50,6 +50,6 @@ func defaultitemlist():
 		2,
 		"Metalslope 1x1x1",
 		"",
-		"Shape_1x1x1"
+		"shape"
 	))
 	items[2].blockid = 4

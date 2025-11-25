@@ -17,24 +17,26 @@ func _ready():
 
 	if multiplayer.is_server(): ### initilize testdata
 		var test_layout := [
-		{"id": 0, "pos": Vector3i(0, 0, 0), "rot": 0},
-		{"id": 0, "pos": Vector3i(1, 0, 0), "rot": 0},
-		{"id": 0, "pos": Vector3i(0, 1, 0), "rot": 0},
-		{"id": 0, "pos": Vector3i(0, 0, 1), "rot": 0},
-		{"id": 0, "pos": Vector3i(-1, 0, 0), "rot": 0},
-		{"id": 0, "pos": Vector3i(0, -1, 0), "rot": 0},
-		{"id": 0, "pos": Vector3i(0, 0, -1), "rot": 0}]
+		{"itemid": 1, "pos": Vector3i(0, 0, 0), "rot": 0},
+		{"itemid": 1, "pos": Vector3i(1, 0, 0), "rot": 0},
+		{"itemid": 1, "pos": Vector3i(0, 1, 0), "rot": 0},
+		{"itemid": 1, "pos": Vector3i(0, 0, 1), "rot": 0},
+		{"itemid": 1, "pos": Vector3i(-1, 0, 0), "rot": 0},
+		{"itemid": 1, "pos": Vector3i(0, -1, 0), "rot": 0},
+		{"itemid": 1, "pos": Vector3i(0, 0, -1), "rot": 0}]
 		for x in test_layout: 
-			placeBlock(x.id,x.pos)
-		removeBlock(Vector3i(0, 1, 0))
+			request_placement(body.to_global(x.pos/5.01),Vector3.ZERO,1,x.itemid)
+		
+		request_removal(body.to_global(Vector3(0,1,0)/5.01),Vector3.ZERO,1)
+		#removeBlock(Vector3i(0, 1, 0))
 		body.mass -= 1 
 	else:
 		request_dic()
 
-func action5_released(_pos,_normal,_id,_item): ## on T Press... 
-	rpc("set_freeze",!body.freeze)
+func action5_released(_pos,_normal,id,_item): ## on T Press... 
+	rpc("set_freeze",!body.freeze,id)
 
-
+## placing blocks
 func mouse1_released(pos,normal:Vector3,id,itemid):
 	rpc("request_placement",pos,normal,id,itemid)
 
@@ -46,10 +48,14 @@ func request_placement(pos,normal:Vector3,id,itemid):
 		$debugg.transform.origin = Vector3(pos)/5
 		id = int(id)
 		placeBlock(item.blockid,pos)
+	if item.type == "shape":
+		
+		pass
 
 
+## removing blocks
 func mouse2_released(pos,normal:Vector3,id,_itemid):
-	rpc("request_removal",pos,normal,id)
+	rpc("request_removal",pos,normal,id) 
 
 @rpc("any_peer","call_local","reliable")
 func request_removal(pos,normal,id):
@@ -64,7 +70,7 @@ func request_dic():
 	rpc_id(1,"send_dic",multiplayer.get_unique_id(),"all")
 
 @rpc("any_peer","call_local","reliable")
-func set_freeze(state:bool):
+func set_freeze(state:bool,_id:int):
 	body.freeze = state
 	print(multiplayer.get_unique_id(), " freeze Status is ", body.freeze)
 
@@ -93,14 +99,16 @@ func placeBlock(id: int,pos: Vector3i):
 		var block = Block.new(body,pos,0,id)
 		grid.set(pos,block)
 		body.mass += Blockcatalog.getb(id).mass 
-		
+
 func removeBlock(pos:Vector3i):
 	if grid.has(pos):
-		body.mass -= Blockcatalog.getb(grid[pos].id).mass 
+		var mass = Blockcatalog.getb(grid[pos].id).mass 
 		grid[pos].destroy()
-		if grid.size() < 1:
+		if grid.is_empty():
 			print("grid "+ name + " que free")
 			self.queue_free()
+		else:
+			body.mass -= mass
 	else:
 		print("ERROR: Block not found in grid Directory")
 

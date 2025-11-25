@@ -139,7 +139,7 @@ func _input(event: InputEvent) -> void: # Key Presses and Looking.
 			if (action+action2) in obj:
 				var objpos = ray.get_collision_point()
 				var objnormal = ray.get_collision_normal()
-				obj.call_deferred(action+action2,objpos,objnormal,name,item)
+				obj.call_deferred(action+action2,objpos,objnormal,name,item,itemrotation)
 	
 	action2 = "_pressed"
 	if Input.is_action_just_released(action):
@@ -148,7 +148,7 @@ func _input(event: InputEvent) -> void: # Key Presses and Looking.
 			if (action+action2) in obj:
 				var objpos = ray.get_collision_point()
 				var objnormal = ray.get_collision_normal()
-				obj.call_deferred(action+action2,objpos,objnormal,name,item)
+				obj.call_deferred(action+action2,objpos,objnormal,name,item,itemrotation)
 
 	action = "action1"
 	action2 = "_released"

@@ -4,8 +4,8 @@ extends Resource
 @export var id: int
 @export var showName: String
 @export var path: String
-@export var mesh: String
-@export var shape: String
+@export var mesh: Mesh
+@export var shape: Shape3D
 @export var material: String
 @export var colormat: Color
 @export var type: String
@@ -38,8 +38,8 @@ func _init(
 	id = _id
 	showName = _showName
 	path = _path
-	mesh = _mesh
-	shape = _shape
+	mesh = load(_mesh)
+	shape = load(_shape)
 	material = _material
 	colormat = _colormat
 	type = _type

@@ -10,6 +10,32 @@ var creator = 0
 
 var body = self
 
+var rotationVectors = [
+Vector3(0, 0, 0),
+Vector3(0, 0, 1.57079633),
+Vector3(0, 0, 3.14159265),
+Vector3(0, 0, 4.71238898),
+Vector3(1.57079633, 0, 0),
+Vector3(1.57079633, 0, 1.57079633),
+Vector3(1.57079633, 0, 3.14159265),
+Vector3(1.57079633, 0, 4.71238898),
+Vector3(3.14159265, 0, 0),
+Vector3(3.14159265, 0, 1.57079633),
+Vector3(3.14159265, 0, 3.14159265),
+Vector3(3.14159265, 0, 4.71238898),
+Vector3(4.71238898, 0, 0),
+Vector3(4.71238898, 0, 1.57079633),
+Vector3(4.71238898, 0, 3.14159265),
+Vector3(4.71238898, 0, 4.71238898),
+Vector3(0, 1.57079633, 0),
+Vector3(0, 1.57079633, 1.57079633),
+Vector3(0, 1.57079633, 3.14159265),
+Vector3(0, 1.57079633, 4.71238898),
+Vector3(0, 4.71238898, 0),
+Vector3(0, 4.71238898, 1.57079633),
+Vector3(0, 4.71238898, 3.14159265),
+Vector3(0, 4.71238898, 4.71238898)]
+
 func _ready():
 	body.freeze = frozen
 	print(multiplayer.get_unique_id(),": grid:",name, "created")
@@ -25,7 +51,7 @@ func _ready():
 		{"itemid": 1, "pos": Vector3i(0, -1, 0), "rot": 0},
 		{"itemid": 1, "pos": Vector3i(0, 0, -1), "rot": 0}]
 		for x in test_layout: 
-			request_placement(body.to_global(x.pos/5.01),Vector3.ZERO,1,x.itemid)
+			request_placement(body.to_global(x.pos/5.01),Vector3.ZERO,1,x.itemid,x.rot)
 		
 		request_removal(body.to_global(Vector3(0,1,0)/5.01),Vector3.ZERO,1)
 		#removeBlock(Vector3i(0, 1, 0))
@@ -34,27 +60,25 @@ func _ready():
 		request_dic()
 
 func action5_released(_pos,_normal,id,_item): ## on T Press... 
-	rpc("set_freeze",!body.freeze,id)
+	rpc("set_freeze",!body.freeze,int(id))
 
 ## placing blocks
-func mouse1_released(pos,normal:Vector3,id,itemid):
-	rpc("request_placement",pos,normal,id,itemid)
+func mouse1_released(pos,normal:Vector3,id,itemid,itemrotation):
+	rpc("request_placement",pos,normal,id,itemid,itemrotation)
 
 @rpc("any_peer","call_local","reliable")
-func request_placement(pos,normal:Vector3,id,itemid):
+func request_placement(pos,normal:Vector3,_id,itemid,itemrotation):
 	pos = Vector3i((body.to_local(pos+normal/10)*5).snapped(Vector3.ONE))
+	if grid.has(pos): return
 	var item = ItemCatalog.geti(itemid)
 	if item.type == "block":
-		$debugg.transform.origin = Vector3(pos)/5
-		id = int(id)
-		placeBlock(item.blockid,pos)
+		placeBlock(item.blockid,pos,0)
 	if item.type == "shape":
-		
-		pass
+		placeBlock(item.blockid,pos,itemrotation)
 
 
 ## removing blocks
-func mouse2_released(pos,normal:Vector3,id,_itemid):
+func mouse2_released(pos,normal:Vector3,id,_itemid,_itemrotation):
 	rpc("request_removal",pos,normal,id) 
 
 @rpc("any_peer","call_local","reliable")
@@ -63,8 +87,17 @@ func request_removal(pos,normal,id):
 	print("removing block at:",pos)
 	var block = Blockcatalog.getb(grid[pos].id)
 	if block.type == "block":
-		$debugg.transform.origin = Vector3(pos)/5
 		removeBlock(pos)
+	
+	if block.type == "shape":
+		removeBlock(pos)
+
+func looking_at(pos,normal:Vector3,_id,itemid,itemrotation):
+	pos = Vector3i((body.to_local(pos+normal/10)*5).snapped(Vector3.ONE))
+	$debugg.transform.origin = Vector3(pos)/5
+	print(itemrotation)
+	$debugg.mesh = Blockcatalog.getb(ItemCatalog.geti(itemid).blockid).mesh
+	$debugg.rotation = rotationVectors[itemrotation]
 
 func request_dic():
 	rpc_id(1,"send_dic",multiplayer.get_unique_id(),"all")
@@ -94,9 +127,9 @@ func recieve_dic(data:Dictionary,type):
 
 
 
-func placeBlock(id: int,pos: Vector3i):
+func placeBlock(id: int,pos: Vector3i,rot:int):
 	if not grid.has(pos):
-		var block = Block.new(body,pos,0,id)
+		var block = Block.new(body,pos,rot,id)
 		grid.set(pos,block)
 		body.mass += Blockcatalog.getb(id).mass 
 

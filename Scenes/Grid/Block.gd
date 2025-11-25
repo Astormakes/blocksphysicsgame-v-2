@@ -10,12 +10,40 @@ var colisionshape: CollisionShape3D
 var mesh:MeshInstance3D
 var parent:Node3D
 
+var rotationVectors = [
+Vector3(0, 0, 0),
+Vector3(0, 0, 1.57079633),
+Vector3(0, 0, 3.14159265),
+Vector3(0, 0, 4.71238898),
+Vector3(1.57079633, 0, 0),
+Vector3(1.57079633, 0, 1.57079633),
+Vector3(1.57079633, 0, 3.14159265),
+Vector3(1.57079633, 0, 4.71238898),
+Vector3(3.14159265, 0, 0),
+Vector3(3.14159265, 0, 1.57079633),
+Vector3(3.14159265, 0, 3.14159265),
+Vector3(3.14159265, 0, 4.71238898),
+Vector3(4.71238898, 0, 0),
+Vector3(4.71238898, 0, 1.57079633),
+Vector3(4.71238898, 0, 3.14159265),
+Vector3(4.71238898, 0, 4.71238898),
+Vector3(0, 1.57079633, 0),
+Vector3(0, 1.57079633, 1.57079633),
+Vector3(0, 1.57079633, 3.14159265),
+Vector3(0, 1.57079633, 4.71238898),
+Vector3(0, 4.71238898, 0),
+Vector3(0, 4.71238898, 1.57079633),
+Vector3(0, 4.71238898, 3.14159265),
+Vector3(0, 4.71238898, 4.71238898)]
+
 func _init(_parent:Node,_pos: Vector3i,_rot:int,_id:int = 1,_hp = null,_temp = 20) -> void:
 	id = _id
+	
 	if _hp == null:
 		hp = Blockcatalog.getb(_id).hpmax
 	else:
 		hp = _hp
+	
 	temp = _temp
 	pos = _pos
 	rot = _rot
@@ -24,21 +52,34 @@ func _init(_parent:Node,_pos: Vector3i,_rot:int,_id:int = 1,_hp = null,_temp = 2
 
 
 func update():
-	mesh = MeshInstance3D.new()
-	mesh.transform.origin = Vector3(pos/5.0)
-	mesh.mesh = load(Blockcatalog.getb(id).mesh)
-	parent.add_child(mesh)
-	mesh.name = str(pos)+"_mesh"
-	
-	colisionshape = CollisionShape3D.new()
-	parent.add_child(colisionshape)
-	colisionshape.transform.origin = Vector3(pos/5.0)
-	var shape = BoxShape3D.new()
-	shape.size = Vector3(0.2,0.2,0.2)
-	colisionshape.shape = shape
-	colisionshape = colisionshape
-	colisionshape.name = str(pos)+"_shape"
-	
+	var thing:Blockdata = Blockcatalog.getb(id)
+	if thing.type == "block":
+		mesh = MeshInstance3D.new()
+		mesh.transform.origin = Vector3(pos/5.0)
+		mesh.mesh = thing.mesh
+		parent.add_child(mesh)
+		mesh.name = str(pos)+"_mesh"
+		
+		colisionshape = CollisionShape3D.new()
+		parent.add_child(colisionshape)
+		colisionshape.transform.origin = Vector3(pos/5.0)
+		colisionshape.shape = thing.shape
+		colisionshape.name = str(pos)+"_shape"
+
+	if thing.type == "shape":
+		mesh = MeshInstance3D.new()
+		mesh.transform.origin = Vector3(pos/5.0)
+		mesh.mesh = thing.mesh
+		parent.add_child(mesh)
+		mesh.rotation = rotationVectors[rot]
+		mesh.name = str(pos)+"_mesh"
+		
+		colisionshape = CollisionShape3D.new()
+		parent.add_child(colisionshape)
+		colisionshape.transform.origin = Vector3(pos/5.0)
+		colisionshape.rotation = rotationVectors[rot]
+		colisionshape.shape = thing.shape
+		colisionshape.name = str(pos)+"_shape"
 
 func destroy() -> void:
 	print("removed block with pos:", pos)

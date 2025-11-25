@@ -15,6 +15,7 @@ var yaw:float = 0.0
 var pitch:float = 0.0
 
 var item = 0
+var itemrotation:int = 0
 
 var ray:RayCast3D = RayCast3D.new()
 
@@ -49,6 +50,16 @@ func _physics_process(delta: float) -> void:
 	ray.target_position = to_local(camera.project_ray_normal(mouse_pos)*100 + camera.project_ray_origin(mouse_pos))
 	
 	var speed_mod = move_speed
+	
+	var currentitem = ItemCatalog.geti(item)
+	
+	if currentitem.type == "block" or currentitem.type == "shape":
+		var obj = ray.get_collider()
+		if obj:
+			if "looking_at" in obj:
+				var objpos = ray.get_collision_point()
+				var objnormal = ray.get_collision_normal()
+				obj.call_deferred("looking_at",objpos,objnormal,name,item,itemrotation)
 	
 	if Input.is_action_pressed("Run"):
 		speed_mod = fast_speed
@@ -96,6 +107,9 @@ func _input(event: InputEvent) -> void: # Key Presses and Looking.
 		if ItemCatalog.geti(item):
 			lable.text = str(item) + " " + ItemCatalog.geti(item).showName
 	
+	if Input.is_action_just_pressed("rotateblocksimple"):
+		itemrotation += 1
+		if itemrotation >23: itemrotation = 0
 	
 	var action = "mouse1"
 	var action2 = "_pressed"
@@ -105,7 +119,7 @@ func _input(event: InputEvent) -> void: # Key Presses and Looking.
 			if (action+action2) in obj:
 				var objpos = ray.get_collision_point()
 				var objnormal = ray.get_collision_normal()
-				obj.call_deferred(action+action2,objpos,objnormal,name,item)
+				obj.call_deferred(action+action2,objpos,objnormal,name,item,itemrotation)
 	
 	action = "mouse1"
 	action2 = "_released"
@@ -115,7 +129,7 @@ func _input(event: InputEvent) -> void: # Key Presses and Looking.
 			if (action+action2) in obj:
 				var objpos = ray.get_collision_point()
 				var objnormal = ray.get_collision_normal()
-				obj.call_deferred(action+action2,objpos,objnormal,name,item)
+				obj.call_deferred(action+action2,objpos,objnormal,name,item,itemrotation)
 		
 	action = "mouse2"
 	action2 = "_released"

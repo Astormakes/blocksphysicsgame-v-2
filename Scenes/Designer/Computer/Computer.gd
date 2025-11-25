@@ -6,7 +6,7 @@ extends StaticBody3D
 @onready var designerspawner:MultiplayerSpawner = $"../DesignerCameraSpawner"
 @onready var gridspawner:MultiplayerSpawner = $"../GridSpawner"
 
-func mouse1_released(pos,normal,id,_item):
+func mouse1_released(pos,normal,id,_item,_itemrotation):
 	rpc_id(1,"Spawn_DesingerCam",id)
 	print("m1_released:",pos, " normal:",normal," id:",id)
 

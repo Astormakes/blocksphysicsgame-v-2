@@ -13,6 +13,7 @@ var action2
 # Called when the node enters the scene tree for the first time.
 
 var item:int
+var itemrotation:int = 0
 
 func _ready() -> void:
 	if is_multiplayer_authority():
@@ -22,15 +23,29 @@ func _ready() -> void:
 	ray.debug_shape_thickness = 1
 	add_child(ray)
 	
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta: float) -> void:
-	var displaytext = str(Engine.get_frames_per_second()) + "\n"
 	
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _physics_process(_delta: float) -> void:
+	if not is_multiplayer_authority(): return
+	if not camera.current: 
+		lable.text = ""
+		return
+	
+	var currentitem = ItemCatalog.geti(item)
+	var displaytext = str(Engine.get_frames_per_second()) + "\n"
+	var obj = ray.get_collider()
+
 	fps.text = displaytext
 	
 	var mouse_pos = get_viewport().get_mouse_position()
 	ray.target_position = to_local(camera.project_ray_normal(mouse_pos)*2 + camera.project_ray_origin(mouse_pos))
+
+	if currentitem.type == "block" or currentitem.type == "shape":
+		if obj:
+			if "looking_at" in obj:
+				var objpos = ray.get_collision_point()
+				var objnormal = ray.get_collision_normal()
+				obj.call_deferred("looking_at",objpos,objnormal,player.name,item,itemrotation)
 
 func _input(_event: InputEvent) -> void:
 	if not is_multiplayer_authority(): return
@@ -40,17 +55,17 @@ func _input(_event: InputEvent) -> void:
 	
 	if Input.is_action_just_released("mousewheel_up"):
 		item = clamp(item+1,0,ItemCatalog.size()-1)
-		print(item)
-		print(ItemCatalog.geti(item))
 		if ItemCatalog.geti(item):
 			lable.text = str(item) + " " + ItemCatalog.geti(item).showName
 		
 	if Input.is_action_just_released("mousewheel_down"):
 		item = clamp(item-1,0,ItemCatalog.size()-1)
-		print(item)
-		print(ItemCatalog.geti(item))
 		if ItemCatalog.geti(item):
 			lable.text = str(item) + " " + ItemCatalog.geti(item).showName
+	
+	if Input.is_action_just_pressed("rotateblocksimple"):
+		itemrotation += 1
+		if itemrotation == 24: itemrotation = 0
 	
 	action = "mouse1"
 	action2 = "_pressed"
@@ -60,7 +75,7 @@ func _input(_event: InputEvent) -> void:
 			if (action+action2) in obj:
 				var objpos = ray.get_collision_point()
 				var objnormal = ray.get_collision_normal()
-				obj.call_deferred(action+action2,objpos,objnormal,player.name,item)
+				obj.call_deferred(action+action2,objpos,objnormal,player.name,item,itemrotation)
 	
 	action = "mouse1"
 	action2 = "_released"
@@ -70,7 +85,7 @@ func _input(_event: InputEvent) -> void:
 			if (action+action2) in obj:
 				var objpos = ray.get_collision_point()
 				var objnormal = ray.get_collision_normal()
-				obj.call_deferred(action+action2,objpos,objnormal,player.name,item)
+				obj.call_deferred(action+action2,objpos,objnormal,player.name,item,itemrotation)
 		
 	action = "mouse2"
 	action2 = "_released"
@@ -80,7 +95,7 @@ func _input(_event: InputEvent) -> void:
 			if (action+action2) in obj:
 				var objpos = ray.get_collision_point()
 				var objnormal = ray.get_collision_normal()
-				obj.call_deferred(action+action2,objpos,objnormal,player.name,item)
+				obj.call_deferred(action+action2,objpos,objnormal,player.name,item,itemrotation)
 	
 	action2 = "_pressed"
 	if Input.is_action_just_released(action):
@@ -89,7 +104,7 @@ func _input(_event: InputEvent) -> void:
 			if (action+action2) in obj:
 				var objpos = ray.get_collision_point()
 				var objnormal = ray.get_collision_normal()
-				obj.call_deferred(action+action2,objpos,objnormal,player.name,item)
+				obj.call_deferred(action+action2,objpos,objnormal,player.name,item,itemrotation)
 
 	action = "action1"
 	action2 = "_released"

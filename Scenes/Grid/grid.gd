@@ -33,7 +33,7 @@ func _ready():
 
 
 func action5_released(_pos,_normal,_id,_item): ## on T Press... 
-	rpc("freeze")
+	rpc("set_freeze",!body.freeze)
 
 
 
@@ -57,8 +57,9 @@ func request_dic():
 	rpc_id(1,"send_dic",multiplayer.get_unique_id(),"all")
 
 @rpc("any_peer","call_local","reliable")
-func freeze():
-	body.freeze = !body.freeze
+func set_freeze(state:bool):
+	body.freeze = state
+	print(multiplayer.get_unique_id(), " freeze Status is ", body.freeze)
 
 @rpc("any_peer","call_local")
 func send_dic(id,type):
@@ -84,13 +85,11 @@ func placeBlock(id: int,pos: Vector3i,rot:int):
 		var block = Block.new(body,pos,rot,id)
 		grid.set(pos,block)
 		body.mass += Blockcatalog.getb(id).mass 
-		print(body.mass)
 		
 @rpc("any_peer","call_local","reliable")
 func removeBlock(pos:Vector3i):
 	if grid.has(pos):
 		body.mass -= Blockcatalog.getb(grid[pos].id).mass 
-		print(body.mass)
 		grid[pos].destroy()
 		if grid.size() < 1:
 			print("grid "+ name + " que free")

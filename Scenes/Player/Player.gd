@@ -1,13 +1,13 @@
 extends Node
 
-var speed = 10
+var speed = 75
 var mouseSpeed = 0.15
 var runMul = 2
 var coruchMul = 0.5
 
-var accel_ground = 60
+var accel_ground = 6000000
 var accel_air = 20
-var decel_ground = 120
+var decel_ground = 1200000000
 var decel_air = 5
 
 var focus = false
@@ -96,7 +96,7 @@ func movement(_delta) -> void:
 		current_speed *= runMul
 		
 	if Input.is_action_just_pressed("jump") and _is_on_floor():
-		body.linear_velocity.y = 5.0
+		body.linear_velocity.y = 50.0
 
 
 	#Movement from Head direction

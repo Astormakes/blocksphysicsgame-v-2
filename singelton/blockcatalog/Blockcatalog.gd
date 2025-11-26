@@ -54,7 +54,7 @@ func defaultblocklist():
 		"res://Meshes/DefaultBoxMesh.tres",
 		"res://prebuilds/defaultColisionShape.tres",
 		"res://Materials/MultiMeshBlockTexture.tres",
-		Color(110,110,110,255)/255,
+		Color(110.0, 110.0, 110.0, 1.0)/255,
 		"block",
 		10.0,
 		20,#mass 30?

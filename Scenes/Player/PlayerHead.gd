@@ -193,7 +193,7 @@ func _input(_event: InputEvent) -> void:
 				obj.call_deferred(action+action2,objpos,objnormal,player.name,item)
 	
 	action2 = "_pressed"
-	if Input.is_action_just_released(action):
+	if Input.is_action_pressed(action):
 		var obj = ray.get_collider()
 		if obj:
 			if (action+action2) in obj:

@@ -8,10 +8,36 @@ extends StaticBody3D
 
 func mouse1_released(pos,normal,id,_item,_itemrotation):
 	rpc_id(1,"Spawn_DesingerCam",id)
-	print("m1_released:",pos, " normal:",normal," id:",id)
+	#print("m1_released:",pos, " normal:",normal," id:",id)
 
 func action5_released(_pos,_normal,id,_item): ## on T Press... 
 	rpc_id(1,"spawn_grid",id)
+	
+var bla = 0
+
+func action5_pressed(_pos,_normal,id,_item): ## on T Press... 
+	rpc_id(1,"spawn_grid",id)
+	rpc_id(1,"spawn_grid",id)
+	rpc_id(1,"spawn_grid",id)
+	rpc_id(1,"spawn_grid",id)
+	rpc_id(1,"spawn_grid",id)
+	rpc_id(1,"spawn_grid",id)
+	rpc_id(1,"spawn_grid",id)
+	rpc_id(1,"spawn_grid",id)
+	rpc_id(1,"spawn_grid",id)
+	rpc_id(1,"spawn_grid",id)
+	rpc_id(1,"spawn_grid",id)
+	rpc_id(1,"spawn_grid",id)
+	rpc_id(1,"spawn_grid",id)
+	rpc_id(1,"spawn_grid",id)
+	rpc_id(1,"spawn_grid",id)
+	rpc_id(1,"spawn_grid",id)
+	rpc_id(1,"spawn_grid",id)
+	rpc_id(1,"spawn_grid",id)
+	rpc_id(1,"spawn_grid",id)
+	rpc_id(1,"spawn_grid",id)
+	bla = bla + 20
+	print(bla)
 
 @rpc("any_peer","call_local","reliable")
 func spawn_grid(id):
@@ -20,21 +46,21 @@ func spawn_grid(id):
 		grid.name = "grid"+id+"_"+str(randi_range(0,9999))
 		gridspawner.call_deferred("add_child",grid,true)
 		grid.creator = id
-		grid.transform.origin = get_parent().transform.origin + Vector3(0,2,-1)
-		grid.frozen = true
+		grid.transform.origin = get_parent().transform.origin + Vector3(0,2,-1)+Vector3(randf_range(0, 25), randf_range(100, 500), randf_range(0, 25))
+		grid.frozen = false
 
 @rpc("any_peer","call_local","reliable")
 func Spawn_DesingerCam(id) -> void: # spawn designer pivot
 	if multiplayer.is_server():
 		var createdesigner = true
 		for x in designerspawner.get_children():
-			print(x.name)
+			#print(x.name)
 			if x.name == id:
 				createdesigner = false
-				print("designer allready exists ", id)
+				#print("designer allready exists ", id)
 				break
 		if createdesigner:
-			print("new designer ", id)
+			#print("new designer ", id)
 			var DesingerCam:Node3D = DesignerCameraPackage.instantiate()
 			DesingerCam.name = id
 			designerspawner.call_deferred("add_child",DesingerCam)

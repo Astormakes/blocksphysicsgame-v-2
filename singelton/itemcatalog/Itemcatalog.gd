@@ -1,6 +1,5 @@
 extends Node
 
-# id: int
 # showName: String
 # path: String
 # type: String
@@ -32,14 +31,12 @@ func size() -> int:
 
 func defaultitemlist(): 
 	items.insert(0,Itemdata.new(
-		0,
 		"Hands",
 		"",
 		""
 	))
 
 	items.insert(1,Itemdata.new(
-		1,
 		"Metalblock",
 		"",
 		"block"
@@ -47,9 +44,15 @@ func defaultitemlist():
 	items[1].blockid = 0
 
 	items.insert(2,Itemdata.new(
-		2,
 		"Metalslope 1x1x1",
 		"",
 		"shape"
 	))
 	items[2].blockid = 4
+
+	items.insert(3,Itemdata.new(
+		"Metalslope 1x1x2",
+		"",
+		"shape"
+	))
+	items[3].blockid = 7

@@ -83,11 +83,7 @@ func mouse1_released(pos,normal:Vector3,id,itemid,itemrotation):
 func request_placement(pos,normal:Vector3,_id,itemid,itemrotation):
 	pos = Vector3i((body.to_local(pos+normal/10)*5).snapped(Vector3.ONE))
 	if grid.has(pos): return
-	var item = ItemCatalog.geti(itemid)
-	if item.type == "block":
-		placeBlock(item.blockid,pos,0)
-	if item.type == "shape":
-		placeBlock(item.blockid,pos,itemrotation)
+	placeBlock(ItemCatalog.geti(itemid).blockid,pos,itemrotation)
 
 
 ## removing blocks
@@ -95,14 +91,10 @@ func mouse2_released(pos,normal:Vector3,id,_itemid,_itemrotation):
 	rpc("request_removal",pos,normal,id) 
 
 @rpc("any_peer","call_local","reliable")
-func request_removal(pos,normal,id):
+func request_removal(pos,normal,_id):
 	pos = Vector3i((body.to_local(pos-normal/10)*5).snapped(Vector3.ONE))
-	var block = Blockcatalog.getb(grid[pos].id)
-	if block.type == "block":
-		removeBlock(pos)
-	
-	if block.type == "shape":
-		removeBlock(pos)
+	#var block = Blockcatalog.getb(grid[pos].id)
+	removeBlock(pos)
 
 func looking_at(pos,normal:Vector3,_id,itemid,itemrotation):
 	pos = Vector3i((body.to_local(pos+normal/10)*5).snapped(Vector3.ONE))
@@ -134,16 +126,29 @@ func recieve_dic(data:Dictionary,type):
 			for x in data:
 				var out = data[x]
 				grid[x] = Block.new(body,out.pos,out.rot,out.itemid,out.hp,out.temp)
-				body.mass += Blockcatalog.getb(out.id).mass
+				body.mass += Blockcatalog.getb(out.itemid).mass
 			body.mass -= 1 
 
 
 
 func placeBlock(id: int,pos: Vector3i,rot:int):
 	if not grid.has(pos):
-		var block = Block.new(body,pos,rot,id)
-		grid.set(pos,block)
-		body.mass += Blockcatalog.getb(id).mass 
+		var gridblock = Block.new(body,pos,rot,id)
+		var block = Blockcatalog.getb(id)
+		
+		if block.type == "block":
+			grid.set(pos,gridblock)
+			body.mass += block.mass 
+		
+		if block.type == "shape":
+			var size = block.size
+			for x in size.x:
+				for y in size.y:
+					for z in size.z:
+						print(Vector3(x,y,z))
+			grid.set(pos,gridblock)
+			body.mass += block.mass 
+
 
 func removeBlock(pos:Vector3i):
 	if grid.has(pos):

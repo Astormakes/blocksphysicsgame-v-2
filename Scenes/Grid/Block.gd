@@ -82,7 +82,7 @@ func update():
 		colisionshape.name = str(pos)+"_shape"
 
 func destroy() -> void:
-	print("removed block with pos:", pos)
+	#print("removed block with pos:", pos)
 	if colisionshape:
 		colisionshape.free()
 	if mesh:

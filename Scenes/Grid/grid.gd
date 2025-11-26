@@ -38,7 +38,6 @@ Vector3(0, 4.71238898, 4.71238898)]
 
 func _ready():
 	body.freeze = frozen
-	print(multiplayer.get_unique_id(),": grid:",name, "created")
 	
 
 	if multiplayer.is_server(): ### initilize testdata
@@ -107,18 +106,15 @@ func mouse2_released(pos,normal:Vector3,id,_itemid,_itemrotation):
 @rpc("any_peer","call_local","reliable")
 func request_removal(pos,normal,id):
 	pos = Vector3i((body.to_local(pos-normal/10)*5).snapped(Vector3.ONE))
-	print("removing block at:",pos)
 	var block = Blockcatalog.getb(grid[pos].id)
 	if block.type == "block":
 		removeBlock(pos)
-	
 	if block.type == "shape":
 		removeBlock(pos)
 
 func looking_at(pos,normal:Vector3,_id,itemid,itemrotation):
 	pos = Vector3i((body.to_local(pos+normal/10)*5).snapped(Vector3.ONE))
 	$debugg.transform.origin = Vector3(pos)/5
-	print(itemrotation)
 	$debugg.mesh = Blockcatalog.getb(ItemCatalog.geti(itemid).blockid).mesh
 	$debugg.rotation = rotationVectors[itemrotation]
 

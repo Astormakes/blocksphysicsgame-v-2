@@ -151,7 +151,6 @@ func placeBlock(id: int,pos: Vector3,normal:Vector3,rot:int):
 		var block = Blockcatalog.getb(id)
 		if block.size == Vector3.ONE:
 			var gridblock = Block.new(body,pos,rot,id)
-			print("block:",Vector3i(pos))
 			grid.set(Vector3i(pos),gridblock)
 			body.mass += block.mass 
 			
@@ -169,7 +168,6 @@ func placeBlock(id: int,pos: Vector3,normal:Vector3,rot:int):
 						# rotate offset positions from size to point in the actual direction the slope is pointing
 						var posoffset = Vector3i((rotaedbasis*Vector3(x,y,z)) + pos)
 						placepositions.append(posoffset)
-						print("checking:",posoffset)
 						if grid.has(posoffset): 
 							print("block blocked.")
 							return
@@ -179,7 +177,6 @@ func placeBlock(id: int,pos: Vector3,normal:Vector3,rot:int):
 			var gridblock = Block.new(body,pos,rot,id)
 			for x in placepositions:
 				gridblock.positions.append(x)
-				print("shape:",Vector3i(x))
 				grid.set(Vector3i(x),gridblock)
 				
 

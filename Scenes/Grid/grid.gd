@@ -146,9 +146,15 @@ func placeBlock(id: int,pos: Vector3i,rot:int):
 				for y in size.y:
 					for z in size.z:
 						print(Vector3(x,y,z))
+						# rotate by item Rotation to point in the actual direction the slope is pointing
+						
+						# iterate though the grid array adding the same gridblock reference to each cell
+						
+						# set body.mass to the block.mass / (x*y*z) amount of blocks this structure occupies.
+						
+						# this should be usable for every kind of custom size object.
 			grid.set(pos,gridblock)
 			body.mass += block.mass 
-
 
 func removeBlock(pos:Vector3i):
 	if grid.has(pos):

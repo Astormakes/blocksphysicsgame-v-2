@@ -5,6 +5,7 @@ const BLOCK_SIZE: float = 0.2 # 20 cm
 var grid:Dictionary
 
 var creator = 0
+var ghostitem = 0
 
 @export var frozen: bool = false
 
@@ -43,14 +44,6 @@ func _ready():
 
 	if multiplayer.is_server(): ### initilize testdata
 		var test_layout := [
-		#{"itemid": 1, "pos": Vector3i(0, 0, 0), "rot": 0},
-		#{"itemid": 1, "pos": Vector3i(1, 0, 0), "rot": 0},
-		#{"itemid": 1, "pos": Vector3i(0, 1, 0), "rot": 0},
-		#{"itemid": 1, "pos": Vector3i(0, 0, 1), "rot": 0},
-		#{"itemid": 1, "pos": Vector3i(-1, 0, 0), "rot": 0},
-		#{"itemid": 1, "pos": Vector3i(0, -1, 0), "rot": 0},
-		#{"itemid": 1, "pos": Vector3i(0, 0, -1), "rot": 0}]
-		
 		{"itemid": 1,"pos": Vector3i(0, 0, 0), "rot": 0},
 		{"itemid": 1,"pos": Vector3i(1, 0, 0), "rot": 0},
 		{"itemid": 1,"pos": Vector3i(0, 0, 1), "rot": 0},
@@ -67,9 +60,6 @@ func _ready():
 		{"itemid": 2,"pos": Vector3i(0, 1, -1), "rot": 16},
 		{"itemid": 1,"pos": Vector3i(0, 1, 0), "rot": 0}
 		]
-
-		
-		
 		
 		for x in test_layout: 
 			request_placement(body.to_global(x.pos/5.01),Vector3.ZERO,1,x.itemid,x.rot)
@@ -107,7 +97,6 @@ func mouse2_released(pos,normal:Vector3,id,_itemid,_itemrotation):
 @rpc("any_peer","call_local","reliable")
 func request_removal(pos,normal,id):
 	pos = Vector3i((body.to_local(pos-normal/10)*5).snapped(Vector3.ONE))
-	print("removing block at:",pos)
 	var block = Blockcatalog.getb(grid[pos].id)
 	if block.type == "block":
 		removeBlock(pos)
@@ -118,9 +107,10 @@ func request_removal(pos,normal,id):
 func looking_at(pos,normal:Vector3,_id,itemid,itemrotation):
 	pos = Vector3i((body.to_local(pos+normal/10)*5).snapped(Vector3.ONE))
 	$debugg.transform.origin = Vector3(pos)/5
-	print(itemrotation)
-	$debugg.mesh = Blockcatalog.getb(ItemCatalog.geti(itemid).blockid).mesh
-	$debugg.rotation = rotationVectors[itemrotation]
+	if ghostitem != itemid:
+		ghostitem = itemid
+		$debugg.mesh = Blockcatalog.getb(ItemCatalog.geti(itemid).blockid).mesh
+		$debugg.rotation = rotationVectors[itemrotation]
 
 func request_dic():
 	rpc_id(1,"send_dic",multiplayer.get_unique_id(),"all")
@@ -128,7 +118,6 @@ func request_dic():
 @rpc("any_peer","call_local","reliable")
 func set_freeze(state:bool,_id:int):
 	body.freeze = state
-	print(multiplayer.get_unique_id(), " freeze Status is ", body.freeze)
 
 @rpc("any_peer","call_local")
 func send_dic(id,type):
@@ -161,7 +150,6 @@ func removeBlock(pos:Vector3i):
 		var mass = Blockcatalog.getb(grid[pos].id).mass 
 		grid[pos].destroy()
 		if grid.is_empty():
-			print("grid "+ name + " que free")
 			self.queue_free()
 		else:
 			body.mass -= mass

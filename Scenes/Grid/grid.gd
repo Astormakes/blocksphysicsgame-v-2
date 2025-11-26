@@ -58,7 +58,8 @@ func _ready():
 		{"itemid": 2,"pos": Vector3i(0, -1, -1), "rot": 19},
 		{"itemid": 2,"pos": Vector3i(0, -1, 1), "rot": 23},
 		{"itemid": 2,"pos": Vector3i(0, 1, -1), "rot": 16},
-		{"itemid": 1,"pos": Vector3i(0, 1, 0), "rot": 0}
+		{"itemid": 1,"pos": Vector3i(0, 1, 0), "rot": 0},
+		
 		]
 		
 		for x in test_layout: 

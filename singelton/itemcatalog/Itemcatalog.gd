@@ -30,29 +30,36 @@ func size() -> int:
 	return items.size()
 
 func defaultitemlist(): 
-	items.insert(0,Itemdata.new(
+	items.insert(items.size(),Itemdata.new(
 		"Hands",
 		"",
 		""
 	))
 
-	items.insert(1,Itemdata.new(
+	items.insert(items.size(),Itemdata.new(
 		"Metalblock",
 		"",
 		"block"
 	))
-	items[1].blockid = 0
+	items[items.size()-1].blockid = 0
 
-	items.insert(2,Itemdata.new(
+	items.insert(items.size(),Itemdata.new(
 		"Metalslope 1x1x1",
 		"",
 		"shape"
 	))
-	items[2].blockid = 4
+	items[items.size()-1].blockid = 4
 
-	items.insert(3,Itemdata.new(
+	items.insert(items.size(),Itemdata.new(
 		"Metalslope 1x1x2",
 		"",
 		"shape"
 	))
-	items[3].blockid = 7
+	items[items.size()-1].blockid = 7
+	
+	items.insert(items.size(),Itemdata.new(
+		"Metalslope 1x1x3",
+		"",
+		"shape"
+	))
+	items[items.size()-1].blockid = 10

@@ -108,9 +108,9 @@ func looking_at(pos,normal:Vector3,_id,itemid,itemrotation):
 	pos = Vector3i((body.to_local(pos+normal/10)*5).snapped(Vector3.ONE))
 	$debugg.transform.origin = Vector3(pos)/5
 	if ghostitem != itemid:
-		ghostitem = itemid
+		ghostitem = itemid+itemrotation
 		$debugg.mesh = Blockcatalog.getb(ItemCatalog.geti(itemid).blockid).mesh
-		$debugg.rotation = rotationVectors[itemrotation]
+	$debugg.rotation = rotationVectors[itemrotation]
 
 func request_dic():
 	rpc_id(1,"send_dic",multiplayer.get_unique_id(),"all")

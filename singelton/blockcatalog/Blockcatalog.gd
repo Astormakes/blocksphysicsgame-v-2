@@ -58,8 +58,7 @@ func defaultblocklist():
 		"block",
 		10.0,
 		20,#mass 30?
-		500,
-		Vector3i.ONE
+		500
 	))
 	blocks.insert(1,Blockdata.new(
 		1,
@@ -72,8 +71,7 @@ func defaultblocklist():
 		"block",
 		10,
 		8,
-		200,
-		Vector3i.ONE
+		200
 	))		
 	blocks.insert(2,Blockdata.new(
 		2,
@@ -86,8 +84,7 @@ func defaultblocklist():
 		"block",
 		5,
 		4,#
-		30,
-		Vector3i.ONE
+		30
 	))
 	blocks.insert(3,Blockdata.new(
 		3,
@@ -100,8 +97,7 @@ func defaultblocklist():
 		"block",
 		10,
 		50,
-		200,
-		Vector3i.ONE
+		200
 	))
 	blocks.insert(4,Blockdata.new(
 		4,

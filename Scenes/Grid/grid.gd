@@ -7,6 +7,13 @@ var grid:Dictionary
 var creator = 0
 var ghostitem = 0
 
+var runnterx:int = 0
+var runntery:int = 0
+var runnterz:int = 0
+
+var minpos = Vector3i.ZERO
+var maxpos = Vector3i.ZERO
+
 @export var frozen: bool = false
 
 var body = self
@@ -75,10 +82,14 @@ func _ready():
 func action5_released(_pos,_normal,id,_item): ## on T Press... 
 	rpc("set_freeze",!body.freeze,int(id))
 	print_grid()
-	
+
+
 ## placing blocks
 func mouse1_released(pos,normal:Vector3,id,itemid,itemrotation):
 	rpc("request_placement",pos,normal,id,itemid,itemrotation)
+
+func action2_released(pos,normal:Vector3,id,itemid,itemrotation): # for now this will be the volume calculation
+	blockrunnter()
 
 @rpc("any_peer","call_local","reliable")
 func request_placement(pos,normal:Vector3,_id,itemid,itemrotation):
@@ -91,20 +102,19 @@ func request_placement(pos,normal:Vector3,_id,itemid,itemrotation):
 func mouse2_released(pos,normal:Vector3,id,_itemid,_itemrotation):
 	rpc("request_removal",pos,normal,id) 
 
+
 @rpc("any_peer","call_local","reliable")
 func request_removal(pos,normal,_id):
 	pos = (body.to_local(pos-normal/500)*5).snapped(Vector3.ONE) # pos to local - with Minus so its the block itself.
 	removeBlock(pos)
 
+
 func looking_at(pos,normal:Vector3,_id,itemid,itemrotation):
 	pos = (body.to_local(pos+normal/10)*5).snapped(Vector3.ONE) # pos to local
 	normal = (body.to_local(pos + normal) - body.to_local(pos)).normalized() # normal to local
 	
-	
 	var block = Blockcatalog.getb(ItemCatalog.geti(itemid).blockid)
-	
 	var rotatedsize = Basis.from_euler(rotationVectors[itemrotation]) * block.size * normal
-	
 	var lenght = max((rotatedsize).distance_to(abs(normal)*100)-100,1)-1 # this is a little boneheaded but it works... 
 	# it will basically take the rotated and for normal selected size and litteraly mesure it.
 	# im certain there is a better way but this works for now. # this will be reused for placing blocks too.
@@ -145,6 +155,25 @@ func recieve_dic(data:Dictionary,type):
 				body.mass += Blockcatalog.getb(out.itemid).mass
 			body.mass -= 1 
 
+func blockrunnter():
+	var pos = Vector3i(runnterx,runntery,runnterz)
+	if grid.has(pos):
+		var block = grid[pos]
+		print(block)
+	else:
+		print("no block at position")
+		#runnterx += 1
+	
+	
+	
+	runnterx += 1
+	
+
+func compareVectors(veca,vecb) -> bool:
+	if veca.x > vecb.x or veca.y > vecb.y or veca.z > vecb.z:
+		return true
+	else:
+		return false
 
 func placeBlock(id: int,pos: Vector3,normal:Vector3,rot:int):
 	if not grid.has(pos):
@@ -178,7 +207,7 @@ func placeBlock(id: int,pos: Vector3,normal:Vector3,rot:int):
 			for x in placepositions:
 				gridblock.positions.append(x)
 				grid.set(Vector3i(x),gridblock)
-				
+
 
 func removeBlock(pos:Vector3i):
 	if grid.has(pos):

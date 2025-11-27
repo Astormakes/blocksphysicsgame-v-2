@@ -4,11 +4,12 @@ extends RefCounted
 var id: int
 var hp: int
 var temp: float
-var rot: int = 0 # 0–5 for orientation
+var rot: int = 0 # 0–24 for orientation
 var colisionshape: CollisionShape3D
 var mesh:MeshInstance3D
 var parent:Node3D
 var positions:= [Vector3i(0,0,0)]
+var room:int = -1
 
 var rotationVectors = [
 Vector3(0, 0, 0),

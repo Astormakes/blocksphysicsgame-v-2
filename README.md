@@ -80,6 +80,8 @@ i want to enable the player to build traintracks in some way that are actually u
 
 i kinda wanna make this game support VR and have the Seats be compatible with VR also. I think it would be great if the player could literaly controll his creations with the VR joystics. I can easily think of many interesting controll schemes... normal joystic controlls like in excavators but also positional controll where the positions and rotaions of both controllers are outputted like mech Controlls with arms sort off, as well as boat and plane like controll schemes. The issue is going to be motion sickness 🤣 and not forcing the player to choose between vr and desktop controlles but having both implemented to be usefull in both instances. 
 
+### Disclosure
 
+AI was used in making this game but only in giving advice or answering qustions to bugs or Algorithems. At no Point in the Development did we use Generative AI for Meshes, Textrues, sounds other Assets. Most of game dosent exist yet, so its been kinda easy. - If, how or for what, we are going to use AI still has to be determend. 
 
 

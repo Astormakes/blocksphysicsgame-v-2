@@ -62,45 +62,6 @@ func defaultblocklist():
 	))
 	blocks.insert(1,Blockdata.new(
 		1,
-		"Alu Block",
-		"",
-		"res://Meshes/DefaultBoxMesh.tres",
-		"res://prebuilds/defaultColisionShape.tres",
-		"res://Materials/MultiMeshBlockTexture.tres",
-		Color(200,200,200,255)/255,
-		"block",
-		10,
-		8,
-		200
-	))		
-	blocks.insert(2,Blockdata.new(
-		2,
-		"Wood Block",
-		"",
-		"res://Meshes/DefaultBoxMesh.tres",
-		"res://prebuilds/defaultColisionShape.tres",
-		"res://Materials/MultiMeshBlockTexture.tres",
-		Color(150,90,60,255)/255,
-		"block",
-		5,
-		4,#
-		30
-	))
-	blocks.insert(3,Blockdata.new(
-		3,
-		"Lead Block",
-		"",
-		"res://Meshes/DefaultBoxMesh.tres",
-		"res://prebuilds/defaultColisionShape.tres",
-		"res://Materials/MultiMeshBlockTexture.tres",
-		Color(20,30,35,255)/255,
-		"block",
-		10,
-		50,
-		200
-	))
-	blocks.insert(4,Blockdata.new(
-		4,
 		"Metal 1x1x1 Slope",
 		"",
 		"res://Meshes/1x1x1 Slope.tres",
@@ -115,40 +76,8 @@ func defaultblocklist():
 		0,#[right,up,back,forward], # directions in which flow is allowed
 		4 # Volume Per block
 	))
-	blocks.insert(5,Blockdata.new(
-		5,
-		"Alu 1x1x1 Slope",
-		"",
-		"res://Meshes/1x1x1 Slope.tres",
-		"res://prebuilds/1x1x1_Slope_ColisionShape.tres",
-		"res://Materials/defaultStructualMaterial.tres",
-		Color(200,200,200,255)/255,
-		"shape",
-		20,
-		1.5,
-		100,
-		Vector3i.ONE,
-		0,#[right,up,back,forward], # directions in which flow is allowed
-		4 # Volume Per block
-	))
-	blocks.insert(6,Blockdata.new(
-		6,
-		"Wood 1x1x1 Slope",
-		"",
-		"res://Meshes/1x1x1 Slope.tres",
-		"res://prebuilds/1x1x1_Slope_ColisionShape.tres",
-		"res://Materials/defaultStructualMaterial.tres",
-		Color(150,90,60,255)/255,
-		"shape",
-		4,
-		0.25,
-		30,
-		Vector3i.ONE,
-		0,#[right,up,back,forward], # directions in which flow is allowed
-		4 # Volume Per block
-	))
-	blocks.insert(7,Blockdata.new(
-		7,
+	blocks.insert(2,Blockdata.new(
+		2,
 		"Metal 1x1x2 Slope",
 		"",
 		"res://Meshes/1x1x2 Slope.obj",
@@ -164,42 +93,8 @@ func defaultblocklist():
 		8,
 		0,#[right,left,up,back,forward]
 	))
-	blocks.insert(8,Blockdata.new(
-		8,
-		"Alu 1x1x2 Slope",
-		"",
-		"res://Meshes/1x1x2 Slope.obj",
-		"res://prebuilds/1x1x2_Slope_ColisionShape.tres",
-		"res://Materials/defaultStructualMaterial.tres",
-		Color(200,200,200,255)/255,
-		"shape",
-		35,
+	blocks.insert(3,Blockdata.new(
 		3,
-		200,
-		Vector3(2,1,1),
-		0,#[right,up,back,forward],
-		8,
-		0,#[right,left,up,back,forward]
-	))
-	blocks.insert(9,Blockdata.new(
-		9,
-		"Wood 1x1x2 Slope",
-		"",
-		"res://Meshes/1x1x2 Slope.obj",
-		"res://prebuilds/1x1x2_Slope_ColisionShape.tres",
-		"res://Materials/defaultStructualMaterial.tres",
-		Color(150,90,60,255)/255,
-		"shape",
-		7,
-		1,
-		30,
-		Vector3(2,1,1),
-		0,#[right,up,back,forward],
-		8,
-		0,#[right,left,up,back,forward]
-	))
-	blocks.insert(10,Blockdata.new(
-		10,
 		"Metal 1x1x3 Slope",
 		"",
 		"res://Meshes/1x1x3 Slope.obj",
@@ -215,37 +110,54 @@ func defaultblocklist():
 		12,
 		0,#[right,left,up,back,forward]
 	))
-	blocks.insert(11,Blockdata.new(
-		11,
-		"Alu 1x1x3 Slope",
+	blocks.insert(4,Blockdata.new(
+		4,
+		"Metal 1x1x4 Slope",
 		"",
-		"res://Meshes/1x1x3 Slope.obj",
-		"res://prebuilds/1x1x3_Slope_ColisionShape.tres",
+		"res://Meshes/1x1x4 Slope.obj",
+		"res://prebuilds/1x1x4_Slope_ColisionShape.tres",
 		"res://Materials/defaultStructualMaterial.tres",
-		Color(200,200,200,255)/255,
+		Color(110,110,110,255)/255,
 		"shape",
-		20,
-		7.5,
-		100,
-		Vector3(3,1,1),
+		7,
+		10.5,
+		30,
+		Vector3(4,1,1),
 		0,#[right,up,back,forward],
 		12,
 		0,#[right,left,up,back,forward]
 	))
-	blocks.insert(12,Blockdata.new(
-		12,
-		"Wood 1x1x3 Slope",
+	blocks.insert(5,Blockdata.new(
+		5,
+		"Metal 1x1x6 Slope",
 		"",
-		"res://Meshes/1x1x3 Slope.obj",
-		"res://prebuilds/1x1x3_Slope_ColisionShape.tres",
+		"res://Meshes/1x1x6 Slope.obj",
+		"res://prebuilds/1x1x6_Slope_ColisionShape.tres",
 		"res://Materials/defaultStructualMaterial.tres",
-		Color(150,90,60,255)/255,
+		Color(110,110,110,255)/255,
 		"shape",
-		4,
-		1.5,
+		7,
+		10.5,
 		30,
-		Vector3(3,1,1),
+		Vector3(6,1,1),
 		0,#[right,up,back,forward],
 		12,
-		0,#[right,left,up,back,forward],
+		0,#[right,left,up,back,forward]
+	))
+	blocks.insert(6,Blockdata.new(
+		6,
+		"Metal 1x1x8 Slope",
+		"",
+		"res://Meshes/1x1x8 Slope.obj",
+		"res://prebuilds/1x1x8_Slope_ColisionShape.tres",
+		"res://Materials/defaultStructualMaterial.tres",
+		Color(110,110,110,255)/255,
+		"shape",
+		7,
+		10.5,
+		30,
+		Vector3(8,1,1),
+		0,#[right,up,back,forward],
+		12,
+		0,#[right,left,up,back,forward]
 	))

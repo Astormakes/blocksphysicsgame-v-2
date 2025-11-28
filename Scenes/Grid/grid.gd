@@ -9,13 +9,10 @@ var ghostitem = 0
 var lookedat
 @onready var ghost = $ghost
 
-var runnterx:int = 0
-var runntery:int = 0
-var runnterz:int = 0
-
 var minpos = Vector3i.ZERO
 var maxpos = Vector3i.ZERO
 
+var gridmax:Vector3i
 @export var frozen: bool = false
 
 var body = self
@@ -83,66 +80,23 @@ func _ready():
 
 
 func _physics_process(_delta: float) -> void:
+	#var speed = 2 * gridmax.x * gridmax.y + 2 * gridmax.x * gridmax.z + 2 * gridmax.z * gridmax.y
+	gridmax = Vector3i(2,5,3)
+	#var speed = gridmax.x * gridmax.y * gridmax.z
 	if lookedat:
 		lookedat = false
 		ghost.show()
 	else:
 		ghost.hide()
-	
-	blockrunnter(1000)
-
 
 func action5_released(_pos,_normal,id,_item): ## on T Press... 
 	rpc("set_freeze",!body.freeze,int(id))
 	print_grid()
 
-
 ## placing blocks
 func mouse1_released(pos,normal:Vector3,id,itemid,itemrotation):
 	rpc("request_placement",pos,normal,id,itemid,itemrotation)
 
-func action2_released(_pos,_normal:Vector3,_id,_itemid): # for now this will be the volume calculation
-	pass
-	print("__")
-	#blockrunnter(1)
-
-var gridmax = Vector3i(30,15,10)
-
-var runnerx = 0
-var runnery = 0
-var runnerz = 0
-var r = 0
-#var runnerpos = Vector3.ZERO
-func blockrunnter(runs:int):
-	for x in runs:
-		var runnerpos = Vector3(runnerx,runnery,runnerz)
-		$debugg2.transform.origin = runnerpos/5.0
-		$debugg.mesh.size = Vector3(0.21+min(r,gridmax.x)/2.5,0.21+min(r,gridmax.y)/2.5,0.21+min(r,gridmax.z)/2.5) 
-		runnerx += 1
-
-
-		if runnerx > min(r,gridmax.x): # if reached  the boundary for x reset and increment y
-			runnerx = -min(r,gridmax.x)
-			runnery += 1
-		if runnery > min(r,gridmax.y): # if reached the boundary for y reset and increment z
-			runnery = -min(r,gridmax.y)
-			runnerz += 1
-		
-		if runnerz > min(r,gridmax.z): # if reached the boundray for z, increase radius and reset to starting point.
-			r += 1
-			runnerx = -min(r,gridmax.x) 
-			runnery = -min(r,gridmax.y) 
-			runnerz = -min(r,gridmax.z) 
-		
-		if not (abs(runnerx) == min(r,gridmax.x) or abs(runnery) == min(r,gridmax.y) or abs(runnerz) == min(r,gridmax.z)):
-			#print("not edge block")
-			runnerx = min(r,gridmax.x) 
-			
-		if r > max(abs(gridmax.x), abs(gridmax.y), abs(gridmax.z)): # when r is greater then the biggest size then we are done and reset.
-			runnerx = 0
-			runnery = 0
-			runnerz = 0
-			r = 0
 
 @rpc("any_peer","call_local","reliable")
 func request_placement(pos,normal:Vector3,_id,itemid,itemrotation):

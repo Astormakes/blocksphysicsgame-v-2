@@ -48,18 +48,39 @@ func defaultitemlist():
 		"",
 		"shape"
 	))
-	items[items.size()-1].blockid = 4
+	items[items.size()-1].blockid = 1
 
 	items.insert(items.size(),Itemdata.new(
 		"Metalslope 1x1x2",
 		"",
 		"shape"
 	))
-	items[items.size()-1].blockid = 7
+	items[items.size()-1].blockid = 2
 	
 	items.insert(items.size(),Itemdata.new(
 		"Metalslope 1x1x3",
 		"",
 		"shape"
 	))
-	items[items.size()-1].blockid = 10
+	items[items.size()-1].blockid = 3
+	
+	items.insert(items.size(),Itemdata.new(
+		"Metalslope 1x1x4",
+		"",
+		"shape"
+	))
+	items[items.size()-1].blockid = 4
+	
+	items.insert(items.size(),Itemdata.new(
+		"Metalslope 1x1x6",
+		"",
+		"shape"
+	))
+	items[items.size()-1].blockid = 5
+	
+	items.insert(items.size(),Itemdata.new(
+		"Metalslope 1x1x8",
+		"",
+		"shape"
+	))
+	items[items.size()-1].blockid = 6

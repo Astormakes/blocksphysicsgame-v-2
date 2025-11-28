@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://cwvuxwqao8a08"]
+
+[ext_resource type="Shape3D" uid="uid://dopiprw42q7qx" path="res://prebuilds/defaultColisionShape.tres" id="1_hpcof"]
+[ext_resource type="BoxMesh" uid="uid://e0s1q4rro6ns" path="res://Scenes/Blocks/Simple Fluidport/simplefluidportmesh.tres" id="2_52qh0"]
+[ext_resource type="Material" uid="uid://b35twiw8imapv" path="res://Scenes/Blocks/Simple Fluidport/simplefluidportTexture.tres" id="3_7tr8a"]
+
+[node name="Simplefluidport" type="RigidBody3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = ExtResource("1_hpcof")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = ExtResource("2_52qh0")
+surface_material_override/0 = ExtResource("3_7tr8a")

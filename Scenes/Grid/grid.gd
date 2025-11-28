@@ -6,6 +6,8 @@ var grid:Dictionary
 
 var creator = 0
 var ghostitem = 0
+var lookedat
+@onready var ghost = $ghost
 
 var runnterx:int = 0
 var runntery:int = 0
@@ -79,6 +81,17 @@ func _ready():
 	else:
 		request_dic()
 
+
+func _physics_process(_delta: float) -> void:
+	if lookedat:
+		lookedat = false
+		ghost.show()
+	else:
+		ghost.hide()
+	
+	blockrunnter(1000)
+
+
 func action5_released(_pos,_normal,id,_item): ## on T Press... 
 	rpc("set_freeze",!body.freeze,int(id))
 	print_grid()
@@ -88,8 +101,48 @@ func action5_released(_pos,_normal,id,_item): ## on T Press...
 func mouse1_released(pos,normal:Vector3,id,itemid,itemrotation):
 	rpc("request_placement",pos,normal,id,itemid,itemrotation)
 
-func action2_released(pos,normal:Vector3,id,itemid,itemrotation): # for now this will be the volume calculation
-	blockrunnter()
+func action2_released(_pos,_normal:Vector3,_id,_itemid): # for now this will be the volume calculation
+	pass
+	print("__")
+	#blockrunnter(1)
+
+var gridmax = Vector3i(30,15,10)
+
+var runnerx = 0
+var runnery = 0
+var runnerz = 0
+var r = 0
+#var runnerpos = Vector3.ZERO
+func blockrunnter(runs:int):
+	for x in runs:
+		var runnerpos = Vector3(runnerx,runnery,runnerz)
+		$debugg2.transform.origin = runnerpos/5.0
+		$debugg.mesh.size = Vector3(0.21+min(r,gridmax.x)/2.5,0.21+min(r,gridmax.y)/2.5,0.21+min(r,gridmax.z)/2.5) 
+		runnerx += 1
+
+
+		if runnerx > min(r,gridmax.x): # if reached  the boundary for x reset and increment y
+			runnerx = -min(r,gridmax.x)
+			runnery += 1
+		if runnery > min(r,gridmax.y): # if reached the boundary for y reset and increment z
+			runnery = -min(r,gridmax.y)
+			runnerz += 1
+		
+		if runnerz > min(r,gridmax.z): # if reached the boundray for z, increase radius and reset to starting point.
+			r += 1
+			runnerx = -min(r,gridmax.x) 
+			runnery = -min(r,gridmax.y) 
+			runnerz = -min(r,gridmax.z) 
+		
+		if not (abs(runnerx) == min(r,gridmax.x) or abs(runnery) == min(r,gridmax.y) or abs(runnerz) == min(r,gridmax.z)):
+			#print("not edge block")
+			runnerx = min(r,gridmax.x) 
+			
+		if r > max(abs(gridmax.x), abs(gridmax.y), abs(gridmax.z)): # when r is greater then the biggest size then we are done and reset.
+			runnerx = 0
+			runnery = 0
+			runnerz = 0
+			r = 0
 
 @rpc("any_peer","call_local","reliable")
 func request_placement(pos,normal:Vector3,_id,itemid,itemrotation):
@@ -112,6 +165,7 @@ func request_removal(pos,normal,_id):
 func looking_at(pos,normal:Vector3,_id,itemid,itemrotation):
 	pos = (body.to_local(pos+normal/10)*5).snapped(Vector3.ONE) # pos to local
 	normal = (body.to_local(pos + normal) - body.to_local(pos)).normalized() # normal to local
+	lookedat = true
 	
 	var block = Blockcatalog.getb(ItemCatalog.geti(itemid).blockid)
 	var rotatedsize = Basis.from_euler(rotationVectors[itemrotation]) * block.size * normal
@@ -120,11 +174,11 @@ func looking_at(pos,normal:Vector3,_id,itemid,itemrotation):
 	# im certain there is a better way but this works for now. # this will be reused for placing blocks too.
 	
 	pos = Vector3(pos+normal*lenght)
-	$debugg.transform.origin = Vector3(pos)/5
+	ghost.transform.origin = Vector3(pos)/5
 	if ghostitem != itemid:
 		ghostitem = itemid+itemrotation
-		$debugg.mesh = block.mesh
-	$debugg.rotation = rotationVectors[itemrotation]
+		ghost.mesh = block.mesh
+	ghost.rotation = rotationVectors[itemrotation]
 
 
 func request_dic():
@@ -154,20 +208,6 @@ func recieve_dic(data:Dictionary,type):
 				grid[x] = Block.new(body,out.pos,out.rot,out.itemid,out.hp,out.temp)
 				body.mass += Blockcatalog.getb(out.itemid).mass
 			body.mass -= 1 
-
-func blockrunnter():
-	var pos = Vector3i(runnterx,runntery,runnterz)
-	if grid.has(pos):
-		var block = grid[pos]
-		print(block)
-	else:
-		print("no block at position")
-		#runnterx += 1
-	
-	
-	
-	runnterx += 1
-	
 
 func compareVectors(veca,vecb) -> bool:
 	if veca.x > vecb.x or veca.y > vecb.y or veca.z > vecb.z:

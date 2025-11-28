@@ -1,0 +1,3 @@
+[gd_scene format=3 uid="uid://ikeku11yjcos"]
+
+[node name="SmalTank" type="RigidBody3D"]

@@ -71,18 +71,16 @@ func _ready():
 		for x in test_layout: 
 			request_placement(body.to_global(x.pos/5.01),Vector3.ZERO,1,x.itemid,x.rot)
 		
-		#request_removal(body.to_global(Vector3(0,1,0)/5.01),Vector3.ZERO,1)
+		request_removal(body.to_global(Vector3(0,1,0)/5.01),Vector3.ZERO,1)
 		request_removal(body.to_global(Vector3(0,0,0)/5.01),Vector3.ZERO,1)
-		#request_removal(body.to_global(Vector3(0,-1,0)/5.01),Vector3.ZERO,1)
-		body.mass -= 1 
+		request_removal(body.to_global(Vector3(0,-1,0)/5.01),Vector3.ZERO,1)
 	else:
 		request_dic()
 
 
 func _physics_process(_delta: float) -> void:
-	#var speed = 2 * gridmax.x * gridmax.y + 2 * gridmax.x * gridmax.z + 2 * gridmax.z * gridmax.y
 	gridmax = Vector3i(2,5,3)
-	#var speed = gridmax.x * gridmax.y * gridmax.z
+
 	if lookedat:
 		lookedat = false
 		ghost.show()
@@ -91,7 +89,11 @@ func _physics_process(_delta: float) -> void:
 
 func action5_released(_pos,_normal,id,_item): ## on T Press... 
 	rpc("set_freeze",!body.freeze,int(id))
+
+func action1_released(_pos,_normal,_id,_item): ## on T Press... 
 	print_grid()
+	print()
+
 
 ## placing blocks
 func mouse1_released(pos,normal:Vector3,id,itemid,itemrotation):
@@ -100,7 +102,7 @@ func mouse1_released(pos,normal:Vector3,id,itemid,itemrotation):
 
 @rpc("any_peer","call_local","reliable")
 func request_placement(pos,normal:Vector3,_id,itemid,itemrotation):
-	pos = (body.to_local(pos+normal/10)*5).snapped(Vector3.ONE) # pos to local
+	pos = (body.to_local(pos+normal/10)*5.0).snapped(Vector3.ONE) # pos to local
 	normal = (body.to_local(pos + normal) - body.to_local(pos)).normalized() # normal to local
 	placeBlock(ItemCatalog.geti(itemid).blockid,pos,normal,itemrotation)
 
@@ -112,12 +114,12 @@ func mouse2_released(pos,normal:Vector3,id,_itemid,_itemrotation):
 
 @rpc("any_peer","call_local","reliable")
 func request_removal(pos,normal,_id):
-	pos = (body.to_local(pos-normal/500)*5).snapped(Vector3.ONE) # pos to local - with Minus so its the block itself.
+	pos = (body.to_local(pos-normal/500)*5.0).snapped(Vector3.ONE) # pos to local - with Minus so its the block itself.
 	removeBlock(pos)
 
 
 func looking_at(pos,normal:Vector3,_id,itemid,itemrotation):
-	pos = (body.to_local(pos+normal/10)*5).snapped(Vector3.ONE) # pos to local
+	pos = (body.to_local(pos+normal/10)*5.0).snapped(Vector3.ONE) # pos to local
 	normal = (body.to_local(pos + normal) - body.to_local(pos)).normalized() # normal to local
 	lookedat = true
 	
@@ -128,7 +130,7 @@ func looking_at(pos,normal:Vector3,_id,itemid,itemrotation):
 	# im certain there is a better way but this works for now. # this will be reused for placing blocks too.
 	
 	pos = Vector3(pos+normal*lenght)
-	ghost.transform.origin = Vector3(pos)/5
+	ghost.transform.origin = Vector3(pos)/5.0
 	if ghostitem != itemid:
 		ghostitem = itemid+itemrotation
 		ghost.mesh = block.mesh
@@ -170,39 +172,39 @@ func compareVectors(veca,vecb) -> bool:
 		return false
 
 func placeBlock(id: int,pos: Vector3,normal:Vector3,rot:int):
-	if not grid.has(pos):
-		var block = Blockcatalog.getb(id)
-		if block.size == Vector3.ONE:
+	print("placing:",pos)
+	var block = Blockcatalog.getb(id)
+	if block.size == Vector3.ONE:
+		if not grid.has(Vector3i(pos)):
 			var gridblock = Block.new(body,pos,rot,id)
 			grid.set(Vector3i(pos),gridblock)
 			change_mass(block.mass,pos/5.0)
-			
-		else:
-			var rotatedsize = Basis.from_euler(rotationVectors[rot]) * block.size * normal
-			var lenght = max((rotatedsize).distance_to(abs(normal)*100)-100,1)-1
-			pos = Vector3i(pos+normal*lenght)
-			
-			var size =  block.size
-			var rotaedbasis = Basis.from_euler(rotationVectors[rot])
-			var placepositions:Array
-			for x in range(size.x):
-				for y in range(size.y):
-					for z in range(size.z):
-						# rotate offset positions from size to point in the actual direction the slope is pointing
-						var posoffset = Vector3i((rotaedbasis*Vector3(x,y,z)) + pos)
-						placepositions.append(posoffset)
-						if grid.has(posoffset): 
-							print("block blocked.")
-							return
-							
-			#body.mass += block.mass
-			change_mass(Blockcatalog.getb(id).mass,pos/5.0)
-			# if non of the blocks was occupied allready
-			var gridblock = Block.new(body,pos,rot,id)
-			for x in placepositions:
-				gridblock.positions.append(x)
-				grid.set(Vector3i(x),gridblock)
-				
+		else: print("tried to place same block again...")
+	else:
+		var rotatedsize = Basis.from_euler(rotationVectors[rot]) * block.size * normal
+		var lenght = max((rotatedsize).distance_to(abs(normal)*100)-100,1)-1
+		pos = Vector3i(pos+normal*lenght)
+		
+		var size =  block.size
+		var rotaedbasis = Basis.from_euler(rotationVectors[rot])
+		var placepositions:Array
+		for x in range(size.x):
+			for y in range(size.y):
+				for z in range(size.z):
+					# rotate offset positions from size to point in the actual direction the slope is pointing
+					var posoffset = Vector3i((rotaedbasis*Vector3(x,y,z)) + pos)
+					placepositions.append(posoffset)
+					if grid.has(posoffset): 
+						print("block blocked.")
+						return
+		
+		change_mass(Blockcatalog.getb(id).mass,pos/5.0)
+		# if non of the blocks was occupied allready
+		var gridblock = Block.new(body,pos,rot,id)
+		for x in placepositions:
+			gridblock.positions.append(x)
+			grid.set(Vector3i(x),gridblock)
+
 
 func removeBlock(pos:Vector3i):
 	if grid.has(pos):
@@ -211,10 +213,10 @@ func removeBlock(pos:Vector3i):
 		if grid.is_empty():
 			self.queue_free()
 	else:
-		print("ERROR: Block not found in grid Directory")
+		
+		print("ERROR: Block:",pos ," not found in grid Directory")
 
 func change_mass(mass, pos):
-	print("change mass pos:",pos)
 	var old_mass = self.mass
 	var new_mass = old_mass + mass
 	mass = abs(mass)
@@ -223,7 +225,8 @@ func change_mass(mass, pos):
 	$debugg2.transform.origin = body.get_center_of_mass()
 
 func print_grid():
-	print(serialize_dic(grid))
+	for x in grid:
+		print(grid[x].get_properties())
 
 
 func serialize_dic(dic:Dictionary):

@@ -63,7 +63,7 @@ func _physics_process(delta: float) -> void:
 	
 	if Input.is_action_pressed("Run"):
 		speed_mod = fast_speed
-	if Input.is_action_pressed("Alt"):
+	if Input.is_action_pressed("Sneak"):
 		speed_mod = slow_speed
 	
 	if Input.is_action_pressed("Forward"):
@@ -76,7 +76,7 @@ func _physics_process(delta: float) -> void:
 		input_dir.x += move_speed
 	if Input.is_action_pressed("jump"):
 		input_dir.y += move_speed
-	if Input.is_action_pressed("Sneak"):
+	if Input.is_action_pressed("Alt"):
 		input_dir.y -= move_speed
 	
 	transform.origin += basis * input_dir * speed_mod * delta

@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://ckv2wprx3ef7l"]
+[gd_scene load_steps=13 format=3 uid="uid://ckv2wprx3ef7l"]
 
 [ext_resource type="Material" uid="uid://or6q7l6tupwi" path="res://Scenes/Designer/Computer/computerCabinMaterial.tres" id="1_0rtfo"]
 [ext_resource type="PackedScene" uid="uid://d1ciw2b1wuq7e" path="res://Scenes/Designer/cameraPivot.tscn" id="2_8b6pi"]
@@ -7,7 +7,10 @@
 [ext_resource type="Script" uid="uid://d3c51gb7u7omn" path="res://Scenes/Designer/Computer/Computer.gd" id="4_8b6pi"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_a0tk4"]
-size = Vector3(0.6524658, 1.4577332, 0.5264206)
+size = Vector3(0.6524658, 1.0971527, 0.5264206)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_u6vlh"]
+size = Vector3(0.64697266, 0.35546875, 0.0925293)
 
 [sub_resource type="PrismMesh" id="PrismMesh_4xowi"]
 
@@ -35,8 +38,12 @@ DesignerCameraPackage = ExtResource("2_8b6pi")
 gridPackage = ExtResource("3_u6vlh")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0012817383, 0.73107165, 0.00066646934)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0012817383, 0.5507814, 0.00066646934)
 shape = SubResource("BoxShape3D_a0tk4")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0006376803, 1.2723144, -0.21008271)
+shape = SubResource("BoxShape3D_u6vlh")
 
 [node name="Node3D" type="Node3D" parent="."]
 

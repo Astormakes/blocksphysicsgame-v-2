@@ -80,7 +80,6 @@ func _ready():
 
 func _physics_process(_delta: float) -> void:
 	gridmax = Vector3i(2,5,3)
-
 	if lookedat:
 		lookedat = false
 		ghost.show()
@@ -165,11 +164,6 @@ func recieve_dic(data:Dictionary,type):
 				body.mass += Blockcatalog.getb(out.itemid).mass
 			body.mass -= 1 
 
-func compareVectors(veca,vecb) -> bool:
-	if veca.x > vecb.x or veca.y > vecb.y or veca.z > vecb.z:
-		return true
-	else:
-		return false
 
 func placeBlock(id: int,pos: Vector3,normal:Vector3,rot:int):
 	print("placing:",pos)
@@ -179,7 +173,7 @@ func placeBlock(id: int,pos: Vector3,normal:Vector3,rot:int):
 			var gridblock = Block.new(body,pos,rot,id)
 			grid.set(Vector3i(pos),gridblock)
 			change_mass(block.mass,pos/5.0)
-		else: print("tried to place same block again...")
+		#else: print("tried to place same block again...")
 	else:
 		var rotatedsize = Basis.from_euler(rotationVectors[rot]) * block.size * normal
 		var lenght = max((rotatedsize).distance_to(abs(normal)*100)-100,1)-1
@@ -212,9 +206,8 @@ func removeBlock(pos:Vector3i):
 		grid[pos].destroy()
 		if grid.is_empty():
 			self.queue_free()
-	else:
-		
-		print("ERROR: Block:",pos ," not found in grid Directory")
+	#else: print("ERROR: Block:",pos ," not found in grid Directory")
+
 
 func change_mass(mass, pos):
 	var old_mass = self.mass
@@ -223,6 +216,7 @@ func change_mass(mass, pos):
 	self.center_of_mass = (self.center_of_mass * old_mass + pos * mass) / new_mass
 	self.mass = new_mass
 	$debugg2.transform.origin = body.get_center_of_mass()
+
 
 func print_grid():
 	for x in grid:

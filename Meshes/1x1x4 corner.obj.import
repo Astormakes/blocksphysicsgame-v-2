@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://cq5mmlaomll8b"
+path="res://.godot/imported/1x1x4 corner.obj-ace3d7d0219f72d7eace98de0a2e5344.mesh"
+
+[deps]
+
+files=["res://.godot/imported/1x1x4 corner.obj-ace3d7d0219f72d7eace98de0a2e5344.mesh"]
+
+source_file="res://Meshes/1x1x4 corner.obj"
+dest_files=["res://.godot/imported/1x1x4 corner.obj-ace3d7d0219f72d7eace98de0a2e5344.mesh", "res://.godot/imported/1x1x4 corner.obj-ace3d7d0219f72d7eace98de0a2e5344.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

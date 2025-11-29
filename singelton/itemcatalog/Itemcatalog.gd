@@ -84,3 +84,45 @@ func defaultitemlist():
 		"shape"
 	))
 	items[items.size()-1].blockid = 6
+
+	items.insert(items.size(),Itemdata.new(
+		"Metalcorner 1x1x1",
+		"",
+		"shape"
+	))
+	items[items.size()-1].blockid = 7
+	
+	items.insert(items.size(),Itemdata.new(
+		"Metalcorner 1x1x2",
+		"",
+		"shape"
+	))
+	items[items.size()-1].blockid = 8
+	
+	items.insert(items.size(),Itemdata.new(
+		"Metalcorner 1x1x3",
+		"",
+		"shape"
+	))
+	items[items.size()-1].blockid = 9
+		
+	items.insert(items.size(),Itemdata.new(
+		"Metalcorner 1x1x4",
+		"",
+		"shape"
+	))
+	items[items.size()-1].blockid = 10
+	
+	items.insert(items.size(),Itemdata.new(
+		"Metalcorner 1x1x6",
+		"",
+		"shape"
+	))
+	items[items.size()-1].blockid = 11
+	
+	items.insert(items.size(),Itemdata.new(
+		"Metalcorner 1x1x8",
+		"",
+		"shape"
+	))
+	items[items.size()-1].blockid = 12

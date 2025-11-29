@@ -161,3 +161,99 @@ func defaultblocklist():
 		12,
 		0,#[right,left,up,back,forward]
 	))
+	blocks.insert(7,Blockdata.new(
+		7,
+		"Metal 1x1x1 corner",
+		"",
+		"res://Meshes/1x1x1 corner.obj",
+		"res://prebuilds/1x1x1_Corner_ColisionShape.tres",
+		"res://Materials/defaultStructualMaterial.tres",
+		Color(110,110,110,255)/255,
+		"shape",
+		7,
+		3.5,
+		30,
+		Vector3i.ONE,
+		0,#[right,up,back,forward], # directions in which flow is allowed
+		4 # Volume Per block
+	))
+	blocks.insert(8,Blockdata.new(
+		8,
+		"Metal 1x1x2 corner",
+		"",
+		"res://Meshes/1x1x2 corner.obj",
+		"res://prebuilds/1x1x2_Corner_ColisionShape.tres",
+		"res://Materials/defaultStructualMaterial.tres",
+		Color(110,110,110,255)/255,
+		"shape",
+		7,
+		3.5,
+		30,
+		Vector3(2,1,1),
+		0,#[right,up,back,forward], # directions in which flow is allowed
+		4 # Volume Per block
+	))
+	blocks.insert(9,Blockdata.new(
+		9,
+		"Metal 1x1x3 corner",
+		"",
+		"res://Meshes/1x1x3 corner.obj",
+		"res://prebuilds/1x1x3_Corner_ColisionShape.tres",
+		"res://Materials/defaultStructualMaterial.tres",
+		Color(110,110,110,255)/255,
+		"shape",
+		7,
+		3.5,
+		30,
+		Vector3(3,1,1),
+		0,#[right,up,back,forward], # directions in which flow is allowed
+		4 # Volume Per block
+	))
+	blocks.insert(10,Blockdata.new(
+		10,
+		"Metal 1x1x4 corner",
+		"",
+		"res://Meshes/1x1x4 corner.obj",
+		"res://prebuilds/1x1x4_Corner_ColisionShape.tres",
+		"res://Materials/defaultStructualMaterial.tres",
+		Color(110,110,110,255)/255,
+		"shape",
+		7,
+		3.5,
+		30,
+		Vector3(4,1,1),
+		0,#[right,up,back,forward], # directions in which flow is allowed
+		4 # Volume Per block
+	))
+	blocks.insert(11,Blockdata.new(
+		11,
+		"Metal 1x1x6 corner",
+		"",
+		"res://Meshes/1x1x6 corner.obj",
+		"res://prebuilds/1x1x6_Corner_ColisionShape.tres",
+		"res://Materials/defaultStructualMaterial.tres",
+		Color(110,110,110,255)/255,
+		"shape",
+		7,
+		3.5,
+		30,
+		Vector3(6,1,1),
+		0,#[right,up,back,forward], # directions in which flow is allowed
+		4 # Volume Per block
+	))
+	blocks.insert(12,Blockdata.new(
+		12,
+		"Metal 1x1x8 corner",
+		"",
+		"res://Meshes/1x1x8 corner.obj",
+		"res://prebuilds/1x1x8_Corner_ColisionShape.tres",
+		"res://Materials/defaultStructualMaterial.tres",
+		Color(110,110,110,255)/255,
+		"shape",
+		7,
+		3.5,
+		30,
+		Vector3(8,1,1),
+		0,#[right,up,back,forward], # directions in which flow is allowed
+		4 # Volume Per block
+	))

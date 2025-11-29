@@ -34,11 +34,13 @@ script = ExtResource("1_uadnl")
 replication_config = SubResource("SceneReplicationConfig_uadnl")
 
 [node name="debugg" type="MeshInstance3D" parent="."]
+visible = false
 mesh = SubResource("BoxMesh_uadnl")
 surface_material_override/0 = SubResource("StandardMaterial3D_srhpa")
 
 [node name="ghost" type="MeshInstance3D" parent="."]
 
 [node name="debugg2" type="MeshInstance3D" parent="."]
+visible = false
 mesh = SubResource("BoxMesh_srhpa")
 surface_material_override/0 = SubResource("StandardMaterial3D_uadnl")

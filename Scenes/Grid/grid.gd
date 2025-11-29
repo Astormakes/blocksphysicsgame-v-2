@@ -175,7 +175,7 @@ func placeBlock(id: int,pos: Vector3,normal:Vector3,rot:int):
 		if block.size == Vector3.ONE:
 			var gridblock = Block.new(body,pos,rot,id)
 			grid.set(Vector3i(pos),gridblock)
-			body.mass += block.mass 
+			change_mass(block.mass,pos/5.0)
 			
 		else:
 			var rotatedsize = Basis.from_euler(rotationVectors[rot]) * block.size * normal
@@ -195,25 +195,32 @@ func placeBlock(id: int,pos: Vector3,normal:Vector3,rot:int):
 							print("block blocked.")
 							return
 							
-			body.mass += block.mass
+			#body.mass += block.mass
+			change_mass(Blockcatalog.getb(id).mass,pos/5.0)
 			# if non of the blocks was occupied allready
 			var gridblock = Block.new(body,pos,rot,id)
 			for x in placepositions:
 				gridblock.positions.append(x)
 				grid.set(Vector3i(x),gridblock)
-
+				
 
 func removeBlock(pos:Vector3i):
 	if grid.has(pos):
-		var mass = Blockcatalog.getb(grid[pos].id).mass 
+		change_mass(-Blockcatalog.getb(grid[pos].id).mass,-pos/5.0)
 		grid[pos].destroy()
 		if grid.is_empty():
 			self.queue_free()
-		else:
-			body.mass -= mass
 	else:
 		print("ERROR: Block not found in grid Directory")
 
+func change_mass(mass, pos):
+	print("change mass pos:",pos)
+	var old_mass = self.mass
+	var new_mass = old_mass + mass
+	mass = abs(mass)
+	self.center_of_mass = (self.center_of_mass * old_mass + pos * mass) / new_mass
+	self.mass = new_mass
+	$debugg2.transform.origin = body.get_center_of_mass()
 
 func print_grid():
 	print(serialize_dic(grid))

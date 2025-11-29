@@ -24,10 +24,12 @@ albedo_color = Color(0.26, 0.63, 1, 0.34117648)
 size = Vector3(0.22, 0.22, 0.22)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uadnl"]
+render_priority = 5
 transparency = 1
 albedo_color = Color(1, 0.26, 0.26, 0.34117648)
 
 [node name="Grid" type="RigidBody3D"]
+center_of_mass_mode = 1
 script = ExtResource("1_uadnl")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
@@ -41,6 +43,5 @@ surface_material_override/0 = SubResource("StandardMaterial3D_srhpa")
 [node name="ghost" type="MeshInstance3D" parent="."]
 
 [node name="debugg2" type="MeshInstance3D" parent="."]
-visible = false
 mesh = SubResource("BoxMesh_srhpa")
 surface_material_override/0 = SubResource("StandardMaterial3D_uadnl")

@@ -1,0 +1,45 @@
+[gd_scene load_steps=6 format=3 uid="uid://ikeku11yjcos"]
+
+[ext_resource type="ArrayMesh" uid="uid://373nak368745" path="res://Meshes/Barrel400l.obj" id="1_atufy"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_dd1c0"]
+friction = 0.59
+rough = true
+bounce = 0.14
+absorbent = true
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_qaalh"]
+height = 0.995
+radius = 0.36
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_dd1c0"]
+top_radius = 0.05
+bottom_radius = 0.05
+height = 0.01
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_atufy"]
+albedo_color = Color(0.20152658, 0.20152658, 0.20152658, 1)
+
+[node name="Barrel" type="RigidBody3D"]
+mass = 430.0
+physics_material_override = SubResource("PhysicsMaterial_dd1c0")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -0.5, 0, 0)
+shape = SubResource("CylinderShape3D_qaalh")
+
+[node name="lid2" type="MeshInstance3D" parent="CollisionShape3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+mesh = SubResource("CylinderMesh_dd1c0")
+skeleton = NodePath("../lid")
+surface_material_override/0 = SubResource("StandardMaterial3D_atufy")
+
+[node name="lid" type="MeshInstance3D" parent="CollisionShape3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+mesh = SubResource("CylinderMesh_dd1c0")
+surface_material_override/0 = SubResource("StandardMaterial3D_atufy")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D"]
+mesh = ExtResource("1_atufy")
+
+[node name="400L tank" type="Node" parent="."]

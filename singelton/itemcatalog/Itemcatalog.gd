@@ -126,3 +126,10 @@ func defaultitemlist():
 		"shape"
 	))
 	items[items.size()-1].blockid = 12
+	
+	items.insert(items.size(),Itemdata.new(
+		"Barrel 400L",
+		"res://Scenes/Blocks/Barrel/Barrel.tscn",
+		"part"
+	))
+	items[items.size()-1].blockid = 13

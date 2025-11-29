@@ -1,9 +1,10 @@
-[gd_scene load_steps=13 format=3 uid="uid://dc5yusrj6d7ge"]
+[gd_scene load_steps=14 format=3 uid="uid://dc5yusrj6d7ge"]
 
 [ext_resource type="Material" uid="uid://biintp0xavghy" path="res://Materials/Prototype/PrototypeMat.tres" id="1_3rhlx"]
 [ext_resource type="PackedScene" uid="uid://ckv2wprx3ef7l" path="res://Scenes/Designer/Computer/computer.tscn" id="1_t1gg8"]
 [ext_resource type="Script" uid="uid://2f0uw5u6t0xi" path="res://Scenes/World/PlayerSpawner.gd" id="1_vadfg"]
 [ext_resource type="PackedScene" uid="uid://c6pcwly7ikk0m" path="res://Scenes/Player/player.tscn" id="2_yp2ti"]
+[ext_resource type="PackedScene" uid="uid://ikeku11yjcos" path="res://Scenes/Blocks/Barrel/Barrel.tscn" id="5_l1hd3"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_vadfg"]
 properties/0/path = NodePath("RigidBody3D:rotation")
@@ -106,3 +107,6 @@ mesh = SubResource("BoxMesh_vadfg")
 [node name="Computer2" parent="." instance=ExtResource("1_t1gg8")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 48.71679, 1, -2)
 visible = false
+
+[node name="SmalTank" parent="." instance=ExtResource("5_l1hd3")]
+transform = Transform3D(-0.23218222, 0.9725795, 0.013444333, -0.9687585, -0.23246455, 0.08641451, 0.087170295, 0.007039599, 0.9961687, 0.7833743, 5.7522426, -2.0573559)

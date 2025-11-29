@@ -1,13 +1,13 @@
 extends Node
 
-var speed = 10
+var speed = 4.5
 var mouseSpeed = 0.15
-var runMul = 2
+var runMul = 2.5
 var coruchMul = 0.5
 
-var accel_ground = 60
+var accel_ground = 40
 var accel_air = 20
-var decel_ground = 120
+var decel_ground = 40
 var decel_air = 5
 
 var focus = false

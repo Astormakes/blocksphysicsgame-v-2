@@ -11,6 +11,8 @@ var parent:Node3D
 var positions:= [Vector3i(0,0,0)]
 var room:int = -1
 
+var thing:Blockdata 
+
 var rotationVectors = [
 Vector3(0, 0, 0),
 Vector3(0, 0, 1.57079633),
@@ -53,7 +55,8 @@ func _init(_parent:Node,_pos: Vector3i,_rot:int,_id:int = 1,_hp = null,_temp = 2
 
 
 func update():
-	var thing:Blockdata = Blockcatalog.getb(id)
+	thing = Blockcatalog.getb(id)
+	
 	if thing.type == "block":
 		mesh = MeshInstance3D.new()
 		mesh.transform.origin = Vector3(positions[0]/5.0)
@@ -82,11 +85,16 @@ func update():
 		colisionshape.shape = thing.shape
 		colisionshape.name = str(positions[0])+"_shape"
 
+	if thing.type == "part":
+		print("building part")
+
 func destroy() -> void:
-	if colisionshape:
-		colisionshape.free()
-	if mesh:
-		mesh.free()
+	if thing.type == "block" or thing.type == "shape":
+		if colisionshape:
+			colisionshape.free()
+		if mesh:
+			mesh.free()
+	
 	for x in positions:
 		parent.grid.erase(x)
 

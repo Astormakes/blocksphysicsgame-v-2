@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://dfluexj0asn8h"]
+[gd_scene load_steps=8 format=3 uid="uid://dfluexj0asn8h"]
 
 [ext_resource type="Script" uid="uid://w8ssewue50uo" path="res://Scenes/Grid/grid.gd" id="1_uadnl"]
+[ext_resource type="Script" uid="uid://cplrdwgtqffq1" path="res://Scenes/Grid/volume.gd" id="2_srhpa"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_uadnl"]
 properties/0/path = NodePath(".:position")
@@ -31,6 +32,9 @@ albedo_color = Color(1, 0.26, 0.26, 0.34117648)
 [node name="Grid" type="RigidBody3D"]
 center_of_mass_mode = 1
 script = ExtResource("1_uadnl")
+
+[node name="Volume" type="Node" parent="."]
+script = ExtResource("2_srhpa")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_uadnl")

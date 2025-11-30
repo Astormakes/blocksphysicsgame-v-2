@@ -1,16 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://ikeku11yjcos"]
+[gd_scene load_steps=5 format=3 uid="uid://ikeku11yjcos"]
 
-[ext_resource type="ArrayMesh" uid="uid://373nak368745" path="res://Meshes/Barrel400l.obj" id="1_atufy"]
-
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_dd1c0"]
-friction = 0.59
-rough = true
-bounce = 0.14
-absorbent = true
+[ext_resource type="ArrayMesh" uid="uid://c3fauloolt2r5" path="res://Meshes/Barrel200l.obj" id="1_atufy"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_qaalh"]
-height = 0.995
-radius = 0.36
+height = 0.8
+radius = 0.293
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_dd1c0"]
 top_radius = 0.05
@@ -21,25 +15,25 @@ height = 0.01
 albedo_color = Color(0.20152658, 0.20152658, 0.20152658, 1)
 
 [node name="Barrel" type="RigidBody3D"]
-mass = 430.0
-physics_material_override = SubResource("PhysicsMaterial_dd1c0")
+mass = 250.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -0.5, 0, 0)
 shape = SubResource("CylinderShape3D_qaalh")
 
-[node name="lid2" type="MeshInstance3D" parent="CollisionShape3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+[node name="200L tank" type="Node" parent="."]
+
+[node name="lid2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3904463, 0)
 mesh = SubResource("CylinderMesh_dd1c0")
 skeleton = NodePath("../lid")
 surface_material_override/0 = SubResource("StandardMaterial3D_atufy")
 
-[node name="lid" type="MeshInstance3D" parent="CollisionShape3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+[node name="lid" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.39319587, 0)
 mesh = SubResource("CylinderMesh_dd1c0")
+skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_atufy")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = ExtResource("1_atufy")
-
-[node name="400L tank" type="Node" parent="."]
+skeleton = NodePath("")

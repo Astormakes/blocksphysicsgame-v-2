@@ -10,6 +10,7 @@ var mesh:MeshInstance3D
 var parent:Node3D
 var positions:= [Vector3i(0,0,0)]
 var room:int = -1
+var scene
 
 var thing:Blockdata 
 
@@ -87,7 +88,9 @@ func update():
 
 	if thing.type == "part":
 		print("building part")
-
+		scene = load(thing.path).instantiate()
+		parent.add_child(scene)
+		
 func destroy() -> void:
 	if thing.type == "block" or thing.type == "shape":
 		if colisionshape:

@@ -259,9 +259,9 @@ func defaultblocklist():
 	))
 	blocks.insert(13,Blockdata.new(
 		13,#	_id: int = -1,
-		"Barrel 400L",#	_showName: String = "",
+		"Barrel 200L",#	_showName: String = "",d
 		"res://Scenes/Blocks/Barrel/Barrel.tscn",#	_path: String = "",
-		"res://Meshes/Barrel400l.obj",#	_mesh: String = "",
+		"res://Meshes/Barrel200l.obj",#	_mesh: String = "",
 		"",#	_shape: String = "",
 		"",#	_material: String = "",
 		Color(110,110,110,255)/255,#	_colormat: Color = Color(1, 1, 1),
@@ -269,7 +269,7 @@ func defaultblocklist():
 		7,#	_cost: float = 0.0,
 		30,#	_mass: float = 1.0,
 		30,#	_hpmax: int = 100,
-		Vector3(8,1,1),#	_size: Vector3i = Vector3i(1, 1, 1),
+		Vector3(5,4,4),#	_size: Vector3i = Vector3i(1, 1, 1),
 		0,#	_flows: int = 0b000100, # only 8 bits!
 		4 #	_volume: float = 0.0,
 		#	_flowssec: int = 0 # only 8 bits!

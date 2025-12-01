@@ -127,13 +127,13 @@ func looking_at(pos,normal:Vector3,_id,itemid,itemrotation):
 	var lenght = max((rotatedsize).distance_to(abs(normal)*100)-100,1)-1 # this is a little boneheaded but it works... 
 	# it will basically take the rotated and for normal selected size and litteraly mesure it.
 	# im certain there is a better way but this works for now. # this will be reused for placing blocks too.
-	if not block.mesh == null:
-		pos = Vector3(pos+normal*lenght)
-		ghost.transform.origin = Vector3(pos)/5.0
-		if ghostitem != itemid:
-			ghostitem = itemid
-			ghost.mesh = block.mesh
-		ghost.rotation = rotationVectors[itemrotation]
+	pos = Vector3(pos+normal*lenght)
+	ghost.transform.origin = Vector3(pos)/5.0
+	if ghostitem != itemid:
+		print(block.mesh)
+		ghostitem = itemid
+		ghost.mesh = block.mesh
+	ghost.rotation = rotationVectors[itemrotation]
 
 
 func request_dic():

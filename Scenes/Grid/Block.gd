@@ -70,8 +70,8 @@ func update():
 		colisionshape.transform.origin = Vector3(positions[0]/5.0)
 		colisionshape.shape = thing.shape
 		colisionshape.name = str(positions[0])+"_shape"
-
-	if thing.type == "shape":
+	else:
+	#if thing.type == "shape":
 		mesh = MeshInstance3D.new()
 		mesh.transform.origin = Vector3(positions[0]/5.0)
 		mesh.mesh = thing.mesh
@@ -86,11 +86,6 @@ func update():
 		colisionshape.shape = thing.shape
 		colisionshape.name = str(positions[0])+"_shape"
 
-	if thing.type == "part":
-		print("building part")
-		scene = load(thing.path).instantiate()
-		parent.add_child(scene)
-		
 func destroy() -> void:
 	if thing.type == "block" or thing.type == "shape":
 		if colisionshape:

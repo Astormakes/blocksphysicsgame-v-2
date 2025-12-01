@@ -35,30 +35,18 @@ func _init(
 	_flowssec: int = 0 # only 8 bits!
 
 ) -> void:
-	if _type == "shape" or _type == "block":
-		id = _id
-		showName = _showName
-		path = _path
-		mesh = load(_mesh)
-		shape = load(_shape)
-		material = _material
-		colormat = _colormat
-		type = _type
-		cost = _cost
-		mass = _mass
-		hpmax = _hpmax
-		size = _size
-		flows = _flows
-		flowsSecondary = _flowssec
-		volume = _volume
-	if _type == "part":
-		id = _id
-		showName = _showName
-		path = _path
-		mesh = load(_mesh)
-		type = _type
-		cost = _cost
-		hpmax = _hpmax
-		size = _size
-		flows = _flows
-		volume = _volume
+	id = _id
+	showName = _showName
+	path = _path
+	mesh = load(_mesh)
+	shape = load(_shape)
+	material = _material
+	colormat = _colormat
+	type = _type
+	cost = _cost
+	mass = _mass
+	hpmax = _hpmax
+	size = _size
+	flows = _flows
+	flowsSecondary = _flowssec
+	volume = _volume

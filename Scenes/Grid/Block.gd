@@ -85,6 +85,9 @@ func update():
 		colisionshape.rotation = rotationVectors[rot]
 		colisionshape.shape = thing.shape
 		colisionshape.name = str(positions[0])+"_shape"
+		
+		if thing.path != "":
+			colisionshape.set_script(thing.path)
 
 func destroy() -> void:
 	if thing.type == "block" or thing.type == "shape":

@@ -260,7 +260,7 @@ func defaultblocklist():
 	blocks.insert(13,Blockdata.new(
 		13,#	_id: int = -1,
 		"Barrel 200L",#	_showName: String = "",d
-		"",#	_path: String = "",
+		"res://Scenes/Blocks/Barrel/barrel.gd",#	_path: String = "",
 		"res://Meshes/Barrel200l.obj",#	_mesh: String = "",
 		"res://Scenes/Blocks/Barrel/Barrel_Shape.tres",#	_shape: String = "",
 		"res://Materials/defaultStructualMaterial.tres",#	_material: String = "",

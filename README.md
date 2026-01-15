@@ -84,4 +84,12 @@ i kinda wanna make this game support VR and have the Seats be compatible with VR
 
 AI was used in making this game but only in giving advice or answering qustions to bugs or Algorithems. At no Point in the Development did we use Generative AI for Meshes, Textrues, sounds other Assets. Most of game dosent exist yet, so its been kinda easy. - If, how or for what, we are going to use AI still has to be determend. 
 
+### Current Status
 
+For now i have lost Motivation a bit and stoped aktivly working on it.. but ill probably come back at some point.
+
+Currently the Next thing to work on was the fluid system... The issue was that its hard to moduleize. I needed some class in a grid that keeps track of Volumes, their contents and things like Pressure and Tempreture. But the issue i ran anainst was, that for first i wanted to get the volumes to work without the room recignition so just like tanks and stuff. I wanted to make a barrel buildable and discoverd that the buidling system needs to be adjusted. I though i had set it up to work with all sizes of blocks but that wasnt the case... that setback cost me a bit of motiviation at the time. Size i just had the Building system Working well and in Multiplayer just to discover that it didnt work as intended at the litteral next step. Ohh well.
+
+Once those Barrels are working ya i need that class for volumes, next would be pipes to connect voltumes, next would be contents of barrels and things like pressure and tempreature, next flow based on pressure and contents, next chemical reactions inside volumes, next room recoginion and finally visuals i guess... and after that most of the ground work for the fluid and building system should be done.
+
+sadly saving and loading grids (which should happen in the mean time) will kinda have to incorparate all of these systems .... so it needs to be reworked and changed a lot

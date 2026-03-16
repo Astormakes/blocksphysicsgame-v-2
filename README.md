@@ -93,3 +93,5 @@ Currently the Next thing to work on was the fluid system... The issue was that i
 Once those Barrels are working ya i need that class for volumes, next would be pipes to connect voltumes, next would be contents of barrels and things like pressure and tempreature, next flow based on pressure and contents, next chemical reactions inside volumes, next room recoginion and finally visuals i guess... and after that most of the ground work for the fluid and building system should be done.
 
 sadly saving and loading grids (which should happen in the mean time) will kinda have to incorparate all of these systems .... so it needs to be reworked and changed a lot
+
+I might try in C# instead... since from some Reddit Posts i see at 8x improvment in Real Projects so with how this game is this is probably the only way..

@@ -22,7 +22,7 @@ Blocks should have attributes like the material, HP and tempreature? in a grid.
 
 enclosed volumes should be recogoniced as such 
 
-there should be "special" geometire pieces. These can but dont have to, span multiple blocks far and allow volumes to connect across their "air space" an example of that would be a "shape" like a 1x1x2 slope
+there should be "special" geometire pieces. These can but dont have to, span multiple blocks far and allow volumes to connect across their "air space" an example of that would be a "shape" like a 1x1x2 slope. They allow fluids to pass though their air space and have been a major headake 
 
 enclosed volumes should have attributes like tempreature and pressure as well as keep track of compunds inside which compounds are going to be part of the game still has to be determend... but its probably going to include nitrogen, oxygen, diesel, oil, Cerosine, salt and a bunch of others... with their solid, liquid and gasious forms.
 
